@@ -4,7 +4,7 @@ spring:
     username: root
     password: pps123
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.79.204.37:3306/shop?characterEncoding=utf8
+    url: jdbc:mysql://120.79.204.37:3306/sajt?characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
 #   数据源其他配置
     initialSize: 5
@@ -26,6 +26,7 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
 server:
   port: 8080
+
 
 #    schema:
 #      - classpath:sql/department.sql

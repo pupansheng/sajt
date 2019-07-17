@@ -21,7 +21,7 @@ public class MyInterceptor implements HandlerInterceptor {
       }
 
       httpServletResponse.sendRedirect("/login.html");*/
-      return  false;
+      return  true;
     }
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {

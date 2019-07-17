@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pps.suanjiaotyong.mapper.TbDriverMapper" >
+  <resultMap id="BaseResultMap" type="com.pps.suanjiaotyong.pojo.TbDriver" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="truename" property="truename" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="cartype" property="cartype" jdbcType="INTEGER" />
+    <result column="platenum" property="platenum" jdbcType="VARCHAR" />
+    <result column="carsize" property="carsize" jdbcType="VARCHAR" />
+    <result column="maxload" property="maxload" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, truename, phone, cartype, platenum, carsize, maxload
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pps.suanjiaotyong.pojo.TbDriverExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_driver
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pps.suanjiaotyong.pojo.TbDriverExample" >
+    delete from tb_driver
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
+    insert into tb_driver (id, truename, phone, 
+      cartype, platenum, carsize, 
+      maxload)
+    values (#{id,jdbcType=INTEGER}, #{truename,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{cartype,jdbcType=INTEGER}, #{platenum,jdbcType=VARCHAR}, #{carsize,jdbcType=VARCHAR}, 
+      #{maxload,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
+    insert into tb_driver
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="truename != null" >
+        truename,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="cartype != null" >
+        cartype,
+      </if>
+      <if test="platenum != null" >
+        platenum,
+      </if>
+      <if test="carsize != null" >
+        carsize,
+      </if>
+      <if test="maxload != null" >
+        maxload,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=INTEGER},
+      </if>
+      <if test="platenum != null" >
+        #{platenum,jdbcType=VARCHAR},
+      </if>
+      <if test="carsize != null" >
+        #{carsize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxload != null" >
+        #{maxload,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pps.suanjiaotyong.pojo.TbDriverExample" resultType="java.lang.Integer" >
+    select count(*) from tb_driver
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_driver
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.truename != null" >
+        truename = #{record.truename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cartype != null" >
+        cartype = #{record.cartype,jdbcType=INTEGER},
+      </if>
+      <if test="record.platenum != null" >
+        platenum = #{record.platenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carsize != null" >
+        carsize = #{record.carsize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxload != null" >
+        maxload = #{record.maxload,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_driver
+    set id = #{record.id,jdbcType=INTEGER},
+      truename = #{record.truename,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      cartype = #{record.cartype,jdbcType=INTEGER},
+      platenum = #{record.platenum,jdbcType=VARCHAR},
+      carsize = #{record.carsize,jdbcType=VARCHAR},
+      maxload = #{record.maxload,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

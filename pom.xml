@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
+		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pps</groupId>
@@ -78,6 +78,8 @@
 	<dependency>
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
+		<version>1.4</version>
+
 	</dependency>
 
 
@@ -111,13 +113,23 @@
 	</dependency>
 
 
-	<dependency>
+	   <dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
 		<scope>runtime</scope>
-	</dependency>
+	   </dependency>
 
-
+		<!--阿里云-->
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-ecs</artifactId>
+			<version>4.11.0</version>
+		</dependency>
 </dependencies>
 
 <build>

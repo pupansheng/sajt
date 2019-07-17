@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="angular.min.js"></script>
+
+    <script>
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+        var app=angular.module("myApp",[]);
+        app.controller("registerController",function ($http,$scope,$interval) {
+
+
+            $scope.submit=function (type) {
+
+                if(type==2)
+                    $scope.user.usertype=3
+
+                if($scope.user.password!=$scope.password2)
+                {
+                    alert("两次密码不一致")
+                    return;
+                }
+                $http.post("./user/register?yanzhengma="+$scope.yanzhengma,$scope.user).success(function (response) {
+                    if(!response.status){
+                        alert("错误："+response.message)
+                    }
+                    else {
+                        alert("注册成功！将转去登陆界面");
+                        location.href="./login.html";
+                    }
+                })
+
+            }
+
+            $scope.yanzhengma="";
+            $scope.getYan=function () {
+
+                if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test($scope.user.phone))) {
+                    alert("手机号码有误，请重填");
+                    return false;
+
+                }
+
+                $scope.num=60;
+                $scope.dis=true;
+                $scope.timer=$interval(function () {
+                        //获取当前时间
+                        $scope.num--;
+                        if($scope.num<=0)
+                            $scope.dis=false;
+
+                    }, 1000, 60);
+                $http.get("getYanzhengma?phone="+$scope.user.phone).success(function (response) {
+                    if(!response.status)
+                    {
+                        alert("错误："+response.message)
+                    }
+
+                })
+
+
+            }
+
+
+
+
+
+
+
+
+        })
+    </script>
+
+
+
+</head>
+<body  ng-app="myApp" ng-controller="registerController">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+
+
+                </div>
+                <div class="col-md-4">
+
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">货物主</a></li>
+                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">车主</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">用户名</label>
+                                        <input type="text" class="form-control" required id="exampleInputEmail1" placeholder="用户名" ng-model="user.username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">密码</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" required placeholder="Password" ng-model="user.password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">确认密码</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" required placeholder="Password" ng-model="password2">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">注册类型</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2" required ng-model="user.usertype"> 企业
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1" required ng-model="user.usertype"> 个人
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">手机号</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="phone" ng-model="user.phone">
+                                        <button class="btn btn-info btn-sm " disabled ng-click="getYan()" ng-if="dis">获取验证码<span ng-if="num>0">({{num}})</span></button>        <button class="btn btn-info btn-sm" ng-click="getYan()"  ng-if="!dis">获取验证码({{num}})</button><input required type="text" ng-model="yanzhengma">
+
+                                    </div>
+
+
+                                    <button  class="btn btn-default" ng-click="submit(1)">提交</button>
+                                </form>
+
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+
+
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">用户名</label>
+                                        <input required type="text" class="form-control" id="exampleInputEmail1" placeholder="用户名" ng-model="user.username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">密码</label>
+                                        <input required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="user.password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">确认密码</label>
+                                        <input required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password2">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">手机号</label>
+                                        <input required type="text" class="form-control" id="exampleInputEmail1" placeholder="phone" ng-model="user.phone">
+                                        <button class="btn btn-info btn-sm " disabled ng-click="getYan()" ng-if="dis">获取验证码<span ng-if="num>0">({{num}})</span></button>           <button class="btn btn-info btn-sm" ng-click="getYan()"  ng-if="!dis">获取验证码({{num}})</button><input required type="text" ng-model="yanzhengma">
+
+                                    </div>
+
+
+                                    <button  class="btn btn-default" ng-click="submit(2)">提交</button>
+                                </form>
+
+
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="col-md-4">
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

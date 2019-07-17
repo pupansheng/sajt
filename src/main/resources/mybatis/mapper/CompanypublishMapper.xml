@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pps.suanjiaotyong.mapper.CompanypublishMapper" >
+  <resultMap id="BaseResultMap" type="com.pps.suanjiaotyong.pojo.Companypublish" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="fromaddress" property="fromaddress" jdbcType="VARCHAR" />
+    <result column="toaddress" property="toaddress" jdbcType="VARCHAR" />
+    <result column="loadtime" property="loadtime" jdbcType="TIMESTAMP" />
+    <result column="unloadtime" property="unloadtime" jdbcType="TIMESTAMP" />
+    <result column="goodssize" property="goodssize" jdbcType="VARCHAR" />
+    <result column="goodsweight" property="goodsweight" jdbcType="DOUBLE" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="invoice" property="invoice" jdbcType="INTEGER" />
+    <result column="companyphone" property="companyphone" jdbcType="VARCHAR" />
+    <result column="pay" property="pay" jdbcType="DOUBLE" />
+    <result column="goodsprice" property="goodsprice" jdbcType="DOUBLE" />
+    <result column="receivername" property="receivername" jdbcType="VARCHAR" />
+    <result column="receiverphone" property="receiverphone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, type, fromaddress, toaddress, loadtime, unloadtime, goodssize, goodsweight, 
+    amount, invoice, companyphone, pay, goodsprice, receivername, receiverphone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pps.suanjiaotyong.pojo.CompanypublishExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from companypublish
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from companypublish
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from companypublish
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pps.suanjiaotyong.pojo.CompanypublishExample" >
+    delete from companypublish
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pps.suanjiaotyong.pojo.Companypublish" >
+    insert into companypublish (id, uid, type, 
+      fromaddress, toaddress, loadtime, 
+      unloadtime, goodssize, goodsweight, 
+      amount, invoice, companyphone, 
+      pay, goodsprice, receivername, 
+      receiverphone)
+    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{fromaddress,jdbcType=VARCHAR}, #{toaddress,jdbcType=VARCHAR}, #{loadtime,jdbcType=TIMESTAMP}, 
+      #{unloadtime,jdbcType=TIMESTAMP}, #{goodssize,jdbcType=VARCHAR}, #{goodsweight,jdbcType=DOUBLE}, 
+      #{amount,jdbcType=VARCHAR}, #{invoice,jdbcType=INTEGER}, #{companyphone,jdbcType=VARCHAR}, 
+      #{pay,jdbcType=DOUBLE}, #{goodsprice,jdbcType=DOUBLE}, #{receivername,jdbcType=VARCHAR}, 
+      #{receiverphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.Companypublish" >
+    insert into companypublish
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="fromaddress != null" >
+        fromaddress,
+      </if>
+      <if test="toaddress != null" >
+        toaddress,
+      </if>
+      <if test="loadtime != null" >
+        loadtime,
+      </if>
+      <if test="unloadtime != null" >
+        unloadtime,
+      </if>
+      <if test="goodssize != null" >
+        goodssize,
+      </if>
+      <if test="goodsweight != null" >
+        goodsweight,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="invoice != null" >
+        invoice,
+      </if>
+      <if test="companyphone != null" >
+        companyphone,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="goodsprice != null" >
+        goodsprice,
+      </if>
+      <if test="receivername != null" >
+        receivername,
+      </if>
+      <if test="receiverphone != null" >
+        receiverphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fromaddress != null" >
+        #{fromaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toaddress != null" >
+        #{toaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="loadtime != null" >
+        #{loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unloadtime != null" >
+        #{unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodssize != null" >
+        #{goodssize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsweight != null" >
+        #{goodsweight,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null" >
+        #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="companyphone != null" >
+        #{companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsprice != null" >
+        #{goodsprice,jdbcType=DOUBLE},
+      </if>
+      <if test="receivername != null" >
+        #{receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverphone != null" >
+        #{receiverphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pps.suanjiaotyong.pojo.CompanypublishExample" resultType="java.lang.Integer" >
+    select count(*) from companypublish
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update companypublish
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromaddress != null" >
+        fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toaddress != null" >
+        toaddress = #{record.toaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loadtime != null" >
+        loadtime = #{record.loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unloadtime != null" >
+        unloadtime = #{record.unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodssize != null" >
+        goodssize = #{record.goodssize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsweight != null" >
+        goodsweight = #{record.goodsweight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoice != null" >
+        invoice = #{record.invoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyphone != null" >
+        companyphone = #{record.companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pay != null" >
+        pay = #{record.pay,jdbcType=DOUBLE},
+      </if>
+      <if test="record.goodsprice != null" >
+        goodsprice = #{record.goodsprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.receivername != null" >
+        receivername = #{record.receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverphone != null" >
+        receiverphone = #{record.receiverphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update companypublish
+    set id = #{record.id,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
+      toaddress = #{record.toaddress,jdbcType=VARCHAR},
+      loadtime = #{record.loadtime,jdbcType=TIMESTAMP},
+      unloadtime = #{record.unloadtime,jdbcType=TIMESTAMP},
+      goodssize = #{record.goodssize,jdbcType=VARCHAR},
+      goodsweight = #{record.goodsweight,jdbcType=DOUBLE},
+      amount = #{record.amount,jdbcType=VARCHAR},
+      invoice = #{record.invoice,jdbcType=INTEGER},
+      companyphone = #{record.companyphone,jdbcType=VARCHAR},
+      pay = #{record.pay,jdbcType=DOUBLE},
+      goodsprice = #{record.goodsprice,jdbcType=DOUBLE},
+      receivername = #{record.receivername,jdbcType=VARCHAR},
+      receiverphone = #{record.receiverphone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pps.suanjiaotyong.pojo.Companypublish" >
+    update companypublish
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fromaddress != null" >
+        fromaddress = #{fromaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toaddress != null" >
+        toaddress = #{toaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="loadtime != null" >
+        loadtime = #{loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unloadtime != null" >
+        unloadtime = #{unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodssize != null" >
+        goodssize = #{goodssize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsweight != null" >
+        goodsweight = #{goodsweight,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null" >
+        invoice = #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="companyphone != null" >
+        companyphone = #{companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="pay != null" >
+        pay = #{pay,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsprice != null" >
+        goodsprice = #{goodsprice,jdbcType=DOUBLE},
+      </if>
+      <if test="receivername != null" >
+        receivername = #{receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverphone != null" >
+        receiverphone = #{receiverphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pps.suanjiaotyong.pojo.Companypublish" >
+    update companypublish
+    set uid = #{uid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      fromaddress = #{fromaddress,jdbcType=VARCHAR},
+      toaddress = #{toaddress,jdbcType=VARCHAR},
+      loadtime = #{loadtime,jdbcType=TIMESTAMP},
+      unloadtime = #{unloadtime,jdbcType=TIMESTAMP},
+      goodssize = #{goodssize,jdbcType=VARCHAR},
+      goodsweight = #{goodsweight,jdbcType=DOUBLE},
+      amount = #{amount,jdbcType=VARCHAR},
+      invoice = #{invoice,jdbcType=INTEGER},
+      companyphone = #{companyphone,jdbcType=VARCHAR},
+      pay = #{pay,jdbcType=DOUBLE},
+      goodsprice = #{goodsprice,jdbcType=DOUBLE},
+      receivername = #{receivername,jdbcType=VARCHAR},
+      receiverphone = #{receiverphone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
