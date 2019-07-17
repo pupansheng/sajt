@@ -3,6 +3,8 @@ package com.pps.suanjiaotyong.mapper;
 import com.pps.suanjiaotyong.pojo.TbUser;
 import com.pps.suanjiaotyong.pojo.TbUserExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TbUserMapper {
@@ -27,4 +29,12 @@ public interface TbUserMapper {
     int updateByPrimaryKeySelective(TbUser record);
 
     int updateByPrimaryKey(TbUser record);
+
+    int NameJudge(Map<String,String> map);
+
+    int loginPasswordJudge(Map<String,String> map);
+
+    int PhoneJudge(String phone);
+
+    String foundUsernameByPhone(String phone);
 }

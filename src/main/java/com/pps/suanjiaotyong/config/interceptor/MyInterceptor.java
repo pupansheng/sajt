@@ -11,7 +11,11 @@ public class MyInterceptor implements HandlerInterceptor {
     //在请求处理之前进行调用（Controller方法调用之前
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
+        Object username=httpServletRequest.getSession().getAttribute("username");
+        if(username==null){
+            httpServletResponse.sendRedirect("/login.html");
+            return  false;
+        }
 /*
         IndexController.logger.info("拦截----------------------------url:"+httpServletRequest.getRequestURI());
 
