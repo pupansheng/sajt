@@ -50,6 +50,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         factory.setMaxFileSize("10MB"); // KB,MB
         /// 总上传数据大小
         factory.setMaxRequestSize("100MB");
+        factory.setLocation("d://uploadtest");
         return factory.createMultipartConfig();
     }
     @Bean

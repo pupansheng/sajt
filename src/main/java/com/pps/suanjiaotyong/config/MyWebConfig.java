@@ -1,6 +1,7 @@
 package com.pps.suanjiaotyong.config;
 
 import com.pps.suanjiaotyong.config.interceptor.MyInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.*;
@@ -15,6 +16,9 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
 
+    @Value("${imagePath}")
+    String imagePath;
+
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
 
@@ -27,14 +31,16 @@ public class MyWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/user/**").excludePathPatterns("/login.html","/user/toLogin","/user/register","*.js","/*.css","/fonts/**","/images/**");
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/user/**").excludePathPatterns("/user/toLogin","/user/register","*.js","/*.css","/fonts/**","/images/**");
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-    }
+        registry.addResourceHandler("/uploadImages/**").addResourceLocations("file:/"+imagePath);
 
+
+    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

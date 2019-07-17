@@ -36,23 +36,38 @@ public class UserController {
 
     //获得手机验证码
     @RequestMapping("/getYanzhengma")
-    public Result getYanzhengma(String phone, HttpServletRequest httpServletRequest){
+    public Result getYanzhengma(String phone, HttpServletRequest httpServletRequest,String type){
+
 
         String yanzhengma = String.valueOf(UUIDUtil.getNumber(5));
-        boolean f = messageUtil.sendMessage(MessageType.SMS_152441016.toString(), yanzhengma, phone);
+
+        boolean f=false;
+        if (type.equals("register"))
+        f = messageUtil.sendMessage(MessageType.SMS_152441016.toString(), yanzhengma, phone);
+        if (type.equals("login"))
+        f = messageUtil.sendMessage(MessageType.SMS_152441018.toString(), yanzhengma, phone);
+
+
         Result result = new Result();
         if(f) {
             HttpSession session = httpServletRequest.getSession();
+            if(type.equals("register"))
             session.setAttribute("yanzhengma", yanzhengma);
+            if(type.equals("login"))
+                session.setAttribute("login", yanzhengma);
+
+
             session.setMaxInactiveInterval(70);
+
             result.setStatus(true);
-            result.setData(yanzhengma);
         }
         else {
             result.setStatus(false);
             result.setMessage("发送失败！");
         }
+
         return  result;
+
     }
     //注册用户
     @RequestMapping("/user/register")
