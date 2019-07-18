@@ -64,12 +64,13 @@ public class UserServiceImp implements UserService {
                 result.setStatus(true);
                 TbUserExample ex=new TbUserExample();
                 TbUserExample.Criteria criteria = ex.createCriteria();
+
                 criteria.andUsernameEqualTo(map.get("username"));
                 criteria.andPasswordEqualTo(map.get("password"));
-                //查询用户信息
-                List<TbUser> user=tbUserMapper.selectByExample(ex);
+
+
+                List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
                 result.setData(user.get(0));
-                result.setMessage("登录成功");
             }else {
                 result.setStatus(false);
                 result.setMessage("密码错误");
@@ -92,7 +93,7 @@ public class UserServiceImp implements UserService {
             //查询用户信息
             TbUserExample ex=new TbUserExample();
             TbUserExample.Criteria criteria = ex.createCriteria();
-            criteria.andUsernameEqualTo(phone);
+            criteria.andPhoneEqualTo(phone);
             List<TbUser> user=tbUserMapper.selectByExample(ex);
             result.setData(user.get(0));
             result.setStatus(true);

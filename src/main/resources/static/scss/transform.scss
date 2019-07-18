@@ -1,0 +1,200 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#page{
+  text-align: center;
+  h1{
+    margin-bottom: 4rem;
+    font-family: 'Lemonada', cursive;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #fff;
+    font-size: 2rem; 
+  }
+}
+
+
+/*** CUSTOM FILE INPUT STYE ***/
+.wrap-custom-file{
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin: 0 0.5rem 1rem;
+  text-align: center;
+  input[type="file"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    overflow: hidden;
+    opacity:0;
+  }
+  label{
+    z-index: 1;
+    position: absolute;
+    left:0; top: 0; bottom: 0; right: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 4px;
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    -ms-transition: -ms-transform 0.4s;
+    -o-transition: -o-transform 0.4s;
+    transition: transform 0.4s;
+    span{ 
+      display: block;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      color: #777;
+      -webkit-transition: color 0.4s;
+      -moz-transition: color 0.4s;
+      -ms-transition: color 0.4s;
+      -o-transition: color 0.4s;
+      transition: color 0.4s;
+    }
+    .fa{
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      -webkit-transform: translatex(-50%);
+      -moz-transform: translatex(-50%);
+      -ms-transform: translatex(-50%);
+      -o-transform: translatex(-50%);
+      transform: translatex(-50%);
+      font-size: 1.5rem;
+      color: lightcoral;
+      -webkit-transition: color 0.4s;
+      -moz-transition: color 0.4s;
+      -ms-transition: color 0.4s;
+      -o-transition: color 0.4s;
+      transition: color 0.4s;
+    }
+    &:hover{
+      -webkit-transform: translateY(-1rem);
+      -moz-transform: translateY(-1rem);
+      -ms-transform: translateY(-1rem);
+      -o-transform: translateY(-1rem);
+      transform: translateY(-1rem);
+      span, .fa{
+        color: #333;
+      }
+    }
+    &.file-ok{
+      //Styles img background
+      background-size: cover;
+      background-position: center;
+      span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.3rem;
+        font-size: 1.1rem;
+        color: #000;
+        background-color: rgba(255,255,255,.7);
+      }
+      .fa{
+        display: none;
+      }
+    }
+  }
+}
+$color-completed: #2ecc71; 
+.progress-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 10px;
+	width: 600px;
+	list-style: none;
+	padding: 0;
+	> .item {
+		position: relative;
+		&:not(:last-child) {
+			width: 100%;
+		}
+		&:not(:last-child) {
+			&:after {
+				content: '';
+				display: block;
+				height: 8px;
+				width: 100%;
+				background: #bdc3c7;
+				position: absolute;
+				top: 50%;
+				left: 5px;
+				z-index: -1;
+				transition: background 0.4s;
+			}
+		}
+		&:before {
+			content: attr(data-step);
+			display: block;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #fff;
+			background: #bdc3c7;
+			color: #7f8c8d;
+			font-size: 30px;
+			font-weight: bold;
+			transition: background 0.8s;
+		}
+		&.is-completed:after {
+			background: $color-completed;
+		}
+		&.is-completed:before {
+			background: $color-completed;
+			color: #fff;
+		}
+		&.is-active:before {
+			background: $color-active;
+			color: #fff;
+		}	
+	}
+}
+
+.actions {
+	position: absolute;
+	bottom: 5%;
+	width: 400px;
+	display: flex;
+	justify-content: space-between;
+	> .btn {
+		background: #fff;
+		padding: 10px 40px;
+		font-weight: bold;
+		cursor: pointer;
+		outline: none;
+		transition: 0.4s;
+		&.-next {
+			border: 2px solid $color-btn-next;
+			color: $color-btn-next;
+			&:hover {
+				background: $color-btn-next;
+				color: #fff;
+				transition: 0.4s;
+			}
+		}
+		&.-reset {
+			border: 2px solid $color-btn-reset;
+			color: $color-btn-reset;
+			&:hover {
+				background: $color-btn-reset;
+				color: #fff;
+				transition: 0.4s;
+			}
+		}
+	}	
+}
