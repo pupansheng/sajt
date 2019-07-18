@@ -65,9 +65,11 @@ public class UserServiceImp implements UserService {
                 TbUserExample ex=new TbUserExample();
                 TbUserExample.Criteria criteria = ex.createCriteria();
                 criteria.andUsernameEqualTo(map.get("username"));
-                criteria.andUsernameEqualTo(map.get("password"));
-                List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
+                criteria.andPasswordEqualTo(map.get("password"));
+                //查询用户信息
+                List<TbUser> user=tbUserMapper.selectByExample(ex);
                 result.setData(user.get(0));
+                result.setMessage("登录成功");
             }else {
                 result.setStatus(false);
                 result.setMessage("密码错误");
