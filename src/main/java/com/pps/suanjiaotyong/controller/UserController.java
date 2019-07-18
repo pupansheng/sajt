@@ -91,6 +91,9 @@ public class UserController {
     @RequestMapping("/user/login")
     public Result login(@RequestBody TbUser tbUser, String yanzhengma,
                         HttpServletRequest request, HttpServletResponse response){
+
+        MyLog.logger.info("登录用户："+tbUser);
+
         String username=tbUser.getUsername();
         if(username==null||username.equals("")){//如果传入用户名字段不存在就是用手机号登录
             String phone=tbUser.getPhone();
@@ -98,8 +101,8 @@ public class UserController {
             if(yanzhengma.equals(yanzhengma1)) {//验证码匹配
                 Result result=userService.loginWithPhone(phone);
                 //获取到手机号对应的用户名
-                String user=result.getMessage();
-                request.getSession().setAttribute("username",user);
+
+                request.getSession().setAttribute("userInf",result.getData());
                 /*Cookie cookie=new Cookie("username",user);
                 //生存时间
                 cookie.setMaxAge(60*60*24*5);
@@ -116,13 +119,24 @@ public class UserController {
             map.put("password",password);
             Result result=userService.login(map);
             if(result.isStatus()){//登录成功
-                request.getSession().setAttribute("username",username);
+
+                request.getSession().setAttribute("userInf",result.getData());
+
                 /*Cookie cookie=new Cookie("username",username);
                 cookie.setMaxAge(60*60*24*5);//生存时间
                 response.addCookie(cookie);*/
             }
             return result;
         }
+
+    }
+    @RequestMapping("/getLogin")
+    public TbUser getUserLogin(HttpServletRequest request){
+
+
+        Object username = request.getSession().getAttribute("userInf");
+        return  (TbUser) username;
+
 
     }
 

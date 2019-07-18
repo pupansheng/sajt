@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../bootstrap.css" rel="stylesheet">
+    <script src="../jquery.min.js"></script>
+    <script src="../bootstrap.min.js"></script>
+    <script src="../angular.min.js"></script>
+
+    <script>
+        var app=angular.module("myApp",[]);
+        app.controller("myController",function ($http,$scope) {
+
+
+
+
+
+
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="type1"></div>
+                    <div class="di1" style="background-color:black;height: 100px">
+                        <div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;"><img src="../image/logo.png" width="100" height="100"> </div>
+                        <div  style="float:left;color: white;margin-right: 200px;"><h2><b速安交通>速安交通</b速安交通></h2>achnyan traff
+                        </div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="../index.html">首页</a></div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="#">在线下单</a></div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;">企业用车</div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;">司机加盟</div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;">联系我们</div>
+                        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 400px;">常见问题</div>
+                        <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;"><!-- Button trigger modal -->
+
+                        <span ng-if="user.id!=null">
+                        <div>
+
+                        {{user.username}}，你好！
+
+                        </div>
+                        </span>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="color: #953b39">
+                        <div class="panel panel-default" style="color: #953b39">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        我的资料
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    <ul>
+                                        <li><a href="st1.html" target="content">完善资料</a></li>
+                                        <li><a href="#">修改资料</a></li>
+                                    </ul>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      我的订单
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#">正在进行</a></li>
+                                        <li><a href="#">交易完成</a></li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                       其他
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-10">
+
+                    <iframe width="100%" height="600px" name="content">
+
+
+
+                    </iframe>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
