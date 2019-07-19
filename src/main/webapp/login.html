@@ -7,7 +7,7 @@
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="angular.min.js"></script>
-    <script src="jquery-3.4.1.js"></script>
+    <script src="jquery.min.js"></script>
 
     <script>
         var app=angular.module("myApp",[]);
@@ -48,6 +48,13 @@
             login(formId,yanzhengma);
         }
         function send(formId) {
+            var phone = document.getElementById('phone').value;
+            //alert(phone);
+            //判断手机号是否有误
+            if(!(/^1[34578]\d{9}$/.test(phone))){
+                alert("手机号码有误，请重填");
+                return false;
+            }
             $.ajax({
                 url:"./getYanzhengma?",
                 type:"POST",
@@ -185,13 +192,13 @@
                                         <label for="exampleInputEmail1">
                                             手机号
                                         </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" name="phone" />
+                                        <input type="text" class="form-control" id="phone" name="phone" />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">
                                             验证码
                                         </label>
-                                        <input id="yanzhengma" type="text" class="form-control" id="exampleInputEmail1" name="yanzhengma" />
+                                        <input id="yanzhengma" type="text" class="form-control" name="yanzhengma" />
                                         <input type="text" style="display: none" name="type" value="login"/>
                                     </div>
                                     <button type="button" class="btn btn-primary" id="sendCode" onclick="send('byPhone')">
