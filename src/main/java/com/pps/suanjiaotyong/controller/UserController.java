@@ -3,9 +3,11 @@ package com.pps.suanjiaotyong.controller;
 
 
 import com.pps.suanjiaotyong.MyLog;
+import com.pps.suanjiaotyong.pojo.TbDriver;
 import com.pps.suanjiaotyong.pojo.group.MessageType;
 import com.pps.suanjiaotyong.pojo.group.Result;
 import com.pps.suanjiaotyong.pojo.TbUser;
+import com.pps.suanjiaotyong.service.DriverService;
 import com.pps.suanjiaotyong.service.UserService;
 import com.pps.suanjiaotyong.util.IdWorker;
 import com.pps.suanjiaotyong.util.MessageUtil;
@@ -37,6 +39,8 @@ public class UserController {
     UserService userService;
     @Autowired
     MessageUtil messageUtil;
+    @Autowired
+    DriverService driverService;
 
     //获得手机验证码
     @RequestMapping("/getYanzhengma")
@@ -136,6 +140,25 @@ public class UserController {
 
         Object username = request.getSession().getAttribute("userInf");
         return  (TbUser) username;
+
+
+    }
+    //提交审核资料
+    @RequestMapping("/user/save")
+    public Result saveShenhe(@RequestBody TbDriver tbDriver){
+
+        tbDriver.setStatus(1);
+        MyLog.logger.info("审核资料："+tbDriver);
+        return  driverService.saveShenhe(tbDriver);
+
+
+    }
+    //更新用户资料
+    @RequestMapping("/user/update")
+    public Result updateUser(@RequestBody TbUser tbUser){
+        MyLog.logger.info("更新用户信息："+tbUser);
+
+     return     userService.update(tbUser);
 
 
     }

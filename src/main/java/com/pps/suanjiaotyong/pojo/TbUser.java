@@ -1,5 +1,7 @@
 package com.pps.suanjiaotyong.pojo;
 
+import com.pps.suanjiaotyong.pojo.group.Result;
+
 public class TbUser {
     private Integer id;
 
@@ -11,9 +13,22 @@ public class TbUser {
 
     private Integer usertype;
 
-    private String driverinf;
+    private Integer userinfoid;
 
-    private String companyinf;
+    @Override
+    public String toString() {
+        return "TbUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", usertype=" + usertype +
+                ", userinfoid=" + userinfoid +
+                ", status=" + status +
+                '}';
+    }
+
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -55,32 +70,21 @@ public class TbUser {
         this.usertype = usertype;
     }
 
-    public String getDriverinf() {
-        return driverinf;
+    public Integer getUserinfoid() {
+        return userinfoid;
     }
 
-    public void setDriverinf(String driverinf) {
-        this.driverinf = driverinf == null ? null : driverinf.trim();
+    public void setUserinfoid(Integer userinfoid) {
+        this.userinfoid = userinfoid;
     }
 
-    public String getCompanyinf() {
-        return companyinf;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setCompanyinf(String companyinf) {
-        this.companyinf = companyinf == null ? null : companyinf.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "TbUser{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", usertype=" + usertype +
-                ", driverinf='" + driverinf + '\'' +
-                ", companyinf='" + companyinf + '\'' +
-                '}';
-    }
+
 }

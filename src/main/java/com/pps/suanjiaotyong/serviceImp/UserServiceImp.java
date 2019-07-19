@@ -39,7 +39,7 @@ public class UserServiceImp implements UserService {
             if (userCount==0) {//判断用户是否存在
                 int phoneCount=tbUserMapper.PhoneJudge(tbUser.getPhone());
                 if (phoneCount==0) {//判断手机号是否存在
-                    tbUserMapper.insert(tbUser);
+                    tbUserMapper.insertSelective(tbUser);
                 }
             }
             result.setStatus(true);
@@ -93,7 +93,7 @@ public class UserServiceImp implements UserService {
             //查询用户信息
             TbUserExample ex=new TbUserExample();
             TbUserExample.Criteria criteria = ex.createCriteria();
-            criteria.andUsernameEqualTo(phone);
+            criteria.andPhoneEqualTo(phone);
             List<TbUser> user=tbUserMapper.selectByExample(ex);
             result.setData(user.get(0));
             result.setStatus(true);
@@ -102,6 +102,20 @@ public class UserServiceImp implements UserService {
             result.setStatus(false);
         }
         return result;
+    }
+
+    @Override
+    public Result update(TbUser tbUser) {
+
+        Result result=new Result();
+        try{
+            tbUserMapper.updateByPrimaryKeySelective(tbUser);
+            result.setStatus(true);
+          }catch (Exception e){
+            result.setStatus(false);
+         }
+
+        return  result;
     }
 
 

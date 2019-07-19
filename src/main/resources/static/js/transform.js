@@ -12,10 +12,12 @@ $('input[type="file"]').each(function(){
       $label = $file.next('label'),
       $labelText = $label.find('span'),
       labelDefault = $labelText.text();
-	 
-  
+
+
+
   // When a new file is selected
   $file.on('change', function(event){
+
     var fileName = $file.val().split( '\\' ).pop(),
         tmppath = URL.createObjectURL(event.target.files[0]);
     //Check successfully selection
