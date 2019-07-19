@@ -15,28 +15,6 @@ public class Companypublish {
 
     private Date loadtime;
 
-    @Override
-    public String toString() {
-        return "Companypublish{" +
-                "id='" + id + '\'' +
-                ", uid=" + uid +
-                ", type=" + type +
-                ", fromaddress='" + fromaddress + '\'' +
-                ", toaddress='" + toaddress + '\'' +
-                ", loadtime=" + loadtime +
-                ", unloadtime=" + unloadtime +
-                ", goodssize='" + goodssize + '\'' +
-                ", goodsweight=" + goodsweight +
-                ", amount='" + amount + '\'' +
-                ", invoice=" + invoice +
-                ", companyphone='" + companyphone + '\'' +
-                ", pay=" + pay +
-                ", goodsprice=" + goodsprice +
-                ", receivername='" + receivername + '\'' +
-                ", receiverphone='" + receiverphone + '\'' +
-                '}';
-    }
-
     private Date unloadtime;
 
     private String goodssize;

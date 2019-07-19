@@ -60,16 +60,4 @@ public class Driverpublish {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    @Override
-    public String toString() {
-        return "Driverpublish{" +
-                "id='" + id + '\'' +
-                ", uid=" + uid +
-                ", type=" + type +
-                ", fromaddress='" + fromaddress + '\'' +
-                ", toaddress='" + toaddress + '\'' +
-                ", price=" + price +
-                '}';
-    }
 }

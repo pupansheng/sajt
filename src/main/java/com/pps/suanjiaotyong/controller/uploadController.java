@@ -33,6 +33,13 @@ public class uploadController {
     @RequestMapping("/upload")
     public Result upload(MultipartFile file) throws IOException {
 
+        if(file==null){
+
+
+            return  new Result("no",false);
+
+        }
+
         MyLog.logger.info("文件上传："+file.getOriginalFilename());
         Result result=new Result();
 

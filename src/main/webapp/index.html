@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>page</title>
+    <title>速安交通</title>
     <link rel="stylesheet" type="text/css" href="home.css" />
     <link href="bootstrap.css" rel="stylesheet">
     <script src="jquery.min.js"></script>
@@ -55,6 +55,22 @@
 
                 }
             }
+
+            $scope.getLogin=function () {
+
+                $http.get("./getLogin").success(function (response) {
+
+                    if(response!=null){
+
+                        $scope.user=response;
+                    }
+                })
+
+            }
+
+
+
+
             $scope.getYan=function () {
 
                 if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test($scope.user.phone))) {
@@ -93,13 +109,13 @@
 
 
 </head>
-<body ng-app="myApp" ng-controller="indexController">
+<body ng-app="myApp" ng-controller="indexController" ng-init="getLogin()">
 <div class="type1"></div>
 <div class="di1" style="background-color:black;height: 100px">
     <div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;"><img src="image/logo.png" width="100" height="100"> </div>
     <div  style="float:left;color: white;margin-right: 200px;"><h2><b速安交通>速安交通</b速安交通></h2>achnyan traff
     </div>
-    <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a>首页</a></div>
+    <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="index.html">首页</a></div>
     <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="#">在线下单</a></div>
     <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;">企业用车</div>
     <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 50px;">司机加盟</div>
@@ -115,10 +131,11 @@
 
        <span ng-if="user.id!=null">
            <div>
-        <a  href="#" data-toggle="modal" data-target="#myModal">
-            {{user.username}}
+        <a  href="user/my.html">
+            {{user.username}}，
         </a>
-       ，你好</div>
+               你好！
+      </div>
        </span>
 
 </div>

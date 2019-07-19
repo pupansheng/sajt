@@ -103,11 +103,24 @@ public class UserServiceImp implements UserService {
             result.setData(user.get(0));
             result.setStatus(true);
         }else {
-            MyLog.logger.info("手机名不存在");
             result.setMessage("手机号不存在");
             result.setStatus(false);
         }
         return result;
+    }
+
+    @Override
+    public Result update(TbUser tbUser) {
+
+        Result result=new Result();
+        try{
+            tbUserMapper.updateByPrimaryKeySelective(tbUser);
+            result.setStatus(true);
+          }catch (Exception e){
+            result.setStatus(false);
+         }
+
+        return  result;
     }
 
 

@@ -2,13 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pps.suanjiaotyong.mapper.TbDriverMapper" >
   <resultMap id="BaseResultMap" type="com.pps.suanjiaotyong.pojo.TbDriver" >
-    <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="truename" property="truename" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="cartype" property="cartype" jdbcType="INTEGER" />
-    <result column="platenum" property="platenum" jdbcType="VARCHAR" />
-    <result column="carsize" property="carsize" jdbcType="VARCHAR" />
-    <result column="maxload" property="maxload" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="carType" property="cartype" jdbcType="VARCHAR" />
+    <result column="carNumber" property="carnumber" jdbcType="VARCHAR" />
+    <result column="carSize" property="carsize" jdbcType="VARCHAR" />
+    <result column="maxLoad" property="maxload" jdbcType="VARCHAR" />
+    <result column="carImage" property="carimage" jdbcType="VARCHAR" />
+    <result column="idCartImage" property="idcartimage" jdbcType="VARCHAR" />
+    <result column="driversLicenseImage" property="driverslicenseimage" jdbcType="VARCHAR" />
+    <result column="walkImages" property="walkimages" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, truename, phone, cartype, platenum, carsize, maxload
+    id, realName, phone, province, city, carType, carNumber, carSize, maxLoad, carImage, 
+    idCartImage, driversLicenseImage, walkImages, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pps.suanjiaotyong.pojo.TbDriverExample" >
     select
@@ -85,6 +93,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_driver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_driver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.pps.suanjiaotyong.pojo.TbDriverExample" >
     delete from tb_driver
     <if test="_parameter != null" >
@@ -92,59 +110,112 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
-    insert into tb_driver (id, truename, phone, 
-      cartype, platenum, carsize, 
-      maxload)
-    values (#{id,jdbcType=INTEGER}, #{truename,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{cartype,jdbcType=INTEGER}, #{platenum,jdbcType=VARCHAR}, #{carsize,jdbcType=VARCHAR}, 
-      #{maxload,jdbcType=VARCHAR})
+       <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
+    insert into tb_driver (id, realName, phone, 
+      province, city, carType, 
+      carNumber, carSize, maxLoad, 
+      carImage, idCartImage, driversLicenseImage, 
+      walkImages, status)
+    values (#{id,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cartype,jdbcType=VARCHAR}, 
+      #{carnumber,jdbcType=VARCHAR}, #{carsize,jdbcType=VARCHAR}, #{maxload,jdbcType=VARCHAR}, 
+      #{carimage,jdbcType=VARCHAR}, #{idcartimage,jdbcType=VARCHAR}, #{driverslicenseimage,jdbcType=VARCHAR}, 
+      #{walkimages,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+
     insert into tb_driver
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="truename != null" >
-        truename,
+      <if test="realname != null" >
+        realName,
       </if>
       <if test="phone != null" >
         phone,
       </if>
-      <if test="cartype != null" >
-        cartype,
+      <if test="province != null" >
+        province,
       </if>
-      <if test="platenum != null" >
-        platenum,
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="cartype != null" >
+        carType,
+      </if>
+      <if test="carnumber != null" >
+        carNumber,
       </if>
       <if test="carsize != null" >
-        carsize,
+        carSize,
       </if>
       <if test="maxload != null" >
-        maxload,
+        maxLoad,
+      </if>
+      <if test="carimage != null" >
+        carImage,
+      </if>
+      <if test="idcartimage != null" >
+        idCartImage,
+      </if>
+      <if test="driverslicenseimage != null" >
+        driversLicenseImage,
+      </if>
+      <if test="walkimages != null" >
+        walkImages,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="truename != null" >
-        #{truename,jdbcType=VARCHAR},
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="cartype != null" >
-        #{cartype,jdbcType=INTEGER},
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
       </if>
-      <if test="platenum != null" >
-        #{platenum,jdbcType=VARCHAR},
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="carnumber != null" >
+        #{carnumber,jdbcType=VARCHAR},
       </if>
       <if test="carsize != null" >
         #{carsize,jdbcType=VARCHAR},
       </if>
       <if test="maxload != null" >
         #{maxload,jdbcType=VARCHAR},
+      </if>
+      <if test="carimage != null" >
+        #{carimage,jdbcType=VARCHAR},
+      </if>
+      <if test="idcartimage != null" >
+        #{idcartimage,jdbcType=VARCHAR},
+      </if>
+      <if test="driverslicenseimage != null" >
+        #{driverslicenseimage,jdbcType=VARCHAR},
+      </if>
+      <if test="walkimages != null" >
+        #{walkimages,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -160,23 +231,44 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.truename != null" >
-        truename = #{record.truename,jdbcType=VARCHAR},
+      <if test="record.realname != null" >
+        realName = #{record.realname,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null" >
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.cartype != null" >
-        cartype = #{record.cartype,jdbcType=INTEGER},
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
       </if>
-      <if test="record.platenum != null" >
-        platenum = #{record.platenum,jdbcType=VARCHAR},
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cartype != null" >
+        carType = #{record.cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carnumber != null" >
+        carNumber = #{record.carnumber,jdbcType=VARCHAR},
       </if>
       <if test="record.carsize != null" >
-        carsize = #{record.carsize,jdbcType=VARCHAR},
+        carSize = #{record.carsize,jdbcType=VARCHAR},
       </if>
       <if test="record.maxload != null" >
-        maxload = #{record.maxload,jdbcType=VARCHAR},
+        maxLoad = #{record.maxload,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carimage != null" >
+        carImage = #{record.carimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcartimage != null" >
+        idCartImage = #{record.idcartimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverslicenseimage != null" >
+        driversLicenseImage = #{record.driverslicenseimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.walkimages != null" >
+        walkImages = #{record.walkimages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -186,14 +278,83 @@
   <update id="updateByExample" parameterType="map" >
     update tb_driver
     set id = #{record.id,jdbcType=INTEGER},
-      truename = #{record.truename,jdbcType=VARCHAR},
+      realName = #{record.realname,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      cartype = #{record.cartype,jdbcType=INTEGER},
-      platenum = #{record.platenum,jdbcType=VARCHAR},
-      carsize = #{record.carsize,jdbcType=VARCHAR},
-      maxload = #{record.maxload,jdbcType=VARCHAR}
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      carType = #{record.cartype,jdbcType=VARCHAR},
+      carNumber = #{record.carnumber,jdbcType=VARCHAR},
+      carSize = #{record.carsize,jdbcType=VARCHAR},
+      maxLoad = #{record.maxload,jdbcType=VARCHAR},
+      carImage = #{record.carimage,jdbcType=VARCHAR},
+      idCartImage = #{record.idcartimage,jdbcType=VARCHAR},
+      driversLicenseImage = #{record.driverslicenseimage,jdbcType=VARCHAR},
+      walkImages = #{record.walkimages,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
+    update tb_driver
+    <set >
+      <if test="realname != null" >
+        realName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        carType = #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="carnumber != null" >
+        carNumber = #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carsize != null" >
+        carSize = #{carsize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxload != null" >
+        maxLoad = #{maxload,jdbcType=VARCHAR},
+      </if>
+      <if test="carimage != null" >
+        carImage = #{carimage,jdbcType=VARCHAR},
+      </if>
+      <if test="idcartimage != null" >
+        idCartImage = #{idcartimage,jdbcType=VARCHAR},
+      </if>
+      <if test="driverslicenseimage != null" >
+        driversLicenseImage = #{driverslicenseimage,jdbcType=VARCHAR},
+      </if>
+      <if test="walkimages != null" >
+        walkImages = #{walkimages,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pps.suanjiaotyong.pojo.TbDriver" >
+    update tb_driver
+    set realName = #{realname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      carType = #{cartype,jdbcType=VARCHAR},
+      carNumber = #{carnumber,jdbcType=VARCHAR},
+      carSize = #{carsize,jdbcType=VARCHAR},
+      maxLoad = #{maxload,jdbcType=VARCHAR},
+      carImage = #{carimage,jdbcType=VARCHAR},
+      idCartImage = #{idcartimage,jdbcType=VARCHAR},
+      driversLicenseImage = #{driverslicenseimage,jdbcType=VARCHAR},
+      walkImages = #{walkimages,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

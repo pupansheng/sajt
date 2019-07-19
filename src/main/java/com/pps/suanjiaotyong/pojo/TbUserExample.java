@@ -434,143 +434,123 @@ public class TbUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfIsNull() {
-            addCriterion("driverinf is null");
+        public Criteria andUserinfoidIsNull() {
+            addCriterion("userInfoId is null");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfIsNotNull() {
-            addCriterion("driverinf is not null");
+        public Criteria andUserinfoidIsNotNull() {
+            addCriterion("userInfoId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfEqualTo(String value) {
-            addCriterion("driverinf =", value, "driverinf");
+        public Criteria andUserinfoidEqualTo(Integer value) {
+            addCriterion("userInfoId =", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfNotEqualTo(String value) {
-            addCriterion("driverinf <>", value, "driverinf");
+        public Criteria andUserinfoidNotEqualTo(Integer value) {
+            addCriterion("userInfoId <>", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfGreaterThan(String value) {
-            addCriterion("driverinf >", value, "driverinf");
+        public Criteria andUserinfoidGreaterThan(Integer value) {
+            addCriterion("userInfoId >", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfGreaterThanOrEqualTo(String value) {
-            addCriterion("driverinf >=", value, "driverinf");
+        public Criteria andUserinfoidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("userInfoId >=", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfLessThan(String value) {
-            addCriterion("driverinf <", value, "driverinf");
+        public Criteria andUserinfoidLessThan(Integer value) {
+            addCriterion("userInfoId <", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfLessThanOrEqualTo(String value) {
-            addCriterion("driverinf <=", value, "driverinf");
+        public Criteria andUserinfoidLessThanOrEqualTo(Integer value) {
+            addCriterion("userInfoId <=", value, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfLike(String value) {
-            addCriterion("driverinf like", value, "driverinf");
+        public Criteria andUserinfoidIn(List<Integer> values) {
+            addCriterion("userInfoId in", values, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfNotLike(String value) {
-            addCriterion("driverinf not like", value, "driverinf");
+        public Criteria andUserinfoidNotIn(List<Integer> values) {
+            addCriterion("userInfoId not in", values, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfIn(List<String> values) {
-            addCriterion("driverinf in", values, "driverinf");
+        public Criteria andUserinfoidBetween(Integer value1, Integer value2) {
+            addCriterion("userInfoId between", value1, value2, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfNotIn(List<String> values) {
-            addCriterion("driverinf not in", values, "driverinf");
+        public Criteria andUserinfoidNotBetween(Integer value1, Integer value2) {
+            addCriterion("userInfoId not between", value1, value2, "userinfoid");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfBetween(String value1, String value2) {
-            addCriterion("driverinf between", value1, value2, "driverinf");
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
             return (Criteria) this;
         }
 
-        public Criteria andDriverinfNotBetween(String value1, String value2) {
-            addCriterion("driverinf not between", value1, value2, "driverinf");
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfIsNull() {
-            addCriterion("companyinf is null");
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfIsNotNull() {
-            addCriterion("companyinf is not null");
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfEqualTo(String value) {
-            addCriterion("companyinf =", value, "companyinf");
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfNotEqualTo(String value) {
-            addCriterion("companyinf <>", value, "companyinf");
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfGreaterThan(String value) {
-            addCriterion("companyinf >", value, "companyinf");
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfGreaterThanOrEqualTo(String value) {
-            addCriterion("companyinf >=", value, "companyinf");
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfLessThan(String value) {
-            addCriterion("companyinf <", value, "companyinf");
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfLessThanOrEqualTo(String value) {
-            addCriterion("companyinf <=", value, "companyinf");
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfLike(String value) {
-            addCriterion("companyinf like", value, "companyinf");
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyinfNotLike(String value) {
-            addCriterion("companyinf not like", value, "companyinf");
-            return (Criteria) this;
-        }
-
-        public Criteria andCompanyinfIn(List<String> values) {
-            addCriterion("companyinf in", values, "companyinf");
-            return (Criteria) this;
-        }
-
-        public Criteria andCompanyinfNotIn(List<String> values) {
-            addCriterion("companyinf not in", values, "companyinf");
-            return (Criteria) this;
-        }
-
-        public Criteria andCompanyinfBetween(String value1, String value2) {
-            addCriterion("companyinf between", value1, value2, "companyinf");
-            return (Criteria) this;
-        }
-
-        public Criteria andCompanyinfNotBetween(String value1, String value2) {
-            addCriterion("companyinf not between", value1, value2, "companyinf");
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }
