@@ -41,7 +41,19 @@ public class UserServiceImp implements UserService {
                 if (phoneCount==0) {//判断手机号是否存在
                     tbUserMapper.insertSelective(tbUser);
                 }
+                else {
+                    result.setStatus(false);
+                    result.setMessage("用户或手机号已注册");
+                    return  result;
+                }
             }
+            else {
+
+                result.setStatus(false);
+                result.setMessage("用户或手机号已注册");
+                return  result;
+            }
+
             result.setStatus(true);
         }
         catch (Exception e){
