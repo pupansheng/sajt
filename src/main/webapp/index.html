@@ -36,7 +36,7 @@
                 else if(type==2){//手机登录
 
 
-                    $http.post("/user/login",$scope.user).success(function (response) {
+                    $http.post("/user/login?yanzhengma="+$scope.yanzhengma,$scope.user).success(function (response) {
 
                         if(!response.status){
                             alert("登陆失败："+response.message)

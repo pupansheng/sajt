@@ -1,5 +1,6 @@
 package com.pps.suanjiaotyong.serviceImp;
 
+import com.pps.suanjiaotyong.MyLog;
 import com.pps.suanjiaotyong.mapper.TbUserMapper;
 import com.pps.suanjiaotyong.pojo.TbUserExample;
 import com.pps.suanjiaotyong.pojo.group.Result;
@@ -38,8 +39,11 @@ public class UserServiceImp implements UserService {
             int userCount=tbUserMapper.NameJudge(map);
             if (userCount==0) {//判断用户是否存在
                 int phoneCount=tbUserMapper.PhoneJudge(tbUser.getPhone());
-                if (phoneCount==0) {//判断手机号是否存在
+                if (phoneCount==0) {//判断手机号是否存在0为不存在
                     tbUserMapper.insert(tbUser);
+                }else{
+                    result.setStatus(false);
+                    result.setMessage("该手机号已经被注册");
                 }
             }
             result.setStatus(true);
@@ -66,11 +70,12 @@ public class UserServiceImp implements UserService {
                 TbUserExample.Criteria criteria = ex.createCriteria();
 
                 criteria.andUsernameEqualTo(map.get("username"));
-                criteria.andPasswordEqualTo(map.get("password"));
+                //criteria.andPasswordEqualTo(map.get("password"));
 
 
                 List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
                 result.setData(user.get(0));
+                result.setMessage("欢迎您： "+map.get("username"));
             }else {
                 result.setStatus(false);
                 result.setMessage("密码错误");
@@ -89,7 +94,7 @@ public class UserServiceImp implements UserService {
         if (phoneCount>0){//手机号码存在
             String username=tbUserMapper.foundUsernameByPhone(phone);
             //登录成功返回用户名
-            result.setMessage(username);
+            result.setMessage("欢迎您： "+username);
             //查询用户信息
             TbUserExample ex=new TbUserExample();
             TbUserExample.Criteria criteria = ex.createCriteria();
@@ -98,6 +103,7 @@ public class UserServiceImp implements UserService {
             result.setData(user.get(0));
             result.setStatus(true);
         }else {
+            MyLog.logger.info("手机名不存在");
             result.setMessage("手机号不存在");
             result.setStatus(false);
         }

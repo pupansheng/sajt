@@ -7,17 +7,78 @@
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="angular.min.js"></script>
+    <script src="jquery-3.4.1.js"></script>
 
     <script>
         var app=angular.module("myApp",[]);
         app.controller("loginController",function ($http,$scope) {
-
-
-
-
-
-
         })
+        //发送表单ajax请求
+        function login(formId,yanzhengma) {
+            $.ajax({
+                url:"./user/login?"+"yanzhengma="+yanzhengma,
+                type:"POST",
+                data:toJson(formId),
+                contentType:"application/json",  //缺失会出现URL编码，无法转成json对象
+                success:function(data){
+                    if (data.status) {
+                        alert(data.message+" "+"即将前往首页");
+                        window.location.href="/index.html";
+                    }else{
+                        alert(data.message);
+                    }
+
+                }
+            });
+        }
+        /** 表单序列化成json字符串的方法  */
+        function toJson(formId) {
+            var paramArray = $('#' + formId).serializeArray();
+            /*请求参数转json对象*/
+            var jsonObj={};
+            $(paramArray).each(function(){
+                jsonObj[this.name]=this.value;
+            });
+            //console.log(jsonObj);
+            // json对象再转换成json字符串
+            return JSON.stringify(jsonObj);
+        }
+        function loginByPhone(formId) {
+            var yanzhengma=$('#yanzhengma').val();
+            login(formId,yanzhengma);
+        }
+        function send(formId) {
+            $.ajax({
+                url:"./getYanzhengma?",
+                type:"POST",
+                data:$('#byPhone').serialize(),
+                success:function(data){
+                    if (data.status){
+                    }
+                    //alert(data.message);
+                }
+            });
+            wait();
+        }
+        //按钮60秒变灰色
+        var time=60;
+        function wait() {
+            var it="#sendCode"
+            //it='"'+it+'"';
+            if (time == 0) {
+                $(it).attr("disabled", false);
+                $(it).text("获取验证码");
+                time = 60;
+            } else {
+                $(it).attr("disabled", true);
+                $(it).text(time + "秒后重新发送");
+                time--;
+                setTimeout(function () {wait(it);},1000);
+            }
+        }
+        function test() {
+            alert($('#byPhone').serialize());
+        }
     </script>
 </head>
 <body>
@@ -86,92 +147,73 @@
                 </div>
                 <div class="col-md-6">
                     <div>
-
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">账号登陆</a></li>
                             <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">手机号登录</a></li>
                             <li role="presentation"><a href="#messages" aria-controls="profile" role="tab" data-toggle="tab">微信扫一扫登录</a></li>
-
                         </ul>
-
                         <!-- Tab panes -->
                         <div class="tab-content">
-
                             <div role="tabpanel" class="tab-pane active" id="home">
-
-
-
-                                <form role="form" action="./user/toLogin" method="post">
+                                <form role="form" action="./user/login" method="post" id="byName">
                                     <div class="form-group">
-
                                         <label for="exampleInputEmail1">
                                             用户名
                                         </label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" name="username" />
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="username" />
                                     </div>
                                     <div class="form-group">
-
                                         <label for="exampleInputPassword1">
                                             密码
                                         </label>
                                         <input type="password" class="form-control" id="exampleInputPassword1" name="password"/>
                                     </div>
-
-
                                     <div class="checkbox">
-
                                         <label>
                                             <input type="checkbox" name="remenber"/> 记住密码
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary" onclick="login('byName')">
                                         登录
                                     </button>
-
                                 </form>
-
-
                             </div>
                             <div role="tabpanel" class="tab-pane" id="profile">
-
-                                <form role="form" action="./user/toLogin" method="post">
+                                <form role="form" id="byPhone" action="./user/login" method="post">
                                     <div class="form-group">
-
                                         <label for="exampleInputEmail1">
                                             手机号
                                         </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" name="" />
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="phone" />
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            验证码
+                                        </label>
+                                        <input id="yanzhengma" type="text" class="form-control" id="exampleInputEmail1" name="yanzhengma" />
+                                        <input type="text" style="display: none" name="type" value="login"/>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" id="sendCode" onclick="send('byPhone')">
+                                        发送验证码
+                                    </button>
+                                    <button type="button" class="btn btn-primary" onclick="loginByPhone('byPhone')">
                                         登录
                                     </button>
-
                                 </form>
-
-
-
                             </div>
                             <div role="tabpanel" class="tab-pane" id="messages">
-
-
-                                微信登陆
-
-
-
+                                <label for="exampleInputEmail1">
+                                    微信扫一扫
+                                </label>
                             </div>
-
                         </div>
-
                     </div>
                     <div class="text-right">
                         <a type="submit" class="btn btn-primary " href="register.html">
                             没有账号？注册一个
                         </a>
-
                     </div>
-
                 </div>
             </div>
         </div>
