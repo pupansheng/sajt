@@ -41,12 +41,12 @@ public class UserServiceImp implements UserService {
                 int phoneCount=tbUserMapper.PhoneJudge(tbUser.getPhone());
                 if (phoneCount==0) {//判断手机号是否存在0为不存在
                     tbUserMapper.insert(tbUser);
+                    result.setStatus(true);
                 }else{
                     result.setStatus(false);
                     result.setMessage("该手机号已经被注册");
                 }
             }
-            result.setStatus(true);
         }
         catch (Exception e){
 
@@ -70,7 +70,7 @@ public class UserServiceImp implements UserService {
                 TbUserExample.Criteria criteria = ex.createCriteria();
 
                 criteria.andUsernameEqualTo(map.get("username"));
-                //criteria.andPasswordEqualTo(map.get("password"));
+                criteria.andPasswordEqualTo(map.get("password"));
 
 
                 List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
