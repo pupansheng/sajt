@@ -27,6 +27,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -198,6 +200,23 @@ public class UserController {
      return     userService.update(tbUser);
 
 
+    }
+
+    //退出登录
+    @RequestMapping("/user/logout")
+    public void logout(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+        //清空session
+        request.getSession().invalidate();
+        Cookie[] cookies = request.getCookies();//获取所有cookies
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (URLDecoder.decode(cookie.getName(), "utf-8").equals("username")) { // 将用户名清除
+                    //通过设置有效时间清除登录时间
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 
 

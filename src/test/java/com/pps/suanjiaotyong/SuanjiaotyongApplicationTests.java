@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,5 +42,11 @@ public class SuanjiaotyongApplicationTests {
 		System.out.println("==========================");
 		System.out.println(md5password);
 		System.out.println(md5password2);
+	}
+	@Test
+	public void testUUID(){
+		String uuid= UUID.randomUUID().toString();
+		System.out.println("this==========================");
+		System.out.println(uuid);
 	}
 }

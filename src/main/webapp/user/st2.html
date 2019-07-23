@@ -103,14 +103,25 @@
             }
 
             $scope.imageUrl=[];
-            $scope.commit=function (start,end,ty) {
-
+            $scope.commit=function (start,end,ty,step) {
+            	for(var i=1;i<=5;i++){
+					if(document.getElementById("inf"+i).value==""){
+						alert("请完善所有信息！！");
+						return false;
+					}
+				}
+				for (var i=start;i<=end;i++) {
+					if (document.getElementById("image"+i).value=="") {
+						alert("请添加全部图片！！");
+						return false;
+					}
+				}
                 var str="";
                 for(var i=start;i<=end;i++){
 
                     $scope.uploadFile(i,ty)
                 }
-
+				$scope.nextSt(step);
             }
             $scope.strLink=function (start,end) {
 
@@ -154,6 +165,14 @@
             };
 
         })
+		//点击同意之后才能进行下一步
+		function allow(checkbox) {
+			if (checkbox.checked){
+				document.getElementById("next").removeAttribute("disabled");
+			}else {
+				document.getElementById("next").disabled="false";
+			}
+		}
 
 	</script>
 
@@ -196,19 +215,19 @@
 
 						<div class="form-group">
 							<label for="exampleInputEmail1">选择省市</label>
-							<select class="form-control" ng-model="user.province" required>
+							<select id="inf1" class="form-control" ng-model="user.province" required>
 								<option ng-repeat="(v,k) in parts">{{v}}</option>
 							</select>
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail1">选择城市</label>
-							<select class="form-control" ng-model="user.city" required>
+							<select id="inf2" class="form-control" ng-model="user.city" required>
 								<option ng-repeat="(v,k) in citys">{{k}}</option>
 							</select>
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail2">居住地</label>
-							<input ng-model="user.address" type="text" class="form-control">
+							<input id="inf3" ng-model="user.address" type="text" class="form-control">
 						</div>
 
 					</div>
@@ -224,13 +243,13 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">真实姓名</label>
 								<div class="col-sm-10">
-									<input type="text" required class="form-control" id="" placeholder="请输入名字" ng-model="user.realname">
+									<input type="text" id="inf4" required class="form-control" id="" placeholder="请输入名字" ng-model="user.realname">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">联系电话</label>
 								<div class="col-sm-10">
-									<input type="text" required class="form-control" id="" placeholder="请输入电话号码" ng-model="user.phone">
+									<input type="text" id="inf5" required class="form-control" id="" placeholder="请输入电话号码" ng-model="user.phone">
 								</div>
 							</div>
 						</form>
@@ -264,10 +283,10 @@
 
 				<div class="checkbox" style="align-content: center; text-align: center;">
 					<label>
-						<input type="checkbox"> 我同意<a href="">《xxx协议》</a>大大大
+						<input type="checkbox" onclick="allow(this)"> 我同意<a href="">《xxx协议》</a>大大大
 					</label>
 				</div>
-				<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;"  ng-click="commit(5,6,1);nextSt(1)">下一步</button>
+				<button id="next" disabled="false" type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;"  ng-click="commit(5,6,1,1)">下一步</button>
 			</div>
 
 		</div>

@@ -38,7 +38,7 @@
         app.controller("st1Controller",function ($http,$scope,$timeout) {
 
             $scope.parts={};
-            $scope.f=[true,false,false,false]
+            $scope.f=[true,false,false,false];
             $scope.user={};
             $scope.cartypes=[];
             $scope.getProvince=function () {
@@ -119,14 +119,23 @@
 
             $scope.imageUrl=[];
 
-            $scope.commit=function (start,end,ty) {
-
+            $scope.commit=function (start,end,ty,step) {
+				for (var i=start;i<=end;i++) {
+					if (document.getElementById("inf"+i).value=="") {
+						alert("请填入完整的信息！！");
+						return false;
+					}
+					if (document.getElementById("image"+i).value=="") {
+						alert("请添加全部图片！！");
+						return false;
+					}
+				}
                 var str="";
                 for(var i=start;i<=end;i++){
 
                     $scope.uploadFile(i,ty)
                 }
-
+				$scope.nextSt(step);
             }
             $scope.strLink=function (start,end) {
 
@@ -172,7 +181,7 @@
                             }
 
                         }else{
-                            alert("上传失败！");
+                            alert("上传失败!!");
                         }
                     }
                 ).error(
@@ -183,6 +192,14 @@
             };
 
         })
+		//点击同意之后才能进行下一步
+		function allow(checkbox) {
+			if (checkbox.checked){
+				document.getElementById("next").removeAttribute("disabled");
+			}else {
+				document.getElementById("next").disabled="false";
+			}
+		}
 
 	</script>
 
@@ -223,22 +240,22 @@
 
 						<div class="form-group">
 							<label for="exampleInputEmail1">企业名字</label>
-							<input class="form-control" ng-model="user.companyname" required type="text">
+							<input id="inf1" class="form-control" ng-model="user.companyname" required type="text">
 							</input>
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail1">企业地址</label>
-							<input class="form-control" ng-model="user.address" required type="text">
+							<input id="inf2" class="form-control" ng-model="user.address" required type="text">
 							</input>
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail1">公司法人</label>
-							<input class="form-control" ng-model="user.companylinkname" required type="text">
+							<input id="inf3" class="form-control" ng-model="user.companylinkname" required type="text">
 							</input>
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail1">公司联系人电话</label>
-							<input class="form-control" ng-model="user.companyphone" required type="text">
+							<input id="inf4" class="form-control" ng-model="user.companyphone" required type="text">
 							</input>
 						</div>
 					</div>
@@ -284,7 +301,7 @@
 								</div>
 
 							</div>
-							<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="commit(1,4,0);nextSt(2)">下一步</button>
+							<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="commit(1,4,0,2)">下一步</button>
 						</form>
 
 
