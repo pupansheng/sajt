@@ -1,6 +1,5 @@
 package com.pps.suanjiaotyong.serviceImp;
 
-import com.pps.suanjiaotyong.MyLog;
 import com.pps.suanjiaotyong.mapper.TbUserMapper;
 import com.pps.suanjiaotyong.pojo.TbUserExample;
 import com.pps.suanjiaotyong.pojo.group.Result;
@@ -39,14 +38,23 @@ public class UserServiceImp implements UserService {
             int userCount=tbUserMapper.NameJudge(map);
             if (userCount==0) {//判断用户是否存在
                 int phoneCount=tbUserMapper.PhoneJudge(tbUser.getPhone());
-                if (phoneCount==0) {//判断手机号是否存在0为不存在
-                    tbUserMapper.insert(tbUser);
-                    result.setStatus(true);
-                }else{
+                if (phoneCount==0) {//判断手机号是否存在
+                    tbUserMapper.insertSelective(tbUser);
+                }
+                else {
                     result.setStatus(false);
-                    result.setMessage("该手机号已经被注册");
+                    result.setMessage("用户或手机号已注册");
+                    return  result;
                 }
             }
+            else {
+
+                result.setStatus(false);
+                result.setMessage("用户或手机号已注册");
+                return  result;
+            }
+
+            result.setStatus(true);
         }
         catch (Exception e){
 
@@ -75,7 +83,6 @@ public class UserServiceImp implements UserService {
 
                 List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
                 result.setData(user.get(0));
-                result.setMessage("欢迎您： "+map.get("username"));
             }else {
                 result.setStatus(false);
                 result.setMessage("密码错误");
@@ -94,7 +101,7 @@ public class UserServiceImp implements UserService {
         if (phoneCount>0){//手机号码存在
             String username=tbUserMapper.foundUsernameByPhone(phone);
             //登录成功返回用户名
-            result.setMessage("欢迎您： "+username);
+            result.setMessage(username);
             //查询用户信息
             TbUserExample ex=new TbUserExample();
             TbUserExample.Criteria criteria = ex.createCriteria();

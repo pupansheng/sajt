@@ -17,6 +17,8 @@ public class TbCompany {
 
     private String companyphone;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -79,5 +81,28 @@ public class TbCompany {
 
     public void setCompanyphone(String companyphone) {
         this.companyphone = companyphone == null ? null : companyphone.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "TbCompany{" +
+                "id=" + id +
+                ", companyname='" + companyname + '\'' +
+                ", companyaddress='" + companyaddress + '\'' +
+                ", companylicence='" + companylicence + '\'' +
+                ", accountlicence='" + accountlicence + '\'' +
+                ", corporateidentitycard='" + corporateidentitycard + '\'' +
+                ", companylinkname='" + companylinkname + '\'' +
+                ", companyphone='" + companyphone + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

@@ -3,11 +3,15 @@ package com.pps.suanjiaotyong.controller;
 
 
 import com.pps.suanjiaotyong.MyLog;
+import com.pps.suanjiaotyong.pojo.TbCompany;
 import com.pps.suanjiaotyong.pojo.TbDriver;
+import com.pps.suanjiaotyong.pojo.TbPerson;
 import com.pps.suanjiaotyong.pojo.group.MessageType;
 import com.pps.suanjiaotyong.pojo.group.Result;
 import com.pps.suanjiaotyong.pojo.TbUser;
+import com.pps.suanjiaotyong.service.CompanyService;
 import com.pps.suanjiaotyong.service.DriverService;
+import com.pps.suanjiaotyong.service.PerService;
 import com.pps.suanjiaotyong.service.UserService;
 import com.pps.suanjiaotyong.util.IdWorker;
 import com.pps.suanjiaotyong.util.MessageUtil;
@@ -44,6 +48,10 @@ public class UserController {
     MessageUtil messageUtil;
     @Autowired
     DriverService driverService;
+    @Autowired
+    CompanyService companyService;
+    @Autowired
+    PerService perService;
 
     //获得手机验证码
     @RequestMapping("/getYanzhengma")
@@ -149,8 +157,8 @@ public class UserController {
 
 
     }
-    //提交审核资料
-    @RequestMapping("/user/save")
+    //提交审核资料-司机
+    @RequestMapping("/user/save1")
     public Result saveShenhe(@RequestBody TbDriver tbDriver){
 
         tbDriver.setStatus(1);
@@ -159,6 +167,29 @@ public class UserController {
 
 
     }
+    //提交审核资料-个人
+    @RequestMapping("/user/save2")
+    public Result saveShenhe2(@RequestBody TbPerson tbPerson){
+
+        tbPerson.setStatus(1);
+        MyLog.logger.info("审核资料："+tbPerson);
+        return  perService.save(tbPerson);
+
+
+    }
+    //提交审核资料-企业
+    @RequestMapping("/user/save3")
+    public Result saveShenhe3(@RequestBody TbCompany tbCompany){
+
+        tbCompany.setStatus(1);
+        MyLog.logger.info("审核资料："+tbCompany);
+        return  companyService.save(tbCompany);
+
+
+    }
+
+
+
     //更新用户资料
     @RequestMapping("/user/update")
     public Result updateUser(@RequestBody TbUser tbUser){
