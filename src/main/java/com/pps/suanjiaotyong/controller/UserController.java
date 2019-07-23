@@ -18,6 +18,7 @@ import com.pps.suanjiaotyong.util.MessageUtil;
 import com.pps.suanjiaotyong.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,6 +104,7 @@ public class UserController {
     }
     //用户登录
     @RequestMapping("/user/login")
+    @CrossOrigin
     public Result login(@RequestBody TbUser tbUser, String yanzhengma,
                         HttpServletRequest request, HttpServletResponse response){
 

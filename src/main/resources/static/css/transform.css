@@ -2,10 +2,39 @@
    CUSTOM INPUT FILES FOR IMAGES
  *********************************/
 /*** GENERAL STYLES ***/
-.superlink a{
-		text-decoration: none;
-		color: #fff;
+#settle {
+	display: none;
+	width: 100%;
+	border-top: 1px solid #d8e0e6;
+	height: 250px;
 }
+.superlink a {
+	text-decoration: none;
+	color: #fff;
+}
+
+
+.receipthide1{
+	display: none;
+}
+.receipthide2{
+	display: none;
+}
+.receipthide3{
+	display: none;
+}
+.receipthide4{
+	display: none;
+}
+
+.receipt {
+	background-color: white;
+	border-radius: 10px;
+	border-radius: 10px;
+	padding: 0 0 0 0;
+
+}
+
 * {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -129,7 +158,13 @@ body {
 .register {
 	background-color: white;
 	border-top-color: green;
-	height: 900px;
+	/* height: 900px; */
+}
+
+.order {
+	background-color: white;
+	border-top-color: green;
+	/* height: 900px; */
 }
 
 .register1 {
@@ -137,19 +172,68 @@ body {
 	height: 300px;
 }
 
+.order1 {
+	border-top: 1px solid lightslategrey;
+	height: 50px;
+
+}
+
+.starting {
+	height: 40px;
+	align-content: center;
+	margin-top: 100px;
+	font-size: 20px;
+	text-decoration: blink;
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.destination {
+	height: 40px;
+	align-content: center;
+	margin-top: 20px;
+	font-size: 20px;
+	text-decoration: blink;
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+#hide1 {
+	display: none;
+}
+
+#hide2 {
+	display: none;
+}
+
+#hide3 {
+	display: none;
+}
+
+#hide4 {
+	display: none;
+}
+
 .register2 {
 	border-top: 1px solid limegreen;
-	height: 300px;
+	height: auto;
 }
 
 .register3 {
 	border-top: 1px solid skyblue;
-	height: 300px;
+	/* height: 300px; */
 }
+
 .dliver {
 	width: 100%;
 	height: 50px;
 }
+.tips4{
+	width: 10%;
+	height: 40px;
+	background-color: #999999;
+	border-radius: 0px 0px 15px 15px;
+	}
 
 .tips1 {
 	width: 25%;
@@ -157,6 +241,26 @@ body {
 	background-color: orangered;
 	border-radius: 0 0 15px 15px;
 }
+.tips5{
+	width: 100%;
+	height: 100%;
+	background-color: orangered;
+}
+
+.order .tips1 {
+	width: 25%;
+	height: 100%;
+	background-color: lightslategrey;
+	border-radius: 0 0 15px 15px;
+}
+
+.dliverreceipt .tips1 {
+	width: 100%;
+	height: 50px;
+	background-color: red;
+	border-radius: 10px 10px 0 0;
+}
+
 
 .tips2 {
 	width: 25%;
@@ -171,11 +275,25 @@ body {
 	background-color: skyblue;
 	border-radius: 0 0 15px 15px;
 
-.practice {
+   }	/* .practice {
 		font-size: 10px;
 		display: none;
-		}
-.superlink a{
+	} */
+
+	.superlink a {
 		text-decoration: none;
 		color: #fff;
-}
+	}
+
+	.receipt {
+		background-color: white;
+		height: 300px;
+		border-radius: 10px;
+
+	}
+
+	.dliverreceipt {
+		width: 100%;
+		height: 50px;
+		border-radius: 10px 10px 0 0;
+	}

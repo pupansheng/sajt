@@ -1,39 +1,77 @@
 package com.pps.suanjiaotyong.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Companypublish {
-    private String id;
+    protected String id;
 
-    private Integer uid;
+    protected Integer uid;
 
-    private Integer type;
+    protected String linkname;
 
-    private String fromaddress;
+    @Override
+    public String toString() {
+        return "Companypublish{" +
+                "id='" + id + '\'' +
+                ", uid=" + uid +
+                ", linkname='" + linkname + '\'' +
+                ", linkphone='" + linkphone + '\'' +
+                ", goodsname='" + goodsname + '\'' +
+                ", goodslength=" + goodslength +
+                ", goodsheight=" + goodsheight +
+                ", goodswidth=" + goodswidth +
+                ", goodsweight=" + goodsweight +
+                ", goodsamount=" + goodsamount +
+                ", needtype='" + needtype + '\'' +
+                ", fromaddress='" + fromaddress + '\'' +
+                ", toaddress='" + toaddress + '\'' +
+                ", loadtime=" + loadtime +
+                ", unloadtime=" + unloadtime +
+                ", goodsprice=" + goodsprice +
+                ", accountprice=" + accountprice +
+                ", invoice=" + invoice +
+                ", paytype=" + paytype +
+                ", createtime=" + createtime +
+                ", status=" + status +
+                '}';
+    }
 
-    private String toaddress;
+    protected String linkphone;
 
-    private Date loadtime;
+    protected String goodsname;
 
-    private Date unloadtime;
+    protected Double goodslength;
 
-    private String goodssize;
+    protected Double goodsheight;
 
-    private Double goodsweight;
+    protected Double goodswidth;
 
-    private String amount;
+    protected Double goodsweight;
 
-    private Integer invoice;
+    protected Integer goodsamount;
 
-    private String companyphone;
+    protected String needtype;
 
-    private Double pay;
+    protected String fromaddress;
 
-    private Double goodsprice;
+    protected String toaddress;
 
-    private String receivername;
+    protected Date loadtime;
 
-    private String receiverphone;
+    protected Date unloadtime;
+
+    protected Double goodsprice;
+
+    protected BigDecimal accountprice;
+
+    protected Integer invoice;
+
+    protected Integer paytype;
+
+    protected Date createtime;
+
+    protected Integer status;
 
     public String getId() {
         return id;
@@ -51,12 +89,76 @@ public class Companypublish {
         this.uid = uid;
     }
 
-    public Integer getType() {
-        return type;
+    public String getLinkname() {
+        return linkname;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setLinkname(String linkname) {
+        this.linkname = linkname == null ? null : linkname.trim();
+    }
+
+    public String getLinkphone() {
+        return linkphone;
+    }
+
+    public void setLinkphone(String linkphone) {
+        this.linkphone = linkphone == null ? null : linkphone.trim();
+    }
+
+    public String getGoodsname() {
+        return goodsname;
+    }
+
+    public void setGoodsname(String goodsname) {
+        this.goodsname = goodsname == null ? null : goodsname.trim();
+    }
+
+    public Double getGoodslength() {
+        return goodslength;
+    }
+
+    public void setGoodslength(Double goodslength) {
+        this.goodslength = goodslength;
+    }
+
+    public Double getGoodsheight() {
+        return goodsheight;
+    }
+
+    public void setGoodsheight(Double goodsheight) {
+        this.goodsheight = goodsheight;
+    }
+
+    public Double getGoodswidth() {
+        return goodswidth;
+    }
+
+    public void setGoodswidth(Double goodswidth) {
+        this.goodswidth = goodswidth;
+    }
+
+    public Double getGoodsweight() {
+        return goodsweight;
+    }
+
+    public void setGoodsweight(Double goodsweight) {
+        this.goodsweight = goodsweight;
+    }
+
+    public Integer getGoodsamount() {
+        return goodsamount;
+    }
+
+    public void setGoodsamount(Integer goodsamount) {
+        this.goodsamount = goodsamount;
+    }
+
+    public String getNeedtype() {
+        return needtype;
+    }
+
+    public void setNeedtype(String needtype) {
+        this.needtype = needtype == null ? null : needtype.trim();
     }
 
     public String getFromaddress() {
@@ -91,28 +193,20 @@ public class Companypublish {
         this.unloadtime = unloadtime;
     }
 
-    public String getGoodssize() {
-        return goodssize;
+    public Double getGoodsprice() {
+        return goodsprice;
     }
 
-    public void setGoodssize(String goodssize) {
-        this.goodssize = goodssize == null ? null : goodssize.trim();
+    public void setGoodsprice(Double goodsprice) {
+        this.goodsprice = goodsprice;
     }
 
-    public Double getGoodsweight() {
-        return goodsweight;
+    public BigDecimal getAccountprice() {
+        return accountprice;
     }
 
-    public void setGoodsweight(Double goodsweight) {
-        this.goodsweight = goodsweight;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount == null ? null : amount.trim();
+    public void setAccountprice(BigDecimal accountprice) {
+        this.accountprice = accountprice;
     }
 
     public Integer getInvoice() {
@@ -123,43 +217,27 @@ public class Companypublish {
         this.invoice = invoice;
     }
 
-    public String getCompanyphone() {
-        return companyphone;
+    public Integer getPaytype() {
+        return paytype;
     }
 
-    public void setCompanyphone(String companyphone) {
-        this.companyphone = companyphone == null ? null : companyphone.trim();
+    public void setPaytype(Integer paytype) {
+        this.paytype = paytype;
     }
 
-    public Double getPay() {
-        return pay;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setPay(Double pay) {
-        this.pay = pay;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
-    public Double getGoodsprice() {
-        return goodsprice;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setGoodsprice(Double goodsprice) {
-        this.goodsprice = goodsprice;
-    }
-
-    public String getReceivername() {
-        return receivername;
-    }
-
-    public void setReceivername(String receivername) {
-        this.receivername = receivername == null ? null : receivername.trim();
-    }
-
-    public String getReceiverphone() {
-        return receiverphone;
-    }
-
-    public void setReceiverphone(String receiverphone) {
-        this.receiverphone = receiverphone == null ? null : receiverphone.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
