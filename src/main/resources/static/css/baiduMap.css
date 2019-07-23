@@ -1,0 +1,34 @@
+body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:14px;}
+#l-map{height:500px;width:100%;}
+#r-result{width:100%;}
+
+/*
+* Disabled for demonstration purposes, should be styled
+*/
+:focus {
+    outline: none;
+}
+
+#r-result {
+  /*  font-size:100%;
+    width: 30em;
+    height: 4em;
+    border-radius: 2em;
+    margin: 10% auto 0 auto;*/
+}
+
+#r-result input {
+  /*  width: 100%;
+    height: 3em;
+    margin: .75em;
+    border-radius: 2em;
+    border: none;
+    !* Change the alpha value on the background to get more or less transparency*!
+    background: rgba(255,255,255,.9);
+    !* Like a lot or shadow? Add it! *!
+    box-shadow: inset 0 .10em .10em rgba(0,0,0,.8);
+    padding-left: 1em;
+    color: rgba(0,0,0,.65);
+    font-family: "Helvetica", Arial, sans-serif;
+    font-size: 100%;*/
+}

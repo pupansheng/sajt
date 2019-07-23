@@ -17,6 +17,7 @@ import com.pps.suanjiaotyong.util.IdWorker;
 import com.pps.suanjiaotyong.util.MessageUtil;
 import com.pps.suanjiaotyong.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,6 +92,7 @@ public class UserController {
         String yanzhengma1 =(String) request.getSession().getAttribute("yanzhengma");
         if(yanzhengma.equals(yanzhengma1)) {
             MyLog.logger.info("注册用户："+tbUser);
+            tbUser.setPassword(DigestUtils.md5DigestAsHex(tbUser.getPassword().getBytes()));
             Result insert = userService.insert(tbUser);
             return insert;
         }
@@ -109,8 +111,10 @@ public class UserController {
         String username=tbUser.getUsername();
         if(username==null||username.equals("")){//如果传入用户名字段不存在就是用手机号登录
             String phone=tbUser.getPhone();
+            MyLog.logger.info(yanzhengma);
             String yanzhengma1 =(String) request.getSession().getAttribute("login");
-            if(yanzhengma.equals(yanzhengma1)) {//验证码匹配
+            MyLog.logger.info(yanzhengma1);
+            if(yanzhengma!=null&&yanzhengma.equals(yanzhengma1)) {//验证码匹配
                 Result result=userService.loginWithPhone(phone);
                 //获取到手机号对应的用户名
 
@@ -128,7 +132,7 @@ public class UserController {
             String password=tbUser.getPassword();
             Map<String,String> map=new HashMap<String,String>();
             map.put("username",username);
-            map.put("password",password);
+            map.put("password",DigestUtils.md5DigestAsHex(password.getBytes()));
             Result result=userService.login(map);
             if(result.isStatus()){//登录成功
 
