@@ -1,157 +1,355 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>认证</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/transform.css" />
+<head>
+	<meta charset="utf-8">
+	<title>认证</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/transform.css" />
 
-	</head>
-	<body>
-		<div class="">
-			<div class="superlink" style="background-color:black;height: 100px">
-				<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;"><img src="img/logo.png"
-					 width="100" height="100"> </div>
-				<div style="float:left;color: white;margin-right: 200px;">
-					<h2>
-						<a href="">速安交通</a>
-					</h2>achnyan traff
+	<script src="../jquery.min.js"></script>
+	<script src="../bootstrap.min.js"></script>
+	<script src="../angular.min.js"></script>
+
+	<style>
+
+		.path{ height: 120px; clear: both;color: #ededed}
+		.path ul{ width: 1200px; margin: 0 auto;}
+		.path li{ float: left; width: 183px; color: #666; font-size: 16px; position: relative; height: 120px;}
+		.path li .line{ display: block; position: absolute; top:44px; left: 0; width: 100%; height: 4px; overflow: hidden;font-size: 0; background: #ccc;}
+		.path li .arr{ background: url(../images/ico-arr01.png); no-repeat; display: block; position: absolute; top:35px; right: 0; width: 20px; height: 20px; overflow: hidden; }
+		.path li .txt{ position: relative; top:70px; width:183px; right: -80px; display: block; text-align: center;}
+		.path li.first{ width: 154px;}
+		.path li.first .line{ border-radius: 3px 0 0 3px;}
+		.path li.first .txt{ width: 154px; right:-66px;}
+		.path li.last{ width: 314px;}
+		.path li.last .line{ border-radius: 0 3px 3px 0;}
+		.path li.last .arr{ left: 183px; right:auto;}
+		.path li.on{ color:#e5454a;}
+		.path li.on .line{ background: #e5454a;}
+		.path li.on .arr{ background-position:0 -20px;}
+		.path li.on .txt{ color: #e5454a;}
+		.path li.first.on .txt{ width: 154px;}
+		.path li.last .txt{ right:-104px;}
+
+	</style>
+	<script>
+
+        var app=angular.module("myApp",[]);
+        app.controller("st1Controller",function ($http,$scope,$timeout) {
+
+            $scope.parts={};
+            $scope.f=[true,false,false,false];
+            $scope.user={};
+            $scope.cartypes=[];
+            $scope.getProvince=function () {
+                $http.get("../data/part.json").success(function (response) {
+                    $scope.parts=response;
+                    $scope.cartypes=response['cartypes'];
+                })
+            };
+
+
+            $scope.$watch("user.province",function (n,o) {
+
+                $scope.citys=$scope.parts[n];
+
+
+            })
+
+            $scope.getLogin=function () {
+
+                $http.get("../getLogin").success(function (response) {
+                    if(response!=null){
+                        $scope.user2=response;
+                    }
+                })
+
+            }
+
+            $scope.nextSt=function (st) {
+                $scope.f[st]=true;
+
+                if(st==0){
+
+                    $('#step0').tab('show')
+
+                }
+                if(st==1){
+
+                    $('#step1').tab('show')
+                    $("#second").addClass("on");
+
+                }
+                if(st==2){
+
+                    var a=confirm("确认提交资料");
+
+                    if(a){
+
+                        $scope.uploadStatus=false;
+
+                        $('#step2').tab('show')
+                        $("#third").addClass("on");
+
+
+                        var a = $timeout(function(){
+
+                            var ss2=    $scope.strLink(3,4);
+                            $scope.user.corporateidentitycard=ss2;
+                            $http.post("./save3",$scope.user).success(function (response) {
+                                if(response.status){
+                                    $scope.user2.userinfoid=response.data.id;
+                                    $http.post("./update",$scope.user2).success(function (response) {
+                                        if(!response.status)
+                                            alert("错误")
+                                    })
+                                }
+                                else {
+                                    alert(response.message)
+                                }
+                            })
+                            $scope.uploadStatus=true;
+                        },6000);
+
+
+
+                    }
+                }
+            }
+
+            $scope.imageUrl=[];
+
+            $scope.commit=function (start,end,ty,step) {
+				for (var i=start;i<=end;i++) {
+					if (document.getElementById("inf"+i).value=="") {
+						alert("请填入完整的信息！！");
+						return false;
+					}
+					if (document.getElementById("image"+i).value=="") {
+						alert("请添加全部图片！！");
+						return false;
+					}
+				}
+                var str="";
+                for(var i=start;i<=end;i++){
+
+                    $scope.uploadFile(i,ty)
+                }
+				$scope.nextSt(step);
+            }
+            $scope.strLink=function (start,end) {
+
+                var str="";
+                for(var i=start;i<=end;i++){
+
+                    if(i==start)
+                        str=$scope.imageUrl[i];
+                    else {
+                        str=str+","+$scope.imageUrl[i];
+                    }
+                }
+                return str;
+
+            }
+
+            $scope.uploadStatus=false;
+            $scope.uploadFile=function(el,ty){
+
+                var formData=new FormData();
+                formData.append('file',$("#image"+el)[0].files[0]);//file 文件上传框的NAME
+                $http({
+                    method:'POST',
+                    url:"../upload",
+                    data: formData,
+                    headers: {'Content-Type':undefined},
+                    transformRequest: angular.identity//对表单进行二进制序列化
+                }).success(
+                    function(response){
+                        if(response.status){
+
+                            if(el==1){
+                                $scope.user.companyaddress=response.data;
+							}
+							if(el==2){
+                                $scope.user.companylicence=response.data;
+							}
+                            if(el==3){
+                                $scope.imageUrl[el]=response.data;
+                            }
+                            if(el==4){
+                                $scope.imageUrl[el]=response.data;
+                            }
+
+                        }else{
+                            alert("上传失败!!");
+                        }
+                    }
+                ).error(
+                    function(){
+                        alert("上传出错！");
+                    }
+                );
+            };
+
+        })
+		//点击同意之后才能进行下一步
+		function allow(checkbox) {
+			if (checkbox.checked){
+				document.getElementById("next").removeAttribute("disabled");
+			}else {
+				document.getElementById("next").disabled="false";
+			}
+		}
+
+	</script>
+
+</head>
+<body ng-app="myApp" ng-controller="st1Controller" ng-init="getProvince();getLogin();">
+
+<div class="passload">
+
+	<div class="path">
+		<ul>
+			<li id="first" class="first on"><span class="line"></span><span class="arr"></span><span class="txt">填写基本信息</span></li>
+			<li id="third" class="third"><span class="line"></span><span class="arr"></span><span class="txt">等待审核</span></li>
+			<!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
+            <li id="fifth" class="fifth"><span class="line"></span><span class="arr"></span><span class="txt">上门服务</span></li>
+            <li id="last" class="last"><span class="line"></span><span class="arr"></span><span class="txt">服务完成</span></li>-->
+		</ul>
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist" ng-show="false">
+			<li role="presentation" class="active"><a href="#st0" aria-controls="home" role="tab" data-toggle="tab" ng-show="f[0]" id="step0" disabled>填写信息</a></li>
+			<li role="presentation"><a href="#st1" aria-controls="profile" role="tab" data-toggle="tab" ng-show="f[1]" id="step1" disabled>上传证件</a></li>
+			<li role="presentation"><a href="#st2" aria-controls="messages" role="tab" data-toggle="tab" ng-show="f[2]" id="step2" >成功</a></li>
+		</ul>
+
+
+	</div>
+
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane fade in active" id="st0">
+
+			<div class="container register">
+				<div class="register1">
+					<div class="dliver">
+						<div class="tips1">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">填写基本信息</p>
+						</div>
+					</div>
+					<div style="margin-top: 30px; margin-left: 25%;">
+
+						<div class="form-group">
+							<label for="exampleInputEmail1">企业名字</label>
+							<input id="inf1" class="form-control" ng-model="user.companyname" required type="text">
+							</input>
+						</div>
+						<div class="form-group" >
+							<label for="exampleInputEmail1">企业地址</label>
+							<input id="inf2" class="form-control" ng-model="user.address" required type="text">
+							</input>
+						</div>
+						<div class="form-group" >
+							<label for="exampleInputEmail1">公司法人</label>
+							<input id="inf3" class="form-control" ng-model="user.companylinkname" required type="text">
+							</input>
+						</div>
+						<div class="form-group" >
+							<label for="exampleInputEmail1">公司联系人电话</label>
+							<input id="inf4" class="form-control" ng-model="user.companyphone" required type="text">
+							</input>
+						</div>
+					</div>
 				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">首页</a></div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">在线下单</a></div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">企业用车</a></div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a></div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a></div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a></div>
-				<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="">登陆</a>/<a
-					 href="">注册</a></div>
+				<div class="register3">
+					<div class="dliver">
+						<div class="tips3">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传相关证件</p>
+						</div>
+					</div>
+					<div>
+						<form>
+							<div id="page">
+								<div class="wrap-custom-file">
+									<input type="file" required name="image1" id="image1" accept=".gif, .jpg, .png" />
+									<label for="image1">
+										<span >点击上传公司许可证</span>
+										<i class="fa fa-plus-circle"></i>
+									</label>
+								</div>
+								<div class="wrap-custom-file">
+									<input type="file" required name="image2" id="image2" accept=".gif, .jpg, .png" />
+									<label for="image2">
+										<span>点击上传开户许可证</span>
+										<i class="fa fa-plus-circle"></i>
+									</label>
+								</div>
 
-			</div>
+								<div class="wrap-custom-file">
+									<input type="file" required name="image3" id="image3" accept=".gif, .jpg, .png" />
+									<label for="image3">
+										<span>点击上传公司法人身份证(前面)</span>
+										<i class="fa fa-plus-circle"></i>
+									</label>
+								</div>
 
-			<!-- <div class=" col-xs-2 col-sm-2 col-md-2">
-				商标
-			</div>
-			<div class="col-xs-8 col-sm-8 col-md-8 row">
-				<div class="col-xs-3 col-sm-3 col-md-3">功能一</div>
-				<div class="col-md-3 col-sm-3 col-md-3">功能二</div>
-				<div class="col-md-3 col-sm-3 col-md-3">功能三</div>
-				<div class="col-md-3 col-sm-3 col-md-3">功能四</div>
-			</div>
-			<div class="col-xs-2 col-sm-2 col-md-2">
-				登陆或者用户头像
-			</div> -->
-		</div>
-		<div class="passload">
+								<div class="wrap-custom-file">
+									<input type="file" required name="image4" id="image4" accept=".gif, .jpg, .png" />
+									<label for="image4">
+										<span>点击上传公司法人身份证（背面）</span>
+										<i class="fa fa-plus-circle"></i>
+									</label>
+								</div>
 
-		</div>
-		<div class="container " style="height: 40%; background-color: #f6f6f6;">
-			<div style=" ">
-				<img src="img/success.jpg" style="height: 300px;" class="center-block">
-			</div>
-			<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
-				<p>提交成功！</p>
-				<p>请耐心等待审核！</p>
-			</div>
-			<div class="text-center" style="margin-top: 30px; font-size: 20px;">
-				<a style="margin-right: 100px;  color:red;text-decoration: none;" href="">返回首页</a><a style="margin-left: 100px;  color:red;text-decoration: none;" href="">继续查看</a>
-			</div>
-		</div>
-		<div class="superlink" style="height: 300px;background-color:black; margin-top: 5px;">
-			<div style="float:left; width: 20%; "><br><br>
-				<div class="text-center">
-					<div style="font-size:20px;color: white">
-						<p>关于我们</p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">开发者关系</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">发展历程</a></p>
-					</div>
-					<div style="font-size:15px;color:#555555">
-						<p><a href="">新闻中心</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">团队介绍</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">加盟合作</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">招贤纳士</a></p>
+							</div>
+							<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="commit(1,4,0,2)">下一步</button>
+						</form>
+
+
 					</div>
 				</div>
 			</div>
-			<div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
-				<div class="text-center"><br><br>
 
-					<div style="font-size:20px;color: white">
-						<p>热门产品</p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">以租代够</a></p>
-					</div>
-				</div>
-			</div>
-			<div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
-				<div class="text-center"><br><br>
-
-					<div style="font-size:20px;color: white">
-						<p>联系我们</p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">联系方式</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">公司地图</a></p>
-					</div>
-					<div style="font-size:15px;color:#555555">
-						<p><a href="">留言提交</a></p>
-					</div>
-					<div style="font-size:15px;color: #555555">
-						<p><a href="">帮助中心</a></p>
-					</div>
-				</div>
-			</div>
-			<div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
-				<div style="float:left; margin-left: 1.25rem; ">
-					<div style="margin-top: 50px;color: white">
-						<img src="img/gzh.png" height="100px" width="100px"><br>官方公众号
-					</div>
-					<div style="color: white">
-						<img src="img/kfh.jpg" height="100px" width="100px"><br>官方客服
-					</div>
-				</div>
-				<div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="img/fm_logo.png" height="50px" width="45%"><br>
-					<p>24小时服务热线：0813-8112271</p>
-					<p>24小时投诉热线：18990053717</p>
-					<p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
-					<p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
-					<p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
-					<p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
-
-				</div>
-			</div>
-
-		</div>
-		</div>
 
 		</div>
 
+		<div role="tabpanel" class="tab-pane fade" id="st1">
 
 
 
 
 
 
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="st2">
+
+
+			<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="uploadStatus">
+				<div style=" ">
+					<img src="../img/success.jpg" style="height: 300px;" class="center-block">
+				</div>
+				<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
+					<p>提交成功！</p>
+					<p>请耐心等待审核！</p>
+				</div>
+				<div class="text-center" style="margin-top: 30px; font-size: 20px;">
+					<a style="margin-right: 100px;  color:red;text-decoration: none;" href="./my.html">返回首页</a><a style="margin-left: 100px;  color:red;text-decoration: none;" href="">继续查看</a>
+				</div>
+			</div>
+			<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="!uploadStatus">
+
+				<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
+					<p>正在提交！</p>
+					<p>请耐心等待！</p>
+				</div>
+
+			</div>
 
 
 
+		</div>
 
-
-
-		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/transform.js" type="text/javascript" charset="utf-8"></script>
-	</body>
+	</div>
+	<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
+</div>
+</body>
 </html>
