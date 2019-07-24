@@ -37,12 +37,26 @@ public class CompanyController {
     @RequestMapping("/company/pulish/list")
     public List<CompanypublishWithBLOBs> getAll(){
 
-
         return  companyPulishService.getAll();
+
+    }
+    @RequestMapping("/company/pulish/list/by")
+    public List<Companypublish> getAll(@RequestBody Companypublish companypublish){
+
+        MyLog.logger.info("条件查询："+companypublish);
+        return  companyPulishService.getAllBy(companypublish);
 
     }
 
 
+
+
+    @RequestMapping("/company/pulish/list/page")
+    public Map getAll(int pageNum,int pageSize,@RequestBody Companypublish companypublish){
+
+        return  companyPulishService.getAllByPageByCondition(companypublish,pageNum,pageSize);
+
+    }
 
 
 }

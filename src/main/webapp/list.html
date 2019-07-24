@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>货源信息</title>
+    <link href="bootstrap.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="angular.min.js"></script>
+    <!-- 分页组件开始 -->
+    <script src="./js/pagination.js"></script>
+    <link rel="stylesheet" href="./css/pagination.css">
+
+
+    <script>
+        var app=angular.module("myApp",['pagination']);
+        app.controller("listController",function ($http,$scope,$interval) {
+
+            $scope.entityList = [];
+            $scope.entity={};
+            $scope.user={};
+
+            $scope.getLogin=function () {
+                $http.get("./getLogin").success(function (response) {
+                    if(response!=null){
+                        $scope.user=response;
+                    }
+                })
+
+            }
+
+
+            $scope.findList=function () {
+                $http.get("/company/pulish/list").success(function (response) {
+                    $scope.entityList=response;
+                })
+            }
+            $scope.findList2=function () {
+                $http.post("/company/pulish/list/by",$scope.searchEntity).success(function (response) {
+                    $scope.entityList=response;
+                })
+            }
+            //分页
+
+            $scope.paginationConf = {
+                currentPage: 1,//当前页
+                totalItems: 10,//总记录数
+                itemsPerPage: 10,//每页记录数
+                perPageOptions: [10, 20, 30, 40, 50],//分页选项
+                onChange: function(){//页面修改时
+                    $scope.reloadList();
+                }
+            };
+
+            $scope.reloadList= function(){
+                //$scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf. itemsPerPage);
+                $scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+            }
+
+            $scope.searchEntity={};
+            $scope.search=function(page,size){
+                $http.post("/company/pulish/list/page?pageNum="+page+"&pageSize="+size,$scope.searchEntity).success(function(response){
+                    $scope.entityList=response.rows;
+                    $scope.paginationConf.totalItems=response.totalItems;
+
+                });
+            };
+            //分页结束！！
+
+
+        })
+    </script>
+
+    <style>
+        .demo3-table{
+            width: 1132px;
+            height: 258px;
+            border: 1px solid #dedede;
+            text-align: center;
+        }
+        .demo3-head{
+            height: 48px;
+            background-color: #f6f6f6;
+        }
+        .demo3-head-div{
+            width: 1132px;
+            margin: 0 auto;
+            overflow: hidden;;
+        }
+        .demo3-head-div ul li {
+            float: left;
+            height: 37px;
+            line-height: 37px;
+            font-size: 14px;
+            color: #5e5e60;
+            width: 120px;
+            font-weight: bold;
+        }
+
+        .demo3-table2 {
+            width: 1132px;
+            margin: 5px auto 0;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+        .demo3-tr2 {
+            height: 42px;
+            line-height: 42px;
+            border-bottom: 1px solid #dedede;
+        }
+        .demo3-table2 .test {
+            border: none;
+        }
+        .demo3-text a {
+            float: right;
+            text-decoration: none;
+            color: #5e5e60;
+            padding-top: 10px;
+        }
+
+
+        .demo3-tr2 a {
+            display: block;
+            width: 110px;
+            height: 26px;
+            background-color: #ff6a06;
+            color: #fff;
+            text-align: center;
+            line-height: 26px;
+            text-decoration: none;
+            margin: 0 auto;
+            border-radius: 14px;
+        }
+
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="listController" >
+
+<div class="">
+    <div class="superlink" style="background-color:black;height: 100px">
+        <div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+            <img src="/img/logo.png" width="100" height="100"> \
+        </div>
+        <div style="float:left;color: white;margin-right: 200px;">
+            <h2>
+                <a href="">速安交通</a>
+            </h2>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown" style="background-color: black">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu"  >
+                            <li><a href="/driver/driverpulish.html" >司机下单</a></li>
+                            <li><a href="/user/placeanorder.html">客户下单</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
+        </div>
+        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+        </div>
+
+
+        <span ng-if="user.id==null">
+
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
+            登录
+
+                </a>
+
+             </div>
+
+        </span>
+
+        <span ng-if="user.id!=null">
+           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+        <a  href="user/my.html">
+            {{user.username}}，
+         </a>
+               你好！
+       </div>
+
+       </span>
+
+    </div>
+
+</div>
+
+<div class="container order" ng-init="getLogin()">
+
+    <div style="height: 60px">
+      <span style="float: left">
+          <button type="submit" class=" btn btn-default" style="margin-left: 30px; background-color: palevioletred;height:60px;color: white;font-size: 30px;" onclick="location.href='list.html'">货主&#45;&#45;货源信息  </button>
+      </span>
+        <span style="float: left ">
+            <button type="submit" class=" btn btn-default" style="margin-left: 30px; background-color: palevioletred;height:60px;color: white;font-size: 30px;" onclick="location.href='list2.html'">车主&#45;&#45;车源信息</button>
+        </span>
+    </div>
+
+    <div class="order1" style="margin-top: 30px;height: 10px;">
+
+        <div class="dliver">
+            <div class="tips1">
+                <p style="font-size:30px; align-content: center; text-align: center; color: white;">货主--货运信息
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <nav class="navbar navbar-default navbar-static-top">   <!--导航条  -->
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand"  style="width: 200px;font-size: 30px;font-style: normal;color: brown">货物平台</a>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                   <!-- <li class="active"><a href="receipt.html" style="color: crimson"> 我的订单<span class="sr-only">(current)</span></a></li>
+                                    <li><a href="#" style="color: crimson">我的收藏</a></li>-->
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: crimson">需求车辆类型<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#" style="color: crimson" ng-click="searchEntity.needtype='整车';reloadList()">整车</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" style="color: crimson" ng-click="searchEntity.needtype='零担';reloadList()">零担</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div style="float: right">
+                                    <form class="navbar-form navbar-left" role="search">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="装货地址" style="width: 200px" ng-model="searchEntity.fromaddress">
+                                            <input type="text" class="form-control" placeholder="卸货地址" style="width: 200px" ng-model="searchEntity.toaddress">
+
+                                        </div>
+                                        <button type="submit" class="btn btn-default" style="color: crimson" ng-click="reloadList()">搜索货物</button>
+                                    </form>
+                                </div>
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="demo3-table" style="margin-top: 100px;">
+        <table class="demo3-table2">
+            <!--//标题，请忽更改-->
+            <tr class="demo3-tr2 active" style="font-size: 17px;">
+                <td>货物出发地<span>|</span></td>
+                <td>货物目的地<span>|</span></td>
+                <td>货物重量(kg)<span>|</span></td>
+                <td>需求货运类型<span>|</span></td>
+                <td>需求车辆类型<span>|</span></td>
+                <td>装货日期<span>|</span></td>
+                <td>运货到达日期<span>|</span></td>
+                <td>操作</td>
+            </tr>
+            <!--//标题，请忽更改-->
+            <tr class="demo3-tr2 active" ng-repeat="x in entityList">
+                <td>{{x.fromaddress}}</td>
+                <td>{{x.toaddress}}</td>
+                <td>{{x.goodsweight}}kg</td>
+                <td>{{x.needtype}}</td>
+                <td>{{x.goodstype}}</td>
+                <td>{{x.loadtime}}</td>
+                <td>{{x.unloadtime}}</td>
+                <td><a  rel="nofollow" target="_blank">查看详细</a></td>
+            </tr>
+
+        </table>
+        <tm-pagination conf="paginationConf"></tm-pagination>
+    </div>
+    <div style="height: 200px;">
+
+        <a href="" rel="nofollow" target="_blank" style="margin-right: 50px;margin-left: 1000px;">更多信息>></a>
+    </div>
+
+
+</div>
+
+<div class="superlink" style="height: 300px;background-color:black; margin-top: 5px;">
+    <div style="float:left; width: 20%; "><br><br>
+        <div class="text-center">
+            <div style="font-size:20px;color: white">
+                <p>关于我们</p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">开发者关系</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">发展历程</a></p>
+            </div>
+            <div style="font-size:15px;color:#555555">
+                <p><a href="">新闻中心</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">团队介绍</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">加盟合作</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">招贤纳士</a></p>
+            </div>
+        </div>
+    </div>
+    <div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
+        <div class="text-center"><br><br>
+
+            <div style="font-size:20px;color: white">
+                <p>热门产品</p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">以租代够</a></p>
+            </div>
+        </div>
+    </div>
+    <div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
+        <div class="text-center"><br><br>
+
+            <div style="font-size:20px;color: white">
+                <p>联系我们</p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">联系方式</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">公司地图</a></p>
+            </div>
+            <div style="font-size:15px;color:#555555">
+                <p><a href="">留言提交</a></p>
+            </div>
+            <div style="font-size:15px;color: #555555">
+                <p><a href="">帮助中心</a></p>
+            </div>
+        </div>
+    </div>
+    <div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
+        <div style="float:left; margin-left: 1.25rem; ">
+            <div style="margin-top: 50px;color: white">
+                <img src="../img/gzh.png" height="100px" width="100px"><br>官方公众号
+            </div>
+            <div style="color: white">
+                <img src="../img/kfh.jpg" height="100px" width="100px"><br>官方客服
+            </div>
+        </div>
+        <div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="../img/fm_logo.png" height="50px" width="45%"><br>
+            <p>24小时服务热线：0813-8112271</p>
+            <p>24小时投诉热线：18990053717</p>
+            <p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
+            <p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
+            <p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
+            <p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+</div>
+
+<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

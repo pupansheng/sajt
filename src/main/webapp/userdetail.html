@@ -1,0 +1,393 @@
+<html style="min-width: 1200px;">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/css/transform.css" />
+		<link href="bootstrap.css" rel="stylesheet">
+		<script src="jquery.min.js"></script>
+		<script src="bootstrap.min.js"></script>
+		<script src="angular.min.js"></script>
+
+
+
+
+		<script>
+
+
+            var app=angular.module("myApp",['pagination']);
+            app.controller("detailController",function ($http,$scope,$interval) {
+
+                $scope.entityList = [];
+                $scope.entity={};
+                $scope.user={};
+
+                $scope.getLogin=function () {
+                    $http.get("./getLogin").success(function (response) {
+                        if(response!=null){
+                            $scope.user=response;
+                        }
+                    })
+
+                }
+
+            })
+		</script>
+		<style type="text/css">
+			html {
+				background: lightgrey;
+			}
+		</style>
+		<title>用户发布详情</title>
+	</head>
+	<body ng-app="myApp" ng-controller="detailController">
+
+
+
+
+	<div class="">
+		<div class="superlink" style="background-color:black;height: 100px">
+			<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+				<img src="/img/logo.png" width="100" height="100"> \
+			</div>
+			<div style="float:left;color: white;margin-right: 200px;">
+				<h2>
+					<a href="">速安交通</a>
+				</h2>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown" style="background-color: black">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu"  >
+								<li><a href="/driver/driverpulish.html" >司机下单</a></li>
+								<li><a href="/user/placeanorder.html">客户下单</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+			</div>
+			<span ng-if="user.id==null">
+
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
+               登录
+			 </a>
+
+             </div>
+
+        </span>
+
+			<span ng-if="user.id!=null">
+           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+        <a  href="user/my.html">
+            {{user.username}}，
+         </a>
+               你好！
+       </div>
+
+       </span>
+
+		</div>
+
+	</div>
+
+
+
+		<div class="container" style="align-content: center;text-align: center;background-color: white; border-radius: 15px; margin-top: 50px;">
+			<div class="dliver">
+				<div class="tips1">
+					<p style="font-size:30px; align-content: center; text-align: center; color: white;">详细信息</p>
+				</div>
+			</div>
+			<div class="container">
+				<hr>
+				<table>
+					<tbody style="width: 100%; ">
+						<tr>
+							<th class="stick1">发货用户ID:</th>
+							<th class="stick">10086</th>
+							<th class="stick1">订单创建时间:</th>
+							<th class="stick">2018-09-21</th>
+						</tr>
+						<tr>
+							<th class="stick1">发货人姓名:</th>
+							<th class="stick">上官狗蛋</th>
+							<th class="stick1">运输车辆规格:</th>
+							<th class="stick">金杯</th>
+						</tr>
+						<tr>
+							<th class="stick1">发货人电话:</th>
+							<th class="stick">6666666666</th>
+							<th class="stick1">预计运输里程:</th>
+							<th class="stick">4096公里</th>
+						</tr>
+						<tr>
+							<th class="stick1">是否开发票:</th>
+							<th class="stick">是</th>
+							<th class="stick1">预计运输价格:</th>
+							<th class="stick">9999</th>
+						</tr>
+						<tr>
+							<th class="stick1">发货起始地:</th>
+							<th class="stick">四川省乐山市市中区白马镇白马中学</th>
+							<th class="stick1">最迟送达时间:</th>
+							<th class="stick">16:00</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+			</div>
+			
+			<div class="container">
+				<table>
+					<tbody>
+						<tr>
+							<th class="stick1">收货人姓名:</th>
+							<th class="stick">迪拜王子茶度啦</th>
+							<th class="stick1">货物长宽高:</th>
+							<th class="stick">3x3x3</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货人电话:</th>
+							<th class="stick">8008208820</th>
+							<th class="stick1">货物的重量:</th>
+							<th class="stick">x吨</th>
+						</tr>
+						<tr>
+							<th class="stick1">上货的时间:</th>
+							<th class="stick">2018-10-12</th>
+							<th class="stick1">卸货的时间:</th>
+							<th class="stick">2018-11-23</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货目的地:</th>
+							<th class="stick">四川省自贡市自流井区汇川路嘉盈写字楼</th>
+							<th class="stick1">货物的数量:</th>
+							<th class="stick">x</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr >
+			</div>
+			
+			<div class="container consignee">
+				<table>
+					<tbody>
+						<tr>
+							<th class="stick1">收货人2姓名:</th>
+							<th class="stick">迪拜王子茶度啦</th>
+							<th class="stick1">货物长宽高:</th>
+							<th class="stick">3x3x3</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货人电话:</th>
+							<th class="stick">8008208820</th>
+							<th class="stick1">货物的重量:</th>
+							<th class="stick">x吨</th>
+						</tr>
+						<tr>
+							<th class="stick1">上货的时间:</th>
+							<th class="stick">2018-10-12</th>
+							<th class="stick1">卸货的时间:</th>
+							<th class="stick">2018-11-23</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货目的地:</th>
+							<th class="stick">四川省自贡市自流井区汇川路嘉盈写字楼</th>
+							<th class="stick1">货物的数量:</th>
+							<th class="stick">x</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr >
+			</div>
+			<div class="container consignee">
+				<table>
+					<tbody>
+						<tr>
+							<th class="stick1">收货人3姓名:</th>
+							<th class="stick">迪拜王子茶度啦</th>
+							<th class="stick1">货物长宽高:</th>
+							<th class="stick">3x3x3</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货人电话:</th>
+							<th class="stick">8008208820</th>
+							<th class="stick1">货物的重量:</th>
+							<th class="stick">x吨</th>
+						</tr>
+						<tr>
+							<th class="stick1">上货的时间:</th>
+							<th class="stick">2018-10-12</th>
+							<th class="stick1">卸货的时间:</th>
+							<th class="stick">2018-11-23</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货目的地:</th>
+							<th class="stick">四川省自贡市自流井区汇川路嘉盈写字楼</th>
+							<th class="stick1">货物的数量:</th>
+							<th class="stick">x</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr >
+			</div>
+			<div class="container consignee" >
+				<table>
+					<tbody>
+						<tr>
+							<th class="stick1">收货人4姓名:</th>
+							<th class="stick">迪拜王子茶度啦</th>
+							<th class="stick1">货物长宽高:</th>
+							<th class="stick">3x3x3</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货人电话:</th>
+							<th class="stick">8008208820</th>
+							<th class="stick1">货物的重量:</th>
+							<th class="stick">x吨</th>
+						</tr>
+						<tr>
+							<th class="stick1">上货的时间:</th>
+							<th class="stick">2018-10-12</th>
+							<th class="stick1">卸货的时间:</th>
+							<th class="stick">2018-11-23</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货目的地:</th>
+							<th class="stick">四川省自贡市自流井区汇川路嘉盈写字楼</th>
+							<th class="stick1">货物的数量:</th>
+							<th class="stick">x</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr >
+			</div<div class="container consignee">
+				<table>
+					<tbody>
+						<tr>
+							<th class="stick1">收货人姓名5:</th>
+							<th class="stick">迪拜王子茶度啦</th>
+							<th class="stick1">货物长宽高:</th>
+							<th class="stick">3x3x3</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货人电话:</th>
+							<th class="stick">8008208820</th>
+							<th class="stick1">货物的重量:</th>
+							<th class="stick">x吨</th>
+						</tr>
+						<tr>
+							<th class="stick1">上货的时间:</th>
+							<th class="stick">2018-10-12</th>
+							<th class="stick1">卸货的时间:</th>
+							<th class="stick">2018-11-23</th>
+						</tr>
+						<tr>
+							<th class="stick1">收货目的地:</th>
+							<th class="stick">四川省自贡市自流井区汇川路嘉盈写字楼</th>
+							<th class="stick1">货物的数量:</th>
+							<th class="stick">x</th>
+						</tr>
+					</tbody>
+				</table>
+				<hr >
+			</div>
+			<div style="margin:100px 0 0 0; height: 100px; align-content: center;">
+				<button class="btn-lg btn-danger" type="button" style="float: right; margin-right: 12%; background-color: #f84e5f; border: 0;">接单</button>
+				<button class="btn-lg btn-danger" type="button" style="float: right; margin-right: 10px; background-color: #f84e5f; border: 0;">返回列表</button>
+			</div>
+		</div>
+
+		<div class="superlink" style="height: 300px;background-color:black; margin-top: 50px;">
+			<div style="float:left; width: 20%; "><br><br>
+				<div class="text-center">
+					<div style="font-size:20px;color: white">
+						<p>关于我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">开发者关系</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">发展历程</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">新闻中心</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">团队介绍</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">加盟合作</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">招贤纳士</a></p>
+					</div>
+				</div>
+			</div>
+			<div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>热门产品</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">以租代够</a></p>
+					</div>
+				</div>
+			</div>
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>联系我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">联系方式</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">公司地图</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">留言提交</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">帮助中心</a></p>
+					</div>
+				</div>
+			</div>
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
+				<div style="float:left; margin-left: 1.25rem; ">
+					<div style="margin-top: 50px;color: white">
+						<img src="img/gzh.png" height="100px" width="100px"><br>官方公众号
+					</div>
+					<div style="color: white">
+						<img src="img/kfh.jpg" height="100px" width="100px"><br>官方客服
+					</div>
+				</div>
+				<div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="img/fm_logo.png"
+					 height="50px" width="45%"><br>
+					<p>24小时服务热线：0813-8112271</p>
+					<p>24小时投诉热线：18990053717</p>
+					<p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
+					<p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
+					<p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
+					<p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
+
+				</div>
+			</div>
+
+		</div>
+		<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/transform.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

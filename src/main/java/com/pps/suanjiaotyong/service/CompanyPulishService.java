@@ -1,5 +1,6 @@
 package com.pps.suanjiaotyong.service;
 
+import com.pps.suanjiaotyong.pojo.Companypublish;
 import com.pps.suanjiaotyong.pojo.CompanypublishWithBLOBs;
 import com.pps.suanjiaotyong.pojo.group.Result;
 
@@ -12,4 +13,6 @@ public interface CompanyPulishService {
     public Map save2(CompanypublishWithBLOBs companypublish);
 
     List<CompanypublishWithBLOBs> getAll();
+    List<Companypublish> getAllBy(Companypublish companypublish);
+    public Map getAllByPageByCondition(Companypublish companypublish,int pageNum,int pageSize);
 }

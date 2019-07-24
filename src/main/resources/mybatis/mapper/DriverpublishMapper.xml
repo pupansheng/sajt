@@ -4,10 +4,23 @@
   <resultMap id="BaseResultMap" type="com.pps.suanjiaotyong.pojo.Driverpublish" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="fromaddress" property="fromaddress" jdbcType="VARCHAR" />
-    <result column="toaddress" property="toaddress" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="linkName" property="linkname" jdbcType="VARCHAR" />
+    <result column="linkPhone" property="linkphone" jdbcType="VARCHAR" />
+    <result column="carLength" property="carlength" jdbcType="DOUBLE" />
+    <result column="carWidth" property="carwidth" jdbcType="DOUBLE" />
+    <result column="carHeight" property="carheight" jdbcType="DOUBLE" />
+    <result column="carWeight" property="carweight" jdbcType="DOUBLE" />
+    <result column="needType" property="needtype" jdbcType="VARCHAR" />
+    <result column="carType" property="cartype" jdbcType="VARCHAR" />
+    <result column="fromAddress" property="fromaddress" jdbcType="VARCHAR" />
+    <result column="toAddress" property="toaddress" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="route" property="route" jdbcType="VARCHAR" />
+    <result column="loadTime" property="loadtime" jdbcType="TIMESTAMP" />
+    <result column="unLoadTime" property="unloadtime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="lever" property="lever" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +81,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, uid, type, fromaddress, toaddress, price
+    id, uid, linkName, linkPhone, carLength, carWidth, carHeight, carWeight, needType, 
+    carType, fromAddress, toAddress, price, route, loadTime, unLoadTime, createTime, 
+    status, lever
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pps.suanjiaotyong.pojo.DriverpublishExample" >
     select
@@ -101,12 +116,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.pps.suanjiaotyong.pojo.Driverpublish" >
-    insert into driverpublish (id, uid, type, 
-      fromaddress, toaddress, price
-      )
-    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{fromaddress,jdbcType=VARCHAR}, #{toaddress,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}
-      )
+    insert into driverpublish (id, uid, linkName, 
+      linkPhone, carLength, carWidth, 
+      carHeight, carWeight, needType, 
+      carType, fromAddress, toAddress, 
+      price, route, loadTime, 
+      unLoadTime, createTime, status, 
+      lever)
+    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{linkname,jdbcType=VARCHAR}, 
+      #{linkphone,jdbcType=VARCHAR}, #{carlength,jdbcType=DOUBLE}, #{carwidth,jdbcType=DOUBLE}, 
+      #{carheight,jdbcType=DOUBLE}, #{carweight,jdbcType=DOUBLE}, #{needtype,jdbcType=VARCHAR}, 
+      #{cartype,jdbcType=VARCHAR}, #{fromaddress,jdbcType=VARCHAR}, #{toaddress,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{route,jdbcType=VARCHAR}, #{loadtime,jdbcType=TIMESTAMP}, 
+      #{unloadtime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{lever,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.Driverpublish" >
     insert into driverpublish
@@ -117,17 +140,56 @@
       <if test="uid != null" >
         uid,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="linkname != null" >
+        linkName,
+      </if>
+      <if test="linkphone != null" >
+        linkPhone,
+      </if>
+      <if test="carlength != null" >
+        carLength,
+      </if>
+      <if test="carwidth != null" >
+        carWidth,
+      </if>
+      <if test="carheight != null" >
+        carHeight,
+      </if>
+      <if test="carweight != null" >
+        carWeight,
+      </if>
+      <if test="needtype != null" >
+        needType,
+      </if>
+      <if test="cartype != null" >
+        carType,
       </if>
       <if test="fromaddress != null" >
-        fromaddress,
+        fromAddress,
       </if>
       <if test="toaddress != null" >
-        toaddress,
+        toAddress,
       </if>
       <if test="price != null" >
         price,
+      </if>
+      <if test="route != null" >
+        route,
+      </if>
+      <if test="loadtime != null" >
+        loadTime,
+      </if>
+      <if test="unloadtime != null" >
+        unLoadTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lever != null" >
+        lever,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -137,8 +199,29 @@
       <if test="uid != null" >
         #{uid,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
+      <if test="linkname != null" >
+        #{linkname,jdbcType=VARCHAR},
+      </if>
+      <if test="linkphone != null" >
+        #{linkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="carlength != null" >
+        #{carlength,jdbcType=DOUBLE},
+      </if>
+      <if test="carwidth != null" >
+        #{carwidth,jdbcType=DOUBLE},
+      </if>
+      <if test="carheight != null" >
+        #{carheight,jdbcType=DOUBLE},
+      </if>
+      <if test="carweight != null" >
+        #{carweight,jdbcType=DOUBLE},
+      </if>
+      <if test="needtype != null" >
+        #{needtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=VARCHAR},
       </if>
       <if test="fromaddress != null" >
         #{fromaddress,jdbcType=VARCHAR},
@@ -147,7 +230,25 @@
         #{toaddress,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="route != null" >
+        #{route,jdbcType=VARCHAR},
+      </if>
+      <if test="loadtime != null" >
+        #{loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unloadtime != null" >
+        #{unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        #{lever,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -166,17 +267,56 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=INTEGER},
+      <if test="record.linkname != null" >
+        linkName = #{record.linkname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkphone != null" >
+        linkPhone = #{record.linkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carlength != null" >
+        carLength = #{record.carlength,jdbcType=DOUBLE},
+      </if>
+      <if test="record.carwidth != null" >
+        carWidth = #{record.carwidth,jdbcType=DOUBLE},
+      </if>
+      <if test="record.carheight != null" >
+        carHeight = #{record.carheight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.carweight != null" >
+        carWeight = #{record.carweight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.needtype != null" >
+        needType = #{record.needtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cartype != null" >
+        carType = #{record.cartype,jdbcType=VARCHAR},
       </if>
       <if test="record.fromaddress != null" >
-        fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
+        fromAddress = #{record.fromaddress,jdbcType=VARCHAR},
       </if>
       <if test="record.toaddress != null" >
-        toaddress = #{record.toaddress,jdbcType=VARCHAR},
+        toAddress = #{record.toaddress,jdbcType=VARCHAR},
       </if>
       <if test="record.price != null" >
-        price = #{record.price,jdbcType=DOUBLE},
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.route != null" >
+        route = #{record.route,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loadtime != null" >
+        loadTime = #{record.loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unloadtime != null" >
+        unLoadTime = #{record.unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lever != null" >
+        lever = #{record.lever,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -187,10 +327,23 @@
     update driverpublish
     set id = #{record.id,jdbcType=VARCHAR},
       uid = #{record.uid,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=INTEGER},
-      fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
-      toaddress = #{record.toaddress,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DOUBLE}
+      linkName = #{record.linkname,jdbcType=VARCHAR},
+      linkPhone = #{record.linkphone,jdbcType=VARCHAR},
+      carLength = #{record.carlength,jdbcType=DOUBLE},
+      carWidth = #{record.carwidth,jdbcType=DOUBLE},
+      carHeight = #{record.carheight,jdbcType=DOUBLE},
+      carWeight = #{record.carweight,jdbcType=DOUBLE},
+      needType = #{record.needtype,jdbcType=VARCHAR},
+      carType = #{record.cartype,jdbcType=VARCHAR},
+      fromAddress = #{record.fromaddress,jdbcType=VARCHAR},
+      toAddress = #{record.toaddress,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      route = #{record.route,jdbcType=VARCHAR},
+      loadTime = #{record.loadtime,jdbcType=TIMESTAMP},
+      unLoadTime = #{record.unloadtime,jdbcType=TIMESTAMP},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -201,17 +354,56 @@
       <if test="uid != null" >
         uid = #{uid,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+      <if test="linkname != null" >
+        linkName = #{linkname,jdbcType=VARCHAR},
+      </if>
+      <if test="linkphone != null" >
+        linkPhone = #{linkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="carlength != null" >
+        carLength = #{carlength,jdbcType=DOUBLE},
+      </if>
+      <if test="carwidth != null" >
+        carWidth = #{carwidth,jdbcType=DOUBLE},
+      </if>
+      <if test="carheight != null" >
+        carHeight = #{carheight,jdbcType=DOUBLE},
+      </if>
+      <if test="carweight != null" >
+        carWeight = #{carweight,jdbcType=DOUBLE},
+      </if>
+      <if test="needtype != null" >
+        needType = #{needtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        carType = #{cartype,jdbcType=VARCHAR},
       </if>
       <if test="fromaddress != null" >
-        fromaddress = #{fromaddress,jdbcType=VARCHAR},
+        fromAddress = #{fromaddress,jdbcType=VARCHAR},
       </if>
       <if test="toaddress != null" >
-        toaddress = #{toaddress,jdbcType=VARCHAR},
+        toAddress = #{toaddress,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="route != null" >
+        route = #{route,jdbcType=VARCHAR},
+      </if>
+      <if test="loadtime != null" >
+        loadTime = #{loadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unloadtime != null" >
+        unLoadTime = #{unloadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        lever = #{lever,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -219,10 +411,23 @@
   <update id="updateByPrimaryKey" parameterType="com.pps.suanjiaotyong.pojo.Driverpublish" >
     update driverpublish
     set uid = #{uid,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      fromaddress = #{fromaddress,jdbcType=VARCHAR},
-      toaddress = #{toaddress,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE}
+      linkName = #{linkname,jdbcType=VARCHAR},
+      linkPhone = #{linkphone,jdbcType=VARCHAR},
+      carLength = #{carlength,jdbcType=DOUBLE},
+      carWidth = #{carwidth,jdbcType=DOUBLE},
+      carHeight = #{carheight,jdbcType=DOUBLE},
+      carWeight = #{carweight,jdbcType=DOUBLE},
+      needType = #{needtype,jdbcType=VARCHAR},
+      carType = #{cartype,jdbcType=VARCHAR},
+      fromAddress = #{fromaddress,jdbcType=VARCHAR},
+      toAddress = #{toaddress,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      route = #{route,jdbcType=VARCHAR},
+      loadTime = #{loadtime,jdbcType=TIMESTAMP},
+      unLoadTime = #{unloadtime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/transform.css" />
 		<link rel="stylesheet" type="text/css" href="../css/baiduMap.css" />
 		<link rel="stylesheet" type="text/css" href="../css/bar.css" />
+		<link rel="stylesheet" type="text/css" href="../css/dateTime.css" />
 
 
 
@@ -21,7 +22,7 @@
             var app=angular.module("myApp",[]);
             app.controller("orderController",function ($http,$scope,$timeout) {
 
-                $scope.f=[true,false,false]
+                $scope.f=[false,false,false]
 				$scope.order={};
                 $scope.receiverpeople=[{name:'',linkphone:''}];
 
@@ -41,23 +42,57 @@
                     $http.get("../getLogin").success(function (response) {
                         if(response!=null){
                             $scope.user=response;
+
+                            if($scope.user.status==0){
+
+                                alert("未审核，请先审核通过！")
+								location="/user/my.html"
+							 }
+                            else {
+
+                                $scope.f[0]=true;
+
+                            }
+
+
                         }
                     })
                 }
 
                 $scope.getProvince=function () {
-                    $http.get("../data/part.json").success(function (response) {
+                    $http.get("/uploadImages/part.json").success(function (response) {
                         $scope.parts=response;
                         $scope.cartypes=response['cartypes'];
                     })
                 };
 
-                $scope.getPrice=function () {
+               /* $scope.getPrice=function () {
                     $http.get("../data/price.json").success(function (response) {
                        $scope.price=response;
                     })
-                };
+                };*/
 
+                $scope.price={};
+
+               $scope.$watch("order.cartype",function (newV,oldV) {
+
+
+                   if(newV!=null){
+
+                       for(var i=0;i<$scope.cartypes.length;i++){
+
+
+                           if(newV==$scope.cartypes[i].name){
+
+                               $scope.price=$scope.cartypes[i];
+
+                               break;
+                           }
+                       }
+
+                   }
+
+               })
 
 				$scope.commitOrder=function () {
                     $scope.order.uid=$scope.user.id;
@@ -79,7 +114,7 @@
                                     $scope.f[i]=false;
                                 }
                             }
-                            alert("fdfd")
+
                             for(var i=0;i<3;i++){
                                 if(i<=2){
                                     $("#st"+i).addClass("on");
@@ -140,16 +175,22 @@
 
 
                         $scope.order.receiverPeople=recePeople;
+						$scope.flag=true;
 						var aa=$timeout(function () {
 						 var d= $("#dis").val();
-						 var aaa=   d.replace(/[^\d.]/g,"")
+
+
+						 var aaa=d.replace(/[^\d.]/g,"")
+
 							if(aaa<$scope.price.startDistance)
 							$scope.totalPrice=$scope.price.startPrice;
 						    else {
 						        $scope.totalPrice=$scope.price.startPrice+(aaa-$scope.price.startDistance)*$scope.price.average;
 							}
                            $scope.order.accountprice=$scope.totalPrice;
-                        },1000)
+
+                            $scope.flag=false;
+                        },2000)
 
 
 					 }
@@ -163,15 +204,29 @@
 					        return;
 
 					}
+					if(st==0){
 
 
 
+                        for(var i=0;i<$scope.f.length;i++){
+
+                            if(i==st){
+                                $scope.f[st]=true;
+                            }
+                            else {
+                                $scope.f[i]=false;
+                            }
+                        }
+                        for(var i=0;i<3;i++){
+                            if(i<=st){
+                                $("#st"+i).addClass("on");
+                            }
+                            else {
+                                $("#st"+i).removeClass("on")
+                            }
+                        }
+					}
                 }
-
-
-
-
-
             })
 
 
@@ -180,33 +235,67 @@
 
 	</head>
 	<body ng-app="myApp" ng-controller="orderController" ng-init="getProvince();getPrice();getLogin()">
-		<div class="">
-			<div class="superlink" style="background-color:black;height: 100px">
-				<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
-					<img src="../img/logo.png" width="100" height="100"> \
-				</div>
-				<div style="float:left;color: white;margin-right: 200px;">
-					<h2>
-						<a href="">速安交通</a>
-					</h2>achnyan traff
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">首页</a>
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">在线下单</a>
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">企业用车</a>
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
-				</div>
-				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
-				</div>
-				<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;"><a href="">登陆</a>/<a
-					 href="">注册</a>
+
+	<div class="">
+		<div class="superlink" style="background-color:black;height: 100px">
+			<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+				<img src="/img/logo.png" width="100" height="100"> \
+			</div>
+			<div style="float:left;color: white;margin-right: 200px;">
+				<h2>
+					<a href="">速安交通</a>
+				</h2>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown" style="background-color: black">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu"  >
+								<li><a href="/driver/driverpulish.html" >司机下单</a></li>
+								<li><a href="/user/placeanorder.html">客户下单</a></li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+			</div>
+
+
+			<span ng-if="user.id==null">
+
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
+            登录
+
+                </a>
+
+             </div>
+
+        </span>
+
+			<span ng-if="user.id!=null">
+           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+        <a  href="/user/my.html">
+            {{user.username}}，
+         </a>
+               你好！
+       </div>
+
+       </span>
+
 		</div>
+
+	</div>
+
 		<div class="passload">
 
 			<div class="path">
@@ -301,32 +390,32 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物价值</label>
+							<label for="" class="col-sm-2 control-label">货物价值(rmb)</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="1" placeholder="请输入货物价值" ng-model="order.goodsprice">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物长度</label>
+							<label for="" class="col-sm-2 control-label">货物长度(m)</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="2" placeholder="请输入货物长度" ng-model="order.goodslength">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物宽度</label>
+							<label for="" class="col-sm-2 control-label">货物宽度(m)</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="3" placeholder="请输入货物宽度" ng-model="order.goodswidth">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物高度</label>
+							<label for="" class="col-sm-2 control-label">货物高度(m)</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="4" placeholder="请输入货物重量" ng-model="order.goodsheight">
+								<input type="text" class="form-control" id="4" placeholder="请输入货物高度" ng-model="order.goodsheight">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物重量</label>
+							<label for="" class="col-sm-2 control-label">货物重量(kg)</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="5" placeholder="请输入货物重量" ng-model="order.goodsweight">
 							</div>
@@ -334,7 +423,7 @@
 						<div class="form-group">
 							<label for="" class="col-sm-2 control-label">货物数量</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="5" placeholder="请输入货物重量" ng-model="order.goodsamount">
+								<input type="text" class="form-control" id="5" placeholder="请输入货物数量" ng-model="order.goodsamount">
 							</div>
 						</div>
 
@@ -342,9 +431,10 @@
 							<label for="exampleInputEmail1" class="col-sm-2 control-label">选择车型</label>
 							<div class="col-sm-8">
 							<select class="form-control" required ng-model="order.cartype">
-								<option ng-repeat="(v,k) in cartypes">{{k}}</option>
+								<option ng-repeat="(k,v) in cartypes">{{v.name}}</option>
 							</select>
 							</div>
+							<span ng-if="order.cartype!=null">车长:{{price.length}} 车宽:{{price.width}} 车高:{{price.height}} 起步距离：{{price.startDistance}}(公里) 起步价(5公里内):{{price.startPrice}}  超里程价:{{price.average}}</span>
 						</div>
 
 						<div class="form-group">
@@ -377,7 +467,7 @@
 						<div class="form-group">
 							<label for="" class="col-md-2 control-label">是否开票</label>
 							<div class="col-sm-10">
-								<select ng-model="order.invoice">
+								<select ng-model="order.invoice" class="form-control">
 									<option value="1">是</option>
 									<option value="0">否</option>
 								</select>
@@ -389,7 +479,7 @@
 						<div class="form-group">
 							<label for="" class="col-md-2 control-label">货车要求</label>
 							<div class="col-sm-10">
-								<select ng-model="order.needtype">
+								<select ng-model="order.needtype" class="form-control">
 									<option >整车</option>
 									<option >零担</option>
 								</select>
@@ -401,7 +491,7 @@
 							<label for="" class="col-md-2 control-label">支付方式</label>
 							<div class="col-sm-10">
 
-								<select ng-model="order.paytype">
+								<select ng-model="order.paytype" class="form-control">
 									<option value="1">支付宝</option>
 									<option value="2">微信</option>
 									<option value="3">现金</option>
@@ -566,7 +656,8 @@
 						</div>
 						<div style=" margin-left: 10%; margin-top: 30px;">
 							总路程：<input id="dis" type="text" disabled v-show="false" >
-							<p style="font-size: 20px;">预计里程费用:￥{{totalPrice}}</p>
+							<p style="font-size: 20px;">预计里程费用:<span ng-if="!flag">￥{{totalPrice}}</span><span ng-if="flag">计算中...</span></p>
+							自己估算费用：<input class="form-control" type="text" ng-model="order.assessedPrice">
 							<p class="text-muted" style="font-size: 15px;">实际费可能因实际行驶里程/等候时间等因素而异</p>
 						</div>
 						<div style="margin-left: 10%;margin-top: 30px;">

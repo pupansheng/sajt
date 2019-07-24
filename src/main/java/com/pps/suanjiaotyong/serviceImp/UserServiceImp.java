@@ -1,5 +1,6 @@
 package com.pps.suanjiaotyong.serviceImp;
 
+import com.pps.suanjiaotyong.MyLog;
 import com.pps.suanjiaotyong.mapper.TbUserMapper;
 import com.pps.suanjiaotyong.pojo.TbUserExample;
 import com.pps.suanjiaotyong.pojo.group.Result;
@@ -107,6 +108,7 @@ public class UserServiceImp implements UserService {
             TbUserExample.Criteria criteria = ex.createCriteria();
             criteria.andPhoneEqualTo(phone);
             List<TbUser> user=tbUserMapper.selectByExample(ex);
+            MyLog.logger.info("用户信息："+user.get(0));
             result.setData(user.get(0));
             result.setStatus(true);
         }else {

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.pps.suanjiaotyong.mapper")
-public class SuanjiaotyongApplication {
+ public class SuanjiaotyongApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SuanjiaotyongApplication.class, args);

@@ -13,16 +13,19 @@
     <result column="goodsWeight" property="goodsweight" jdbcType="DOUBLE" />
     <result column="goodsAmount" property="goodsamount" jdbcType="INTEGER" />
     <result column="needType" property="needtype" jdbcType="VARCHAR" />
+    <result column="carType" property="cartype" jdbcType="VARCHAR" />
     <result column="fromaddress" property="fromaddress" jdbcType="VARCHAR" />
     <result column="toaddress" property="toaddress" jdbcType="VARCHAR" />
     <result column="loadtime" property="loadtime" jdbcType="TIMESTAMP" />
     <result column="unloadtime" property="unloadtime" jdbcType="TIMESTAMP" />
     <result column="goodsPrice" property="goodsprice" jdbcType="DOUBLE" />
     <result column="accountPrice" property="accountprice" jdbcType="DECIMAL" />
+    <result column="assessedPrice" property="assessedprice" jdbcType="DOUBLE" />
     <result column="invoice" property="invoice" jdbcType="INTEGER" />
     <result column="payType" property="paytype" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="lever" property="lever" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pps.suanjiaotyong.pojo.CompanypublishWithBLOBs" extends="BaseResultMap" >
     <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
@@ -88,8 +91,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, uid, linkName, linkPhone, goodsName, goodsLength, goodsHeight, goodsWidth, goodsWeight, 
-    goodsAmount, needType, fromaddress, toaddress, loadtime, unloadtime, goodsPrice, 
-    accountPrice, invoice, payType, createtime, status
+    goodsAmount, needType, carType, fromaddress, toaddress, loadtime, unloadtime, goodsPrice, 
+    accountPrice, assessedPrice, invoice, payType, createtime, status, lever
   </sql>
   <sql id="Blob_Column_List" >
     remark, receiverPeople
@@ -146,18 +149,20 @@
     insert into companypublish (id, uid, linkName, 
       linkPhone, goodsName, goodsLength, 
       goodsHeight, goodsWidth, goodsWeight, 
-      goodsAmount, needType, fromaddress, 
-      toaddress, loadtime, unloadtime, 
-      goodsPrice, accountPrice, invoice, 
-      payType, createtime, status, 
+      goodsAmount, needType, carType, 
+      fromaddress, toaddress, loadtime, 
+      unloadtime, goodsPrice, accountPrice, 
+      assessedPrice, invoice, payType, 
+      createtime, status, lever, 
       remark, receiverPeople)
     values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{linkname,jdbcType=VARCHAR}, 
       #{linkphone,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{goodslength,jdbcType=DOUBLE}, 
       #{goodsheight,jdbcType=DOUBLE}, #{goodswidth,jdbcType=DOUBLE}, #{goodsweight,jdbcType=DOUBLE}, 
-      #{goodsamount,jdbcType=INTEGER}, #{needtype,jdbcType=VARCHAR}, #{fromaddress,jdbcType=VARCHAR}, 
-      #{toaddress,jdbcType=VARCHAR}, #{loadtime,jdbcType=TIMESTAMP}, #{unloadtime,jdbcType=TIMESTAMP}, 
-      #{goodsprice,jdbcType=DOUBLE}, #{accountprice,jdbcType=DECIMAL}, #{invoice,jdbcType=INTEGER}, 
-      #{paytype,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{goodsamount,jdbcType=INTEGER}, #{needtype,jdbcType=VARCHAR}, #{cartype,jdbcType=VARCHAR}, 
+      #{fromaddress,jdbcType=VARCHAR}, #{toaddress,jdbcType=VARCHAR}, #{loadtime,jdbcType=TIMESTAMP}, 
+      #{unloadtime,jdbcType=TIMESTAMP}, #{goodsprice,jdbcType=DOUBLE}, #{accountprice,jdbcType=DECIMAL}, 
+      #{assessedprice,jdbcType=DOUBLE}, #{invoice,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{lever,jdbcType=INTEGER}, 
       #{remark,jdbcType=LONGVARCHAR}, #{receiverpeople,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.CompanypublishWithBLOBs" >
@@ -196,6 +201,9 @@
       <if test="needtype != null" >
         needType,
       </if>
+      <if test="cartype != null" >
+        carType,
+      </if>
       <if test="fromaddress != null" >
         fromaddress,
       </if>
@@ -214,6 +222,9 @@
       <if test="accountprice != null" >
         accountPrice,
       </if>
+      <if test="assessedprice != null" >
+        assessedPrice,
+      </if>
       <if test="invoice != null" >
         invoice,
       </if>
@@ -225,6 +236,9 @@
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="lever != null" >
+        lever,
       </if>
       <if test="remark != null" >
         remark,
@@ -267,6 +281,9 @@
       <if test="needtype != null" >
         #{needtype,jdbcType=VARCHAR},
       </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=VARCHAR},
+      </if>
       <if test="fromaddress != null" >
         #{fromaddress,jdbcType=VARCHAR},
       </if>
@@ -285,6 +302,9 @@
       <if test="accountprice != null" >
         #{accountprice,jdbcType=DECIMAL},
       </if>
+      <if test="assessedprice != null" >
+        #{assessedprice,jdbcType=DOUBLE},
+      </if>
       <if test="invoice != null" >
         #{invoice,jdbcType=INTEGER},
       </if>
@@ -296,6 +316,9 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        #{lever,jdbcType=INTEGER},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=LONGVARCHAR},
@@ -347,6 +370,9 @@
       <if test="record.needtype != null" >
         needType = #{record.needtype,jdbcType=VARCHAR},
       </if>
+      <if test="record.cartype != null" >
+        carType = #{record.cartype,jdbcType=VARCHAR},
+      </if>
       <if test="record.fromaddress != null" >
         fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
       </if>
@@ -365,6 +391,9 @@
       <if test="record.accountprice != null" >
         accountPrice = #{record.accountprice,jdbcType=DECIMAL},
       </if>
+      <if test="record.assessedprice != null" >
+        assessedPrice = #{record.assessedprice,jdbcType=DOUBLE},
+      </if>
       <if test="record.invoice != null" >
         invoice = #{record.invoice,jdbcType=INTEGER},
       </if>
@@ -376,6 +405,9 @@
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lever != null" >
+        lever = #{record.lever,jdbcType=INTEGER},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=LONGVARCHAR},
@@ -401,16 +433,19 @@
       goodsWeight = #{record.goodsweight,jdbcType=DOUBLE},
       goodsAmount = #{record.goodsamount,jdbcType=INTEGER},
       needType = #{record.needtype,jdbcType=VARCHAR},
+      carType = #{record.cartype,jdbcType=VARCHAR},
       fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
       toaddress = #{record.toaddress,jdbcType=VARCHAR},
       loadtime = #{record.loadtime,jdbcType=TIMESTAMP},
       unloadtime = #{record.unloadtime,jdbcType=TIMESTAMP},
       goodsPrice = #{record.goodsprice,jdbcType=DOUBLE},
       accountPrice = #{record.accountprice,jdbcType=DECIMAL},
+      assessedPrice = #{record.assessedprice,jdbcType=DOUBLE},
       invoice = #{record.invoice,jdbcType=INTEGER},
       payType = #{record.paytype,jdbcType=INTEGER},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=LONGVARCHAR},
       receiverPeople = #{record.receiverpeople,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -430,16 +465,19 @@
       goodsWeight = #{record.goodsweight,jdbcType=DOUBLE},
       goodsAmount = #{record.goodsamount,jdbcType=INTEGER},
       needType = #{record.needtype,jdbcType=VARCHAR},
+      carType = #{record.cartype,jdbcType=VARCHAR},
       fromaddress = #{record.fromaddress,jdbcType=VARCHAR},
       toaddress = #{record.toaddress,jdbcType=VARCHAR},
       loadtime = #{record.loadtime,jdbcType=TIMESTAMP},
       unloadtime = #{record.unloadtime,jdbcType=TIMESTAMP},
       goodsPrice = #{record.goodsprice,jdbcType=DOUBLE},
       accountPrice = #{record.accountprice,jdbcType=DECIMAL},
+      assessedPrice = #{record.assessedprice,jdbcType=DOUBLE},
       invoice = #{record.invoice,jdbcType=INTEGER},
       payType = #{record.paytype,jdbcType=INTEGER},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -477,6 +515,9 @@
       <if test="needtype != null" >
         needType = #{needtype,jdbcType=VARCHAR},
       </if>
+      <if test="cartype != null" >
+        carType = #{cartype,jdbcType=VARCHAR},
+      </if>
       <if test="fromaddress != null" >
         fromaddress = #{fromaddress,jdbcType=VARCHAR},
       </if>
@@ -495,6 +536,9 @@
       <if test="accountprice != null" >
         accountPrice = #{accountprice,jdbcType=DECIMAL},
       </if>
+      <if test="assessedprice != null" >
+        assessedPrice = #{assessedprice,jdbcType=DOUBLE},
+      </if>
       <if test="invoice != null" >
         invoice = #{invoice,jdbcType=INTEGER},
       </if>
@@ -506,6 +550,9 @@
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        lever = #{lever,jdbcType=INTEGER},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=LONGVARCHAR},
@@ -528,16 +575,19 @@
       goodsWeight = #{goodsweight,jdbcType=DOUBLE},
       goodsAmount = #{goodsamount,jdbcType=INTEGER},
       needType = #{needtype,jdbcType=VARCHAR},
+      carType = #{cartype,jdbcType=VARCHAR},
       fromaddress = #{fromaddress,jdbcType=VARCHAR},
       toaddress = #{toaddress,jdbcType=VARCHAR},
       loadtime = #{loadtime,jdbcType=TIMESTAMP},
       unloadtime = #{unloadtime,jdbcType=TIMESTAMP},
       goodsPrice = #{goodsprice,jdbcType=DOUBLE},
       accountPrice = #{accountprice,jdbcType=DECIMAL},
+      assessedPrice = #{assessedprice,jdbcType=DOUBLE},
       invoice = #{invoice,jdbcType=INTEGER},
       payType = #{paytype,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER},
       remark = #{remark,jdbcType=LONGVARCHAR},
       receiverPeople = #{receiverpeople,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
@@ -554,16 +604,19 @@
       goodsWeight = #{goodsweight,jdbcType=DOUBLE},
       goodsAmount = #{goodsamount,jdbcType=INTEGER},
       needType = #{needtype,jdbcType=VARCHAR},
+      carType = #{cartype,jdbcType=VARCHAR},
       fromaddress = #{fromaddress,jdbcType=VARCHAR},
       toaddress = #{toaddress,jdbcType=VARCHAR},
       loadtime = #{loadtime,jdbcType=TIMESTAMP},
       unloadtime = #{unloadtime,jdbcType=TIMESTAMP},
       goodsPrice = #{goodsprice,jdbcType=DOUBLE},
       accountPrice = #{accountprice,jdbcType=DECIMAL},
+      assessedPrice = #{assessedprice,jdbcType=DOUBLE},
       invoice = #{invoice,jdbcType=INTEGER},
       payType = #{paytype,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

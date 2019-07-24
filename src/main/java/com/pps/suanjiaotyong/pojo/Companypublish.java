@@ -4,74 +4,53 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Companypublish {
-    protected String id;
+    private String id;
 
-    protected Integer uid;
+    private Integer uid;
 
-    protected String linkname;
+    private String linkname;
 
-    @Override
-    public String toString() {
-        return "Companypublish{" +
-                "id='" + id + '\'' +
-                ", uid=" + uid +
-                ", linkname='" + linkname + '\'' +
-                ", linkphone='" + linkphone + '\'' +
-                ", goodsname='" + goodsname + '\'' +
-                ", goodslength=" + goodslength +
-                ", goodsheight=" + goodsheight +
-                ", goodswidth=" + goodswidth +
-                ", goodsweight=" + goodsweight +
-                ", goodsamount=" + goodsamount +
-                ", needtype='" + needtype + '\'' +
-                ", fromaddress='" + fromaddress + '\'' +
-                ", toaddress='" + toaddress + '\'' +
-                ", loadtime=" + loadtime +
-                ", unloadtime=" + unloadtime +
-                ", goodsprice=" + goodsprice +
-                ", accountprice=" + accountprice +
-                ", invoice=" + invoice +
-                ", paytype=" + paytype +
-                ", createtime=" + createtime +
-                ", status=" + status +
-                '}';
-    }
+    private String linkphone;
 
-    protected String linkphone;
+    private String goodsname;
 
-    protected String goodsname;
+    private Double goodslength;
 
-    protected Double goodslength;
+    private Double goodsheight;
 
-    protected Double goodsheight;
+    private Double goodswidth;
 
-    protected Double goodswidth;
+    private Double goodsweight;
 
-    protected Double goodsweight;
+    private Integer goodsamount;
 
-    protected Integer goodsamount;
+    private String needtype;
 
-    protected String needtype;
+    private String cartype;
 
-    protected String fromaddress;
+    private String fromaddress;
 
-    protected String toaddress;
+    private String toaddress;
 
-    protected Date loadtime;
+    private Date loadtime;
 
-    protected Date unloadtime;
+    private Date unloadtime;
 
-    protected Double goodsprice;
+    private Double goodsprice;
 
-    protected BigDecimal accountprice;
+    private BigDecimal accountprice;
 
-    protected Integer invoice;
+    private Double assessedprice;
 
-    protected Integer paytype;
+    private Integer invoice;
 
-    protected Date createtime;
+    private Integer paytype;
 
-    protected Integer status;
+    private Date createtime;
+
+    private Integer status;
+
+    private Integer lever;
 
     public String getId() {
         return id;
@@ -161,6 +140,14 @@ public class Companypublish {
         this.needtype = needtype == null ? null : needtype.trim();
     }
 
+    public String getCartype() {
+        return cartype;
+    }
+
+    public void setCartype(String cartype) {
+        this.cartype = cartype == null ? null : cartype.trim();
+    }
+
     public String getFromaddress() {
         return fromaddress;
     }
@@ -209,6 +196,14 @@ public class Companypublish {
         this.accountprice = accountprice;
     }
 
+    public Double getAssessedprice() {
+        return assessedprice;
+    }
+
+    public void setAssessedprice(Double assessedprice) {
+        this.assessedprice = assessedprice;
+    }
+
     public Integer getInvoice() {
         return invoice;
     }
@@ -239,5 +234,13 @@ public class Companypublish {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getLever() {
+        return lever;
+    }
+
+    public void setLever(Integer lever) {
+        this.lever = lever;
     }
 }
