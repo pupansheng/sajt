@@ -61,6 +61,14 @@
                     $http.get("../getLogin").success(function (response) {
                         if(response!=null){
                             $scope.user2=response;
+
+                            $http.get("/get/driverInfoById/"+response.userinfoid).success(function (response) {
+
+                                $scope.user=response;
+
+                            })
+
+
                         }
                     })
 
@@ -93,8 +101,8 @@
                             var a = $timeout(function(){
 
 								var ss1=    $scope.strLink(1,4);
-                                var ss2=    $scope.strLink(4,5);
-                                var ss3=    $scope.strLink(6,9);
+                                var ss2=    $scope.strLink(5,6);
+                                var ss3=    $scope.strLink(7,9);
                                 var ss4=    $scope.strLink(10,11);
 
                                 $scope.user.carimage=ss1;
@@ -103,12 +111,12 @@
                                 $scope.user.walkimages=ss4;
 
 
-                                $http.post("./save1",$scope.user).success(function (response) {
+                                $http.post("./save1/update",$scope.user).success(function (response) {
 
                                     if(response.status){
 
                                         $scope.user2.userinfoid=response.data.id;
-                                        $scope.user2.status=1;
+
                                         $http.post("./update",$scope.user2).success(function (response) {
                                             if(!response.status)
                                                 alert("错误")

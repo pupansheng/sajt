@@ -52,11 +52,19 @@
                 $scope.citys=$scope.parts[n];
             })
 
+
             $scope.getLogin=function () {
 
                 $http.get("../getLogin").success(function (response) {
                     if(response!=null){
+
                         $scope.user2=response;
+                        $http.get("/get/peopleInfoById/"+response.userinfoid).success(function (response) {
+
+                            $scope.user=response;
+
+                        })
+
                     }
                 })
 
@@ -82,12 +90,11 @@
                         $("#third").addClass("on");
 
                         var a = $timeout(function(){
-                            var ss2= $scope.strLink(5,6);
+                            var ss2= $scope.strLink(4,5);
                             $scope.user.idcartimageurl=ss2;
-                            $http.post("./save2",$scope.user).success(function (response) {
+                            $http.post("./save2/update",$scope.user).success(function (response) {
                                 if(response.status){
                                     $scope.user2.userinfoid=response.data.id;
-                                    $scope.user2.status=1;
                                     $http.post("./update",$scope.user2).success(function (response) {
                                         if(!response.status)
                                             alert("错误")
@@ -252,6 +259,7 @@
 								<div class="col-sm-10">
 									<input type="text" id="inf5" required class="form-control" id="" placeholder="请输入电话号码" ng-model="user.phone">
 								</div>
+
 							</div>
 						</form>
 					</div>

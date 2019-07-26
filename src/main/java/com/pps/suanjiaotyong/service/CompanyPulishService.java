@@ -15,4 +15,8 @@ public interface CompanyPulishService {
     List<CompanypublishWithBLOBs> getAll();
     List<Companypublish> getAllBy(Companypublish companypublish);
     public Map getAllByPageByCondition(Companypublish companypublish,int pageNum,int pageSize);
+
+    Companypublish getCompanyById(String id);
+
+    Map getAllMatch(Companypublish companypublish, int pageNum, int pageSize);
 }

@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="realName" property="realname" jdbcType="VARCHAR" />
     <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="idCartImageUrl" property="idcartimageurl" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, realName, province, city, idCartImageUrl, address, status
+    id, realName, province, phone, address, city, idCartImageUrl, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pps.suanjiaotyong.pojo.TbPersonExample" >
     select
@@ -106,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tb_person (id, realName, province, 
-      city, idCartImageUrl, address, 
-      status)
+      phone, address, city, 
+      idCartImageUrl, status)
     values (#{id,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{idcartimageurl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER})
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{idcartimageurl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pps.suanjiaotyong.pojo.TbPerson" >
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
@@ -127,14 +128,17 @@
       <if test="province != null" >
         province,
       </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
       <if test="city != null" >
         city,
       </if>
       <if test="idcartimageurl != null" >
         idCartImageUrl,
-      </if>
-      <if test="address != null" >
-        address,
       </if>
       <if test="status != null" >
         status,
@@ -150,14 +154,17 @@
       <if test="province != null" >
         #{province,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
       <if test="city != null" >
         #{city,jdbcType=VARCHAR},
       </if>
       <if test="idcartimageurl != null" >
         #{idcartimageurl,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -182,14 +189,17 @@
       <if test="record.province != null" >
         province = #{record.province,jdbcType=VARCHAR},
       </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
       <if test="record.city != null" >
         city = #{record.city,jdbcType=VARCHAR},
       </if>
       <if test="record.idcartimageurl != null" >
         idCartImageUrl = #{record.idcartimageurl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.address != null" >
-        address = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
@@ -204,9 +214,10 @@
     set id = #{record.id,jdbcType=INTEGER},
       realName = #{record.realname,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=VARCHAR},
       idCartImageUrl = #{record.idcartimageurl,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -221,14 +232,17 @@
       <if test="province != null" >
         province = #{province,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
       <if test="idcartimageurl != null" >
         idCartImageUrl = #{idcartimageurl,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -240,9 +254,10 @@
     update tb_person
     set realName = #{realname,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       idCartImageUrl = #{idcartimageurl,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

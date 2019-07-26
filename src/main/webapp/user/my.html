@@ -115,7 +115,29 @@
                                         <li ng-if="user.usertype==1"><a href="st3.html" target="content">完善资料(企业)</a></li>
                                         <li ng-if="user.usertype==2"><a href="st1.html" target="content">完善资料(车主)</a></li>
                                         </span>
-                                        <li><a href="#" target="content">修改资料</a></li>
+
+                                        <span ng-if="user.status==1">
+                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content">审核中(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content">审核中(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content">审核中(车主)</a></li>
+                                        </span>
+
+                                        <span ng-if="user.status==2">
+
+                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content">已审核资料(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content">已审核资料(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content">已审核资料(车主)</a></li>
+
+
+                                        <li ng-if="user.usertype==0"><a href="st2_1.html" target="content">重新审核(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1.html" target="content">重新审核(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1.html" target="content">重新审核(车主)</a></li>
+                                        </span>
+
+
+
+
+
                                     </ul>
                                 </div>
                             </div>

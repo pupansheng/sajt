@@ -42,12 +42,11 @@
             $scope.user={};
             $scope.cartypes=[];
             $scope.getProvince=function () {
-                $http.get("../data/part.json").success(function (response) {
+                $http.get("/uploadImages/part.json").success(function (response) {
                     $scope.parts=response;
                     $scope.cartypes=response['cartypes'];
                 })
             };
-
 
             $scope.$watch("user.province",function (n,o) {
 
@@ -99,6 +98,7 @@
                             $http.post("./save3",$scope.user).success(function (response) {
                                 if(response.status){
                                     $scope.user2.userinfoid=response.data.id;
+                                    $scope.user2.status=1;
                                     $http.post("./update",$scope.user2).success(function (response) {
                                         if(!response.status)
                                             alert("错误")
@@ -167,12 +167,12 @@
                     function(response){
                         if(response.status){
 
+                            if(el==2){
+                                $scope.user.accountlicence=response.data;
+                            }
                             if(el==1){
-                                $scope.user.companyaddress=response.data;
-							}
-							if(el==2){
                                 $scope.user.companylicence=response.data;
-							}
+                            }
                             if(el==3){
                                 $scope.imageUrl[el]=response.data;
                             }
@@ -230,7 +230,7 @@
 		<div role="tabpanel" class="tab-pane fade in active" id="st0">
 
 			<div class="container register">
-				<div class="register1">
+				<div class="register1" style="height: auto">
 					<div class="dliver">
 						<div class="tips1">
 							<p style="font-size:30px; align-content: center; text-align: center; color: white;">填写基本信息</p>
@@ -245,7 +245,7 @@
 						</div>
 						<div class="form-group" >
 							<label for="exampleInputEmail1">企业地址</label>
-							<input id="inf2" class="form-control" ng-model="user.address" required type="text">
+							<input id="inf2" class="form-control" ng-model="user.companyaddress" required type="text">
 							</input>
 						</div>
 						<div class="form-group" >
@@ -260,6 +260,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="register3">
 					<div class="dliver">
 						<div class="tips3">

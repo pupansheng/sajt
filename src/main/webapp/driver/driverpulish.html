@@ -40,12 +40,18 @@
                     if(response!=null){
                         $scope.user=response;
 
-                        if($scope.user.status==0){
+                        if($scope.user.status==0||$scope.user.status==1){
 
                             alert("未审核，请先审核通过！")
                             location="/user/my.html"
                         }
                         else {
+
+                            if($scope.user.usertype!=2){
+
+                                alert("司机才能下单！")
+                                location="/index.html"
+                            }
 
                             $scope.f[0]=true;
 
@@ -55,17 +61,32 @@
             }
 
             $scope.getProvince=function () {
-                $http.get("../data/part.json").success(function (response) {
+                $http.get("/uploadImages/part.json").success(function (response) {
                     $scope.parts=response;
                     $scope.cartypes=response['cartypes'];
                 })
             };
 
-            $scope.getPrice=function () {
-                $http.get("../data/price.json").success(function (response) {
-                    $scope.price=response;
-                })
-            };
+            $scope.$watch("order.cartype",function (newV,oldV) {
+
+
+                if(newV!=null){
+
+                    for(var i=0;i<$scope.cartypes.length;i++){
+
+
+                        if(newV==$scope.cartypes[i].name){
+
+                            $scope.price=$scope.cartypes[i];
+
+                            break;
+                        }
+                    }
+
+                }
+
+            })
+
 
 
             $scope.commitOrder=function () {
@@ -171,6 +192,8 @@
                             $scope.totalPrice=$scope.price.startPrice+(aaa-$scope.price.startDistance)*$scope.price.average;
                         }
 
+                        $scope.order.price=$scope.totalPrice;
+
                     },1000)
 
 
@@ -218,9 +241,15 @@
                 }
 
 
-
             }
 
+            $scope.match=function () {
+
+                sessionStorage.setItem("d",JSON.stringify($scope.order))
+                location.href="match.html";
+
+
+            }
 
 
 
@@ -418,12 +447,12 @@
 
 
 
-                    <div class="form-group">
+                  <!--  <div class="form-group">
                         <label for="" class="col-sm-2 control-label">价格</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="" placeholder="请输入价格" ng-model="order.price">
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <label for="" class="col-md-2 control-label">服务类型</label>
@@ -439,7 +468,7 @@
                         <label for="exampleInputEmail1" class="col-sm-2 control-label">货车车型</label>
                         <div class="col-sm-8">
                             <select class="form-control" required ng-model="order.cartype">
-                                <option ng-repeat="(v,k) in cartypes">{{k}}</option>
+                                <option ng-repeat="(v,k) in cartypes">{{k.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -605,7 +634,7 @@
             </div>
         </div>
         <div class="text-center" style="height: 100px;">
-            <p style="font-size: 30px; margin-top: 20px;">尊敬的用户，您的订单已收录</p>
+            <p style="font-size: 30px; margin-top: 20px;">尊敬的用户，您的订单已收录</p><a href="match.html" class="btn btn-info">点击匹配合适的货源</a>
         </div>
     </div>
     <div class="container register" style="margin-top: 50px; border-radius: 15px;">

@@ -41,4 +41,32 @@ public class DriverServiceImp implements DriverService{
 
         return result;
     }
+
+    @Override
+    public TbDriver getOneById(int id) {
+
+     return    tbDriverMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Result updateShenhe(TbDriver tbDriver) {
+
+        Result result=new Result();
+        try{
+
+            tbDriverMapper.updateByPrimaryKeySelective(tbDriver);
+
+            result.setStatus(true);
+            result.setData(tbDriver);
+
+        }
+        catch (Exception e){
+            result.setStatus(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+
+
+    }
+
 }

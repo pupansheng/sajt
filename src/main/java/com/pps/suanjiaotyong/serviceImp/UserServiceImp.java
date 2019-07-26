@@ -83,6 +83,7 @@ public class UserServiceImp implements UserService {
 
 
                 List<TbUser> user=tbUserMapper.selectByExample(ex);//查询用户信息
+                MyLog.logger.info("登录信息："+user.get(0));
                 result.setData(user.get(0));
             }else {
                 result.setStatus(false);
@@ -123,13 +124,20 @@ public class UserServiceImp implements UserService {
 
         Result result=new Result();
         try{
-            tbUserMapper.updateByPrimaryKeySelective(tbUser);
+           tbUserMapper.updateByPrimaryKeySelective(tbUser);
             result.setStatus(true);
+            result.setData(tbUser);
           }catch (Exception e){
             result.setStatus(false);
          }
 
         return  result;
+    }
+
+    @Override
+    public TbUser getOneById(int id) {
+
+        return tbUserMapper.selectByPrimaryKey(id);
     }
 
 

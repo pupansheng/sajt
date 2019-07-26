@@ -1,0 +1,369 @@
+<html style="min-width: 1200px;">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		<script src="/jquery.min.js"></script>
+		<script src="/bootstrap.min.js"></script>
+		<script src="/angular.min.js"></script>
+		<!-- 分页组件开始 -->
+		<script src="/js/pagination.js"></script>
+		<link rel="stylesheet" href="/css/pagination.css">
+
+		<style type="text/css">
+			html {
+				background: lightgrey;
+			}
+		</style>
+
+
+		<script>
+            var app=angular.module("myApp",['pagination']);
+            app.controller("orderController",function ($http,$scope,$timeout) {
+
+                $scope.user={};
+                $scope.getLogin=function () {
+                    $http.get("/getLogin").success(function (response) {
+                        if(response!=null){
+                            $scope.user=response;
+                        }
+                    })
+                }
+                $scope.getProvince=function () {
+                    $http.get("/uploadImages/part.json").success(function (response) {
+                        $scope.parts=response;
+                        $scope.cartypes=response['cartypes'];
+                    })
+                };
+                $scope.entityList = [];
+                $scope.entity={};
+                //分页
+                $scope.paginationConf = {
+                    currentPage: 1,//当前页
+                    totalItems: 10,//总记录数
+                    itemsPerPage: 10,//每页记录数
+                    perPageOptions: [10, 20, 30, 40, 50],//分页选项
+                    onChange: function(){//页面修改时
+                        $scope.reloadList();
+                    }
+                };
+
+                $scope.reloadList= function(){
+                    //$scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf. itemsPerPage);
+					$scope.flag=true;
+                    $scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+
+                }
+
+                $scope.searchEntity={};
+                $scope.search=function(page,size){
+
+
+                    $http.post("/company/pulish/match/page/?pageNum="+page+"&pageSize="+size,$scope.searchEntity).success(function(response){
+                        $scope.entityList=response.rows;
+                        $scope.paginationConf.totalItems=response.totalItems;
+                        $scope.flag=false;
+
+                    });
+                };
+                //分页结束！！
+
+
+				$scope.pageInit=function () {
+
+					sessionStorage.setItem("d",'{"fromaddress": "自贡市自流井区中港·燊海森林","toaddress": "自贡市自流井区舒坪镇","goodsweight": 11,"needtype": "整车","cartype": ""}');
+				 var  order=sessionStorage.getItem("d");
+				 var  orderEntity=JSON.parse(order);
+				 $scope.searchEntity.fromaddress=orderEntity.fromaddress;
+				 $scope.searchEntity.toaddress=orderEntity.toaddress;
+				 $scope.searchEntity.cartype=orderEntity.cartype;
+				 $scope.searchEntity.needtype=orderEntity.needtype;
+				 $scope.searchEntity.goodsweight=orderEntity.goodsweight;
+
+
+
+                }
+
+
+                $scope.detail=false;
+                $scope.receiverpeoples=[];
+                $scope.seeDetail=function (id) {
+
+                       location.href="/userdetail.html#?id="+id+"&type=2"
+
+                }
+
+
+
+
+
+            })
+		</script>
+		<title>匹配</title>
+	</head>
+	<body ng-app="myApp" ng-controller="orderController" ng-init="getLogin();getProvince();pageInit()">
+
+
+	<div class="">
+		<div class="superlink" style="background-color:black;height: 100px">
+			<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+				<img src="/img/logo.png" width="100" height="100"> \
+			</div>
+			<div style="float:left;color: white;margin-right: 200px;">
+				<h2>
+					<a href="">速安交通</a>
+				</h2>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown" style="background-color: black">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu"  >
+								<li><a href="/driver/driverpulish.html" >司机下单</a></li>
+								<li><a href="/user/placeanorder.html">客户下单</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
+			</div>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+			</div>
+
+
+			<span ng-if="user.id==null">
+
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
+            登录
+                </a>
+
+             </div>
+
+        </span>
+
+			<span ng-if="user.id!=null">
+           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+        <a  href="user/my.html">
+            {{user.username}}，
+         </a>
+               你好！
+       </div>
+
+       </span>
+
+		</div>
+
+	</div>
+
+
+
+
+	<div class="container" style="height: auto; background-color: white; border-bottom: 1px solid orange; padding: 0; margin-top: 10px; border-radius: 15px 15px 0 0;">
+			<div style="width: 20%; background-color: orange; align-content:flex-start; text-align: center; height: auto; border-radius: 15px  0 0 0;">
+				<p style="color: white; font-size: 30px;margin-bottom: 0; font-weight: bold;">匹配</p>
+			</div>
+		</div>
+		<div class="container" style="background-color: #f6f6f6; border-radius: 0 0 15px 15px;">
+			<div class="container text-center" style="line-height: 50px; ">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					选择新需求车型:
+				</div>
+				<div class="col-md-10" >
+
+					<a href="#" ng-repeat="x in cartypes" style="float: left"  ng-click="searchEntity.cartype=x.name;;reloadList()">{{x.name}}&nbsp;&nbsp;&nbsp;</a>
+
+				</div>
+
+			</div>
+			<div class="container text-center" style="line-height: 50px;">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					选择车需求类别:
+				</div>
+				<div class="col-md-10">
+					<div >
+
+						<a href="javascript:null" style="float: left" ng-click="searchEntity.needtype='整车';reloadList()">整车 &nbsp;&nbsp;&nbsp;</a>
+						<a href="javascript:null" style="float: left"  ng-click="searchEntity.needtype='零担';reloadList()">零担</a>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+			<div class="container text-center" style="line-height: 50px;">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					选择货物重量(t):
+				</div>
+				<div class="col-md-10">
+
+					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=1;reloadList()"><=1 &nbsp;&nbsp;&nbsp;</a>
+					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=2;reloadList()"><=2 &nbsp;&nbsp;&nbsp;</a>
+					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=5;reloadList()"><=5 &nbsp;&nbsp;&nbsp;</a>
+					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=10;reloadList()"><=10 &nbsp;&nbsp;&nbsp;</a>
+					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=20;reloadList()"><=20 &nbsp;&nbsp;&nbsp;</a>
+				</div>
+			</div>
+			<div class="container text-center" style="line-height: 50px; ">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					选择起始地:
+				</div>
+				<div class="col-md-6">
+					<input class="form-control input-sm" ng-model="searchEntity.fromaddress" type="text">
+				</div>
+			</div>
+				<div class="container text-center" style="line-height: 50px; ">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					选择目的地:
+				</div>
+				<div class="col-md-6">
+					<input class="form-control input-sm" ng-model="searchEntity.toaddress" type="text">
+				</div>
+			</div>
+			<div class="container text-center" style="line-height: 50px; ">
+				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+					发货时间:
+				</div>
+				<div class="col-md-6">
+					<div >
+
+						<input class="form-control input-sm " ng-model="searchEntity.loadtime" type="date">
+
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div >
+						<button class="btn btn-info" ng-click="reloadList()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>检索</button>
+					</div>
+				</div>
+			</div>
+			<hr>
+
+			<div class="container" style="margin-top:5px ;margin-bottom: 0px; border-radius: 15px;" >
+
+
+				<table class="table" >
+					<caption ng-show="!flag">匹配结果</caption>	<caption ng-show="flag">匹配中......</caption>
+					<!--//标题，请忽更改-->
+					<tr class="active" style="font-size: 17px;">
+						<td>出发地<span>|</span></td>
+						<td>目的地<span>|</span></td>
+						<td>货物重量<span>|</span></td>
+						<td>需求车型<span>|</span></td>
+						<td>装货时间<span>|</span></td>
+						<td>卸货时间<span>|</span></td>
+						<td>操作</td>
+					</tr>
+					<!--//标题，请忽更改-->
+					<tr class="active" ng-repeat="x in entityList">
+						<td>{{x.fromaddress}}</td>
+						<td>{{x.toaddress}}</td>
+						<td>{{x.goodsweight}}</td>
+						<td>{{x.cartype}}</td>
+						<td>{{x.loadtime}}</td>
+						<td>{{x.unloadtime}}</td>
+						<td><a rel="nofollow"  ng-click="seeDetail(x.id)">查看详细</a></td>
+					</tr>
+
+
+				</table>
+				<tm-pagination conf="paginationConf"></tm-pagination>
+			</div>
+
+
+
+
+
+
+
+
+
+
+		</div>
+		<div class="superlink" style="height: 300px;background-color:black; margin-top: 50px;">
+			<div style="float:left; width: 20%; "><br><br>
+				<div class="text-center">
+					<div style="font-size:20px;color: white">
+						<p>关于我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">开发者关系</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">发展历程</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">新闻中心</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">团队介绍</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">加盟合作</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">招贤纳士</a></p>
+					</div>
+				</div>
+			</div>
+			<div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>热门产品</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">以租代够</a></p>
+					</div>
+				</div>
+			</div>
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>联系我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">联系方式</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">公司地图</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">留言提交</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">帮助中心</a></p>
+					</div>
+				</div>
+			</div>
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
+				<div style="float:left; margin-left: 1.25rem; ">
+					<div style="margin-top: 50px;color: white">
+						<img src="/img/gzh.png" height="100px" width="100px"><br>官方公众号
+					</div>
+					<div style="color: white">
+						<img src="/img/kfh.jpg" height="100px" width="100px"><br>官方客服
+					</div>
+				</div>
+				<div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="/img/fm_logo.png"
+					 height="50px" width="45%"><br>
+					<p>24小时服务热线：0813-8112271</p>
+					<p>24小时投诉热线：18990053717</p>
+					<p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
+					<p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
+					<p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
+					<p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

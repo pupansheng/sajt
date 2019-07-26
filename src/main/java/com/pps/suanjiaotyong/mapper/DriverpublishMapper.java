@@ -3,6 +3,8 @@ package com.pps.suanjiaotyong.mapper;
 import com.pps.suanjiaotyong.pojo.Driverpublish;
 import com.pps.suanjiaotyong.pojo.DriverpublishExample;
 import java.util.List;
+
+import com.pps.suanjiaotyong.pojo.TbDriver;
 import org.apache.ibatis.annotations.Param;
 
 public interface DriverpublishMapper {
@@ -27,4 +29,8 @@ public interface DriverpublishMapper {
     int updateByPrimaryKeySelective(Driverpublish record);
 
     int updateByPrimaryKey(Driverpublish record);
+    List<TbDriver> selectByFromAddress(String address);
+    List<TbDriver> selectByToAddress(String address);
+    List<TbDriver> selectByRouteAddress(String address);
+
 }

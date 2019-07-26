@@ -4,53 +4,83 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Companypublish {
-    private String id;
+    protected String id;
 
-    private Integer uid;
+    protected  Integer uid;
 
-    private String linkname;
+    @Override
+    public String toString() {
+        return "Companypublish{" +
+                "id='" + id + '\'' +
+                ", uid=" + uid +
+                ", linkname='" + linkname + '\'' +
+                ", linkphone='" + linkphone + '\'' +
+                ", goodsname='" + goodsname + '\'' +
+                ", goodslength=" + goodslength +
+                ", goodsheight=" + goodsheight +
+                ", goodswidth=" + goodswidth +
+                ", goodsweight=" + goodsweight +
+                ", goodsamount=" + goodsamount +
+                ", needtype='" + needtype + '\'' +
+                ", cartype='" + cartype + '\'' +
+                ", fromaddress='" + fromaddress + '\'' +
+                ", toaddress='" + toaddress + '\'' +
+                ", loadtime=" + loadtime +
+                ", unloadtime=" + unloadtime +
+                ", goodsprice=" + goodsprice +
+                ", accountprice=" + accountprice +
+                ", assessedprice=" + assessedprice +
+                ", invoice=" + invoice +
+                ", paytype=" + paytype +
+                ", createtime=" + createtime +
+                ", status=" + status +
+                ", lever=" + lever +
+                '}';
+    }
 
-    private String linkphone;
+    protected  String linkname;
 
-    private String goodsname;
+    protected  String linkphone;
 
-    private Double goodslength;
+    protected  String goodsname;
 
-    private Double goodsheight;
+    protected  Double goodslength;
 
-    private Double goodswidth;
+    protected  Double goodsheight;
+
+    protected  Double goodswidth;
 
     private Double goodsweight;
 
-    private Integer goodsamount;
+    protected  Integer goodsamount;
 
-    private String needtype;
+    protected  String needtype;
 
-    private String cartype;
+    protected  String cartype;
 
     private String fromaddress;
 
-    private String toaddress;
+    protected  String toaddress;
 
-    private Date loadtime;
+    protected Date loadtime;
 
-    private Date unloadtime;
+    protected  Date unloadtime;
 
-    private Double goodsprice;
+    protected  Double goodsprice;
 
-    private BigDecimal accountprice;
+    protected  BigDecimal accountprice;
 
-    private Double assessedprice;
+    protected  Double assessedprice;
 
-    private Integer invoice;
+    protected  Integer invoice;
 
-    private Integer paytype;
+    protected Integer paytype;
 
-    private Date createtime;
+    protected  Date createtime;
 
     private Integer status;
 
-    private Integer lever;
+    protected  Integer lever;
 
     public String getId() {
         return id;

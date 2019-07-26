@@ -11,4 +11,6 @@ public interface UserService {
     public Result loginWithPhone(String phone);
 
     Result update(TbUser tbUser);
+
+    TbUser getOneById(int id);
 }

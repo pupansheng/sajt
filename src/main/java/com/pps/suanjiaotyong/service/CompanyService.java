@@ -1,7 +1,11 @@
 package com.pps.suanjiaotyong.service;
 
+import com.pps.suanjiaotyong.pojo.Companypublish;
 import com.pps.suanjiaotyong.pojo.TbCompany;
+import com.pps.suanjiaotyong.pojo.TbPerson;
 import com.pps.suanjiaotyong.pojo.group.Result;
+
+import java.util.Map;
 
 /**
  * @Classname CompanyService
@@ -12,4 +16,9 @@ import com.pps.suanjiaotyong.pojo.group.Result;
  **/
 public interface CompanyService {
     Result save(TbCompany tbCompany);
+
+    TbCompany getOneById(int id);
+
+    Result update(TbCompany tbCompany);
+
 }

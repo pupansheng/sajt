@@ -7,4 +7,7 @@ public interface PerService {
 
     public Result save(TbPerson tbPerson);
 
+    TbPerson getOneById(int id);
+
+    Result update(TbPerson tbPerson);
 }

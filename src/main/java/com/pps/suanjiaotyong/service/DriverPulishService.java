@@ -14,4 +14,8 @@ public interface DriverPulishService {
     List<Driverpublish> getAll();
 
     Map getAllByPageByCondition(Driverpublish driverpublish,int pageNum,int pageSize);
+
+    Driverpublish getOneById(String id);
+
+    Map getAllMatch(Driverpublish driverpublish, int pageNum, int pageSize);
 }

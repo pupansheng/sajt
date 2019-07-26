@@ -47,8 +47,9 @@
                         $scope.cartypes=response['cartypes'];
                     })
                 };
-
-
+                $("#first").addClass("on");
+                $("#second").addClass("on");
+                $("#third").addClass("on");
                 $scope.$watch("user.province",function (n,o) {
 
                    $scope.citys=$scope.parts[n];
@@ -61,6 +62,57 @@
                     $http.get("../getLogin").success(function (response) {
                         if(response!=null){
                             $scope.user2=response;
+
+                            $http.get("/get/driverInfoById/"+response.userinfoid).success(function (response) {
+
+                                $scope.user=response;
+								var ss1,ss2,ss3,ss4
+
+                                ss1=$scope.user.carimage;
+                                ss2=$scope.user.idcartimage
+                                ss3=$scope.user.driverslicenseimage
+                                ss4=$scope.user.walkimages
+
+							    var p1=ss1.split(",");
+                                var p2=ss2.split(",");
+                                var p3=ss3.split(",");
+                                var p4=ss4.split(",");
+
+                                for(var i=1;i<=4;i++){
+
+
+                                    $("#Im"+i).addClass('file-ok');
+                                    $("#Im"+i).css('background-image', 'url(/' + p1[i-1] + ')');
+
+								}
+
+                                for(var i=5;i<=6;i++){
+
+
+                                    $("#Im"+i).addClass('file-ok');
+                                    $("#Im"+i).css('background-image', 'url(/' + p2[i-1-4] + ')');
+
+                                }
+
+                                for(var i=7;i<=9;i++){
+
+                                    $("#Im"+i).addClass('file-ok');
+                                    $("#Im"+i).css('background-image', 'url(/' + p3[i-1-6] + ')');
+
+                                }
+
+                                for(var i=10;i<=11;i++){
+                                    $("#Im"+i).addClass('file-ok');
+                                    $("#Im"+i).css('background-image', 'url(/' + p4[i-1-9] + ')');
+
+                                }
+
+
+
+
+                            })
+
+
                         }
                     })
 
@@ -103,12 +155,12 @@
                                 $scope.user.walkimages=ss4;
 
 
-                                $http.post("./save1",$scope.user).success(function (response) {
+                                $http.post("./save1/update",$scope.user).success(function (response) {
 
                                     if(response.status){
 
                                         $scope.user2.userinfoid=response.data.id;
-                                        $scope.user2.status=1;
+
                                         $http.post("./update",$scope.user2).success(function (response) {
                                             if(!response.status)
                                                 alert("错误")
@@ -296,188 +348,157 @@
 						</div>
 					</div>
 					<div class="register3">
+
 						<div class="dliver">
 							<div class="tips3">
-								<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传车辆照片</p>
+								<p style="font-size:30px; align-content: center; text-align: center; color: white;">车辆照片</p>
 							</div>
 						</div>
 						<div>
 							<form>
 								<div id="page">
 									<div class="wrap-custom-file">
-										<input type="file" required name="image1" id="image1" accept=".gif, .jpg, .png" />
-										<label for="image1">
-											<span ng-click="commit()">点击上传正面照片</span>
+
+										<label for="image1" id="Im1">
+										       <span>车辆正面照片</span>
 											<i class="fa fa-plus-circle"></i>
 										</label>
 									</div>
 
 									<div class="wrap-custom-file">
-										<input type="file" required name="image2" id="image2" accept=".gif, .jpg, .png" />
-										<label for="image2">
-											<span>点击上传左侧照片</span>
+
+										<label for="image2" id="Im2">
+											<span>车辆左侧照片</span>
 											<i class="fa fa-plus-circle"></i>
 										</label>
 									</div>
 
 									<div class="wrap-custom-file">
-										<input type="file" required name="image3" id="image3" accept=".gif, .jpg, .png" />
-										<label for="image3">
-											<span>点击上传右侧照片</span>
+
+										<label for="image3" id="Im3">
+										<span>	右侧照片</span>
 											<i class="fa fa-plus-circle"></i>
 										</label>
 									</div>
 
 									<div class="wrap-custom-file">
-										<input type="file" required name="image4" id="image4" accept=".gif, .jpg, .png" />
-										<label for="image4">
-											<span>点击上传车尾照片</span>
+
+										<label for="image4" id="Im4">
+										<span> 车尾照片</span>
 											<i class="fa fa-plus-circle"></i>
 										</label>
 									</div>
 
 								</div>
-								<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="judgeinf(1,4,0,1)">下一步</button>
 							</form>
 
 
 						</div>
+
+
+						<div class="container register">
+							<div class="register1">
+								<div class="dliver">
+									<div class="tips1">
+										<p style="font-size:30px; align-content: center; text-align: center; color: white;">身份证</p>
+									</div>
+								</div>
+								<div id="page">
+									<div class="wrap-custom-file" style="margin-right: 60px;">
+
+										<label for="image5" id="Im5">
+											<span>身份证正面照片</span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+
+									<div class="wrap-custom-file" style="margin-left: 60px;">
+
+										<label for="image6" id="Im6">
+											<span>身份证背面照片</span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="register2">
+								<div class="dliver">
+									<div class="tips2">
+										<p style="font-size:30px; align-content: center; text-align: center; color: white;">驾驶证</p>
+									</div>
+								</div>
+								<div id="page">
+									<div class="wrap-custom-file" style="margin-right: 60px;">
+
+										<label for="image7" id="Im7">
+											<span></span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+
+									<div class="wrap-custom-file">
+
+										<label for="image8" id="Im8">
+											<span></span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+									<div class="wrap-custom-file" style="margin-left: 60px;">
+
+										<label for="image9" id="Im9">
+											<span></span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="register3">
+								<div class="dliver">
+									<div class="tips3">
+										<p style="font-size:30px; align-content: center; text-align: center; color: white;">行驶证</p>
+									</div>
+								</div>
+								<div id="page">
+									<div class="wrap-custom-file" style="margin-right: 60px;">
+
+										<label for="image10" id="Im10">
+											<span>行驶证照片</span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+
+									<div class="wrap-custom-file" style="margin-left: 60px;">
+
+										<label for="image11" id="Im11">
+											<span>行驶证照片</span>
+											<i class="fa fa-plus-circle"></i>
+										</label>
+									</div>
+
+								</div>
+
+								</form>
+							</div>
+
+
 					</div>
+
+
+
 				</div>
 
 
 			</div>
 
-			<div role="tabpanel" class="tab-pane fade" id="st1">
-
-
-				<div class="container register">
-					<div class="register1">
-						<div class="dliver">
-							<div class="tips1">
-								<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传身份证</p>
-							</div>
-						</div>
-						<div id="page">
-							<div class="wrap-custom-file" style="margin-right: 60px;">
-								<input type="file" required name="image1" id="image5" accept=".gif, .jpg, .png" />
-								<label for="image5">
-									<span>点击上传身份证正面照片</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-
-							<div class="wrap-custom-file" style="margin-left: 60px;">
-								<input type="file" required name="image2" id="image6" accept=".gif, .jpg, .png" />
-								<label for="image6">
-									<span>点击上传身份证背面照片</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="register2">
-						<div class="dliver">
-							<div class="tips2">
-								<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传驾驶证</p>
-							</div>
-						</div>
-						<div id="page">
-							<div class="wrap-custom-file" style="margin-right: 60px;">
-								<input type="file" required name="image1" id="image7" accept=".gif, .jpg, .png" />
-								<label for="image7">
-									<span>点击上传</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-
-							<div class="wrap-custom-file">
-								<input type="file" required name="image2" id="image8" accept=".gif, .jpg, .png" />
-								<label for="image8">
-									<span>点击上传</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-							<div class="wrap-custom-file" style="margin-left: 60px;">
-								<input type="file" required name="image2" id="image9" accept=".gif, .jpg, .png" />
-								<label for="image9">
-									<span>点击上传</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="register3">
-						<div class="dliver">
-							<div class="tips3">
-								<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传行驶证</p>
-							</div>
-						</div>
-						<div id="page">
-							<div class="wrap-custom-file" style="margin-right: 60px;">
-								<input type="file"  required name="image1" id="image10" accept=".gif, .jpg, .png" />
-								<label for="image10">
-									<span>点击上传行驶证照片</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-
-							<div class="wrap-custom-file" style="margin-left: 60px;">
-								<input type="file" required name="image2" id="image11" accept=".gif, .jpg, .png" />
-								<label for="image11">
-									<span>点击上传行驶证照片</span>
-									<i class="fa fa-plus-circle"></i>
-								</label>
-							</div>
-
-						</div>
-						<div class="checkbox" style="align-content: center; text-align: center;">
-							<label>
-								<input type="checkbox" onclick="allow(this)"> 我同意<a href="">《xxx协议》</a>大大大
-							</label>
-						</div>
-						<button id="next" disabled="false" type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;"  ng-click="commit(5,6,1);commit(7,9,2);commit(10,11,3,2)">下一步</button>
-						</form>
-					</div>
-				</div>
 
 
 
 
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="st2">
 
-
-				<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="uploadStatus">
-					<div style=" ">
-						<img src="../img/success.jpg" style="height: 300px;" class="center-block">
-					</div>
-					<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
-						<p>提交成功！</p>
-						<p>请耐心等待审核！</p>
-					</div>
-					<div class="text-center" style="margin-top: 30px; font-size: 20px;">
-						<a style="margin-right: 100px;  color:red;text-decoration: none;" href="./my.html">返回首页</a><a style="margin-left: 100px;  color:red;text-decoration: none;" href="">继续查看</a>
-					</div>
-				</div>
-				<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="!uploadStatus">
-
-					<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
-						<p>正在提交！</p>
-						<p>请耐心等待！</p>
-					</div>
-
-				</div>
-
-
-
-			</div>
-			<div role="tabpanel" class="tab-pane fade" id="st4">
-
-
-				4
-			</div>
 		</div>
 			<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
 		</div>

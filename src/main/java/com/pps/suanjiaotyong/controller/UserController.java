@@ -18,10 +18,7 @@ import com.pps.suanjiaotyong.util.MessageUtil;
 import com.pps.suanjiaotyong.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -169,6 +166,18 @@ public class UserController {
 
 
     }
+
+    //修改审核资料-司机
+    @RequestMapping("/user/save1/update")
+    public Result updateShenhe(@RequestBody TbDriver tbDriver){
+
+        tbDriver.setStatus(1);
+        MyLog.logger.info("审核资料："+tbDriver);
+        return  driverService.updateShenhe(tbDriver);
+
+
+    }
+
     //提交审核资料-个人
     @RequestMapping("/user/save2")
     public Result saveShenhe2(@RequestBody TbPerson tbPerson){
@@ -179,6 +188,17 @@ public class UserController {
 
 
     }
+    //修改审核资料-个人
+    @RequestMapping("/user/save2/update")
+    public Result updateShenhe2(@RequestBody TbPerson tbPerson){
+
+        tbPerson.setStatus(1);
+        MyLog.logger.info("审核资料："+tbPerson);
+        return  perService.update(tbPerson);
+
+
+    }
+
     //提交审核资料-企业
     @RequestMapping("/user/save3")
     public Result saveShenhe3(@RequestBody TbCompany tbCompany){
@@ -186,21 +206,48 @@ public class UserController {
         tbCompany.setStatus(1);
         MyLog.logger.info("审核资料："+tbCompany);
         return  companyService.save(tbCompany);
-
-
     }
+    //修改审核资料-企业
+    @RequestMapping("/user/save3/update")
+    public Result updateShenhe3(@RequestBody TbCompany tbCompany){
 
+        tbCompany.setStatus(1);
+        MyLog.logger.info("审核资料："+tbCompany);
+        return  companyService.update(tbCompany);
+    }
 
 
     //更新用户资料
     @RequestMapping("/user/update")
-    public Result updateUser(@RequestBody TbUser tbUser){
+    public Result updateUser(@RequestBody TbUser tbUser,HttpServletRequest request){
         MyLog.logger.info("更新用户信息："+tbUser);
 
-     return     userService.update(tbUser);
+        Result update = userService.update(tbUser);
+
+        request.getSession().setAttribute("userInf",update.getData());
+
+        return  update;
+
+    }
+
+    @RequestMapping("/getUserById/{id}")
+    public TbUser getOneById(@PathVariable("id") int id){
+
+      return     userService.getOneById(id);
+
+    }
+
+    @RequestMapping("/get/peopleInfoById/{id}")
+    public TbPerson  getinfoById(@PathVariable("id") int id){
+
+        return  perService.getOneById(id);
 
 
     }
+
+
+
+
 
     //退出登录
     @RequestMapping("/user/logout")

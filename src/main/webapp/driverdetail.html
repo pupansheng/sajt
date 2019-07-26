@@ -1,69 +1,82 @@
 <html style="min-width: 1200px;">
 	<head>
 		<meta charset="utf-8">
+
 		<link rel="stylesheet" type="text/css" href="/css/transform.css" />
 		<link href="bootstrap.css" rel="stylesheet">
 		<script src="jquery.min.js"></script>
 		<script src="bootstrap.min.js"></script>
 		<script src="angular.min.js"></script>
 
-
-
-
 		<script>
+
             var app=angular.module("myApp",[]);
             app.controller("companyController",function ($http,$scope,$interval,$location) {
 
                 $scope.entityList = [];
-                $scope.entity={};
-                $scope.user={};
+                $scope.entity = {};
+                $scope.user = {};
 
-                $scope.getLogin=function () {
+                $scope.getLogin = function () {
                     $http.get("/getLogin").success(function (response) {
-                        if(response!=null){
-                            $scope.user=response;
+                        if (response != null) {
+                            $scope.user = response;
                         }
                     })
 
                 }
 
-                $scope.receiverpeoples=[];
+                $scope.driver={};
+
+                $scope.images=[];
                 $scope.findEntity=function () {
 
-                  var id= $location.search()['id'];
-                  var type=$location.search()['type'];
+                    var id= $location.search()['id'];
 
-                  if(type==2)
-                      $scope.toUrl="/driver/match.html";
-                  else
-                      $scope.toUrl="/list.html";
+                    var type=$location.search()['type'];
 
-                  $http.get("/get/companyPulishById/"+id).success(function (response) {
-                      $scope.entity=response;
+                    if(type==2)
+                        $scope.toUrl="/user/match.html";
+                    else
+                        $scope.toUrl="/list2.html";
 
-                      var a="["+response.receiverpeople+"]";
-					  $scope.receiverpeoples=(JSON.parse(a));
+                    $http.get("/get/driverPulishById/"+id).success(function (response) {
+                        $scope.entity=response;
+
+                        $http.get("/getUserById/"+response.uid).success(function (response) {
+
+                            $http.get("/get/driverInfoById/"+response.userinfoid).success(function (response) {
+                                $scope.driver=response;
+
+                                $scope.images=$scope.driver.carimage.split(",");
+
+                            })
 
 
-                  })
+
+                        })
+
+
+                    })
                 }
 
 
 
-            })
-		</script>
 
+            });
+
+
+
+		</script>
 		<style type="text/css">
 			html {
 				background: lightgrey;
 			}
 		</style>
-
 		<title>用户发布详情</title>
-
 	</head>
-
 	<body ng-app="myApp" ng-controller="companyController" ng-init="findEntity();getLogin()">
+
 
 	<div class="">
 		<div class="superlink" style="background-color:black;height: 100px">
@@ -125,89 +138,72 @@
 
 		<div class="container" style="align-content: center;text-align: center;background-color: white; border-radius: 15px; margin-top: 50px;">
 			<div class="dliver">
-				<div class="tips1">
+				<div class="tips1" style="background-color: #1F73C9;">
 					<p style="font-size:30px; align-content: center; text-align: center; color: white;">详细信息</p>
 				</div>
 			</div>
 			<div class="container">
 				<hr>
 				<table>
-					<tbody style="width: 100%;">
+					<tbody style="width: 100%; ">
 						<tr>
-							<th class="stick1">订单ID:</th>
-							<th class="stick">{{entity.id}}</th>
-							<th class="stick1">订单创建时间:</th>
+							<th class="stick1">发车司机:</th>
+							<th class="stick">{{entity.linkname}}</th>
+							<th class="stick1">信息发布时间:</th>
 							<th class="stick">{{entity.createtime}}</th>
 						</tr>
 						<tr>
-							<th class="stick1">发货人姓名:</th>
+							<th class="stick1">司机姓名:</th>
 							<th class="stick">{{entity.linkname}}</th>
-							<th class="stick1">需要运输车辆类型:</th>
+							<th class="stick1">运输车辆规格:</th>
 							<th class="stick">{{entity.cartype}}</th>
 						</tr>
 						<tr>
-							<th class="stick1">发货人电话:</th>
+							<th class="stick1">司机电话:</th>
 							<th class="stick">{{entity.linkphone}}</th>
-							<th class="stick1">自估费用:</th>
-							<th class="stick">{{entity.assessedPrice}}</th>
+							<th class="stick1">预计价格:</th>
+							<th class="stick">{{entity.price}}</th>
 						</tr>
 						<tr>
-							<th class="stick1">是否开发票:</th>
-							<th class="stick" ng-if="entity.invoice==1">是</th>
-							<th class="stick" ng-if="entity.invoice==0">否</th>
-							<th class="stick1">系统预计运输价格:</th>
-							<th class="stick">{{entity.accountprice}}</th>
-						</tr>
-						<tr>
-							<th class="stick1">发货起始地:</th>
+							<th class="stick1">发车起始地:</th>
 							<th class="stick">{{entity.fromaddress}}</th>
-							<th class="stick1">最迟送达时间:</th>
-							<th class="stick">{{entity.unloadtime}}</th>
-						</tr>
-					</tbody>
-				</table>
-				<hr>
-			</div>
-			
-
-			<div class="container" ng-repeat="(k,v) in receiverpeoples">
-				<table>
-					<tbody>
-						<tr>
-							<th class="stick1">收货人{{k+1}}姓名:</th>
-							<th class="stick">{{v.name}}</th>
-							<th class="stick1">货物长宽高:</th>
-							<th class="stick">{{entity.goodslength}}x{{entity.goodswidth}}x{{entity.goodsheight}}</th>
-						</tr>
-						<tr>
-							<th class="stick1">收货人{{k+1}}电话:</th>
-							<th class="stick">{{v.linkphone}}</th>
-							<th class="stick1">货物的重量:</th>
-							<th class="stick">{{entity.goodsweight}}吨</th>
-						</tr>
-						<tr>
-							<th class="stick1">上货的时间:</th>
-							<th class="stick">{{entity.loadtime}}</th>
-							<th class="stick1">卸货的时间:</th>
-							<th class="stick">{{entity.unloadtime}}</th>
+							<th class="stick1">运输车辆尺寸:</th>
+							<th class="stick">{{entity.carlength}}x{{entity.carwidth}}x{{entity.carheight}}</th>
 						</tr>
 						<tr>
 							<th class="stick1">收货目的地:</th>
 							<th class="stick">{{entity.toaddress}}</th>
-							<th class="stick1">货物的数量:</th>
-							<th class="stick">{{entity.goodsamount}}</th>
+							<th class="stick1">最迟到达时间:</th>
+							<th class="stick">{{entity.unloadtime}}</th>
 						</tr>
+						<tr ng-if="entity.needtype=='零担'">
+							<th class="stick1">途经路线:</th>
+							<th class="stick">{{entity.route}}</th>
+						</tr>
+
 					</tbody>
 				</table>
-				<hr >
+				<hr>
 			</div>
+			<div style="width: auto; height: auto;">
+				<div style="width: 100%; margin: 50px 0 50px">
+					<div style="align-content: flex-start; text-align: left; margin-left: 30px;">
+						<p style="font-size: 20px;font-weight: bolder ;">车辆预览</p>
+					</div>
+				</div>
+				<div class="container">
+					<div class="col-md-2" ng-repeat="x in images"> <img src="{{x}}"  width="100px" height="100px" alt="暂无"></div>
 
+						<p style="line-height: 40px;" >发车时间:<span>{{entity.loadtime}}</span></p>
+						<p style="line-height: 40px;" >运送方式:<span>{{entity.needtype}}</span></p>
+					</div>
+				</div>
+			</div>
 			<div style="margin:100px 0 0 0; height: 100px; align-content: center;">
-				<button class="btn-lg btn-danger" type="button" style="float: right; margin-right: 12%; background-color: #f84e5f; border: 0;">接单</button>
+				<button class="btn-lg btn-danger" type="button" style="float: right; margin-right: 12%; background-color: #f84e5f; border: 0;">确定运输</button>
 				<a class="btn-lg btn-danger" type="button" style="float: right; margin-right: 10px; background-color: #f84e5f; border: 0;" href="{{toUrl}}">返回列表</a>
 			</div>
 		</div>
-
 		<div class="superlink" style="height: 300px;background-color:black; margin-top: 50px;">
 			<div style="float:left; width: 20%; "><br><br>
 				<div class="text-center">
@@ -282,11 +278,8 @@
 					<p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
 					<p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
 					<p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
-
 				</div>
 			</div>
-
 		</div>
-
 	</body>
 </html>

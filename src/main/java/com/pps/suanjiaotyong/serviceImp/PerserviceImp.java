@@ -37,4 +37,29 @@ public class PerserviceImp implements PerService {
 
         return result;
     }
+
+    @Override
+    public TbPerson getOneById(int id) {
+
+
+        return tbPersonMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Result update(TbPerson tbPerson) {
+        Result result=new Result();
+        try{
+
+            tbPersonMapper.updateByPrimaryKeySelective(tbPerson);
+            result.setStatus(true);
+            result.setData(tbPerson);
+        }
+        catch (Exception e){
+
+            result.setStatus(false);
+
+        }
+
+        return result;
+    }
 }

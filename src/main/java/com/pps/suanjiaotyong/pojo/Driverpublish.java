@@ -193,4 +193,29 @@ public class Driverpublish {
     public void setLever(Integer lever) {
         this.lever = lever;
     }
+
+    @Override
+    public String toString() {
+        return "Driverpublish{" +
+                "id='" + id + '\'' +
+                ", uid=" + uid +
+                ", linkname='" + linkname + '\'' +
+                ", linkphone='" + linkphone + '\'' +
+                ", carlength=" + carlength +
+                ", carwidth=" + carwidth +
+                ", carheight=" + carheight +
+                ", carweight=" + carweight +
+                ", needtype='" + needtype + '\'' +
+                ", cartype='" + cartype + '\'' +
+                ", fromaddress='" + fromaddress + '\'' +
+                ", toaddress='" + toaddress + '\'' +
+                ", price=" + price +
+                ", route='" + route + '\'' +
+                ", loadtime=" + loadtime +
+                ", unloadtime=" + unloadtime +
+                ", createtime=" + createtime +
+                ", status=" + status +
+                ", lever=" + lever +
+                '}';
+    }
 }

@@ -51,12 +51,33 @@
             $scope.$watch("user.province",function (n,o) {
                 $scope.citys=$scope.parts[n];
             })
+            $("#second").addClass("on");
+            $("#third").addClass("on");
 
             $scope.getLogin=function () {
 
                 $http.get("../getLogin").success(function (response) {
                     if(response!=null){
+
                         $scope.user2=response;
+                        $http.get("/get/peopleInfoById/"+response.userinfoid).success(function (response) {
+
+                            $scope.user=response;
+
+                            var ss2;
+                            ss2=$scope.user.idcartimageurl;
+                            var a= ss2.split(",");
+                            for(var i=5;i<=6;i++){
+
+
+                                $("#Im"+i).addClass('file-ok');
+                                $("#Im"+i).css('background-image', 'url(/' + a[i-5] + ')');
+
+							}
+
+
+                        })
+
                     }
                 })
 
@@ -82,12 +103,11 @@
                         $("#third").addClass("on");
 
                         var a = $timeout(function(){
-                            var ss2= $scope.strLink(5,6);
+                            var ss2= $scope.strLink(4,5);
                             $scope.user.idcartimageurl=ss2;
-                            $http.post("./save2",$scope.user).success(function (response) {
+                            $http.post("./save2/update",$scope.user).success(function (response) {
                                 if(response.status){
                                     $scope.user2.userinfoid=response.data.id;
-                                    $scope.user2.status=1;
                                     $http.post("./update",$scope.user2).success(function (response) {
                                         if(!response.status)
                                             alert("错误")
@@ -252,6 +272,7 @@
 								<div class="col-sm-10">
 									<input type="text" id="inf5" required class="form-control" id="" placeholder="请输入电话号码" ng-model="user.phone">
 								</div>
+
 							</div>
 						</form>
 					</div>
@@ -260,65 +281,33 @@
 				<div class="register1">
 					<div class="dliver">
 						<div class="tips1">
-							<p style="font-size:30px; align-content: center; text-align: center; color: white;">上传身份证</p>
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">身份证</p>
 						</div>
 					</div>
 					<div id="page">
 						<div class="wrap-custom-file" style="margin-right: 60px;">
-							<input type="file" required name="image1" id="image5" accept=".gif, .jpg, .png" />
-							<label for="image5">
-								<span>点击上传身份证正面照片</span>
+
+							<label for="image5" id="Im5">
+								<span>身份证正面照片</span>
 								<i class="fa fa-plus-circle"></i>
 							</label>
 						</div>
 
 						<div class="wrap-custom-file" style="margin-left: 60px;">
-							<input type="file" required name="image2" id="image6" accept=".gif, .jpg, .png" />
-							<label for="image6">
-								<span>点击上传身份证背面照片</span>
+
+							<label for="image6" id="Im6" >
+								<span>身份证背面照片</span>
 								<i class="fa fa-plus-circle"></i>
 							</label>
 						</div>
 					</div>
 				</div>
 
-				<div class="checkbox" style="align-content: center; text-align: center;">
-					<label>
-						<input type="checkbox" onclick="allow(this)"> 我同意<a href="">《xxx协议》</a>大大大
-					</label>
-				</div>
-				<button id="next" disabled="false" type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;"  ng-click="commit(5,6,1,1)">下一步</button>
+
 			</div>
 
 		</div>
 
-		<div role="tabpanel" class="tab-pane fade" id="st1">
-
-
-			<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="uploadStatus">
-				<div style=" ">
-					<img src="../img/success.jpg" style="height: 300px;" class="center-block">
-				</div>
-				<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
-					<p>提交成功！</p>
-					<p>请耐心等待审核！</p>
-				</div>
-				<div class="text-center" style="margin-top: 30px; font-size: 20px;">
-					<a style="margin-right: 100px;  color:red;text-decoration: none;" href="./my.html">返回首页</a><a style="margin-left: 100px;  color:red;text-decoration: none;" href="">继续查看</a>
-				</div>
-			</div>
-			<div class="container " style="height: 40%; background-color: #f6f6f6;" ng-if="!uploadStatus">
-
-				<div id="" style="border: 2px solid green; width: 30%; margin-top: 50px; font-size: 15px;" class="center-block text-center">
-					<p>正在提交！</p>
-					<p>请耐心等待！</p>
-				</div>
-
-			</div>
-
-
-
-		</div>
 
 
 

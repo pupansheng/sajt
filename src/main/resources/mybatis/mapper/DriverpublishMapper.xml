@@ -430,4 +430,88 @@
       lever = #{lever,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="selectByFromAddress" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    SELECT
+    `id`,
+    `uid`,
+    `linkName`,
+    `linkPhone`,
+    `carLength`,
+    `carWidth`,
+    `carHeight`,
+    `carWeight`,
+    `needType`,
+    `carType`,
+    `fromAddress`,
+    `toAddress`,
+    `price`,
+    `route`,
+    `loadTime`,
+    `unLoadTime`,
+    `createTime`,
+    `status`,
+    `lever`
+    FROM
+    `sajt`.`driverpublish`
+    WHERE fromAddress like #{address};
+
+  </select>
+
+  <select id="selectByToAddress" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    SELECT
+    `id`,
+    `uid`,
+    `linkName`,
+    `linkPhone`,
+    `carLength`,
+    `carWidth`,
+    `carHeight`,
+    `carWeight`,
+    `needType`,
+    `carType`,
+    `fromAddress`,
+    `toAddress`,
+    `price`,
+    `route`,
+    `loadTime`,
+    `unLoadTime`,
+    `createTime`,
+    `status`,
+    `lever`
+    FROM
+    `sajt`.`driverpublish`
+    WHERE toAddress like #{address};
+  </select>
+
+  <select id="selectByRouteAddress" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    SELECT
+    `id`,
+    `uid`,
+    `linkName`,
+    `linkPhone`,
+    `carLength`,
+    `carWidth`,
+    `carHeight`,
+    `carWeight`,
+    `needType`,
+    `carType`,
+    `fromAddress`,
+    `toAddress`,
+    `price`,
+    `route`,
+    `loadTime`,
+    `unLoadTime`,
+    `createTime`,
+    `status`,
+    `lever`
+    FROM
+    `sajt`.`driverpublish`
+    WHERE route like #{address};
+  </select>
+
 </mapper>

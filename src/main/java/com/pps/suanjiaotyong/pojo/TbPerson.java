@@ -7,24 +7,13 @@ public class TbPerson {
 
     private String province;
 
-    private String city;
-
-    private String idcartimageurl;
+    private String phone;
 
     private String address;
 
-    @Override
-    public String toString() {
-        return "TbPerson{" +
-                "id=" + id +
-                ", realname='" + realname + '\'' +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", idcartimageurl='" + idcartimageurl + '\'' +
-                ", address='" + address + '\'' +
-                ", status=" + status +
-                '}';
-    }
+    private String city;
+
+    private String idcartimageurl;
 
     private Integer status;
 
@@ -52,6 +41,22 @@ public class TbPerson {
         this.province = province == null ? null : province.trim();
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
     public String getCity() {
         return city;
     }
@@ -66,14 +71,6 @@ public class TbPerson {
 
     public void setIdcartimageurl(String idcartimageurl) {
         this.idcartimageurl = idcartimageurl == null ? null : idcartimageurl.trim();
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
     }
 
     public Integer getStatus() {
