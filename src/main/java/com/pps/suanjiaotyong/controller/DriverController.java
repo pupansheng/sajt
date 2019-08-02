@@ -1,17 +1,16 @@
 package com.pps.suanjiaotyong.controller;
 
 import com.pps.suanjiaotyong.MyLog;
-import com.pps.suanjiaotyong.pojo.Driverpublish;
-import com.pps.suanjiaotyong.pojo.TbDriver;
+import com.pps.suanjiaotyong.pojo.*;
+import com.pps.suanjiaotyong.pojo.group.Result;
 import com.pps.suanjiaotyong.service.DriverPulishService;
 import com.pps.suanjiaotyong.service.DriverService;
+import com.pps.suanjiaotyong.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +22,15 @@ import java.util.Map;
  * @Vestion 1.0
  **/
 @RestController
+@CrossOrigin
 public class DriverController {
 
     @Autowired
     private DriverPulishService driverPulishService;
     @Autowired
     private DriverService driverService;
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping("/driver/pulish/save")
     public Map save(@RequestBody Driverpublish driverpublish){
@@ -84,6 +86,24 @@ public class DriverController {
 
     }
 
+    //司机接单
+    @RequestMapping("/driver/jiedan")
+    public Result jiedan(@RequestBody Companypublish companypublish, HttpServletRequest request){
+
+        TbUser user=(TbUser)request.getSession().getAttribute("userInf");
+        if(user.getUsertype()!=2)
+            return  null;
+        MyLog.logger.info("companypulish:"+companypublish+"user:"+user);
+        return  orderService.save(companypublish,user);
+
+    }
+    //乘客提醒司机
+    @RequestMapping("/driver/tixing")
+    public  void   tixing(){
+
+
+
+    }
 
 
 }

@@ -1,13 +1,11 @@
 package com.pps.suanjiaotyong.serviceImp;
 
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pps.suanjiaotyong.MyLog;
 import com.pps.suanjiaotyong.mapper.CompanypublishMapper;
-import com.pps.suanjiaotyong.pojo.Companypublish;
-import com.pps.suanjiaotyong.pojo.CompanypublishExample;
-import com.pps.suanjiaotyong.pojo.CompanypublishWithBLOBs;
-import com.pps.suanjiaotyong.pojo.TbDriver;
+import com.pps.suanjiaotyong.pojo.*;
 import com.pps.suanjiaotyong.pojo.group.Result;
 import com.pps.suanjiaotyong.service.CompanyPulishService;
 import com.pps.suanjiaotyong.util.IdWorker;
@@ -168,7 +166,7 @@ public class CompanyPulishServiceImp implements CompanyPulishService {
 
         CompanypublishExample.Criteria criteria = example.createCriteria();
 
-        if(companypublish!=null&&!companypublish.getFromaddress().equals("")&&!companypublish.getToaddress().equals("")){
+        if(companypublish!=null&&companypublish.getFromaddress()!=null&&!companypublish.getToaddress().equals("")){
 
 
             String formAddress="",toAddress="";
@@ -187,26 +185,47 @@ public class CompanyPulishServiceImp implements CompanyPulishService {
 
 
             //根据起点匹配起点位置
+            x:
             for(int i=0;i<f1;i++){
 
-                criteria.andFromaddressLike(formAddress.substring(0,f1-i)+"%");
-                List<Companypublish> list= companypublishMapper.selectByExample(example);
-                if(list!=null&&list.size()>0){
+                CompanypublishExample ex=new CompanypublishExample();
+                CompanypublishExample.Criteria criteria2 = ex.createCriteria();
+                criteria2.andFromaddressLike(formAddress.substring(0, f1 - i)+"%");
+                List<Companypublish> list = companypublishMapper.selectByExample(ex);
+
+                if(list!=null&&list.size()>0){//找到最佳出发起点
+
+
                     formAddress2=formAddress.substring(0, f1 - i);
-                    break;
+                    MyLog.logger.info("第"+i+"次循环==》fromaddress2="+formAddress2);
+
+                     for(int i2=0;i2<f2;i2++){//然后找根据这个最佳起点 匹配最佳终点 若匹配到 则结束 不然 继续回到匹配起点哪里
+
+                         toAddress2=toAddress.substring(0, f2 - i2);
+
+                         CompanypublishExample ex2 = new CompanypublishExample();
+                         CompanypublishExample.Criteria criteria22 = ex2.createCriteria();
+
+                         if(!StringUtils.isEmpty(formAddress2)&&!StringUtils.isEmpty(toAddress2)) {
+                             criteria22.andToaddressLike(toAddress.substring(0, f2 - i2) + "%");
+                             criteria22.andFromaddressLike(formAddress2 + "%");
+                         }
+                         MyLog.logger.info("第"+i+"-"+i2+"次循环==》toddress2="+toAddress2);
+
+                         List<Companypublish> list2 = companypublishMapper.selectByExample(ex2);
+                         if(list2!=null&&list2.size()>0){
+
+                             break  x;
+
+                         }
+                     }
+
                 }
 
-            }
+                formAddress2="";
+                toAddress2="";
 
-            //根据最佳匹配终点地址
-            for(int i=0;i<f2;i++){
-                criteria.andToaddressLike(toAddress.substring(0,f2-i)+"%");
-                List<Companypublish> list= companypublishMapper.selectByExample(example);
-                if(list!=null&&list.size()>0){
-                    toAddress2=toAddress.substring(0, f2 - i);
-                    break;
-                }
-            }
+           }
 
 
             if(formAddress2.equals("")||toAddress2.equals("")){
@@ -226,9 +245,7 @@ public class CompanyPulishServiceImp implements CompanyPulishService {
 
         }
 
-
         if(companypublish!=null){
-
 
             if(companypublish.getGoodsweight()!=null){
 

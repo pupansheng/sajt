@@ -155,93 +155,14 @@ public class DriverPulishServiceImp implements DriverPulishService {
         Map map=new HashMap();
 
 
-        if(driverpublish.getNeedtype()!=null&&!driverpublish.getNeedtype().equals("")){
+        /*if(driverpublish.getNeedtype()!=null&&!driverpublish.getNeedtype().equals("")){
 
             criteria.andNeedtypeEqualTo(driverpublish.getNeedtype());
-        }
-
-
-        //整车匹配
-
-        if(driverpublish!=null&&driverpublish.getNeedtype().equals("整车")){
-
-            String formAddress="",toAddress="";
-            String formAddress2="",toAddress2="";
-
-            if(driverpublish.getFromaddress()!=null&&!driverpublish.getFromaddress().equals("")){
-                formAddress=driverpublish.getFromaddress();
-            }
-            if(driverpublish.getToaddress()!=null&&!driverpublish.getToaddress().equals("")){
-                toAddress=driverpublish.getToaddress();
-            }
-
-            int f1=formAddress.length();
-            int f2=toAddress.length();
-
-
-            //根据起点匹配起点位置
-            for(int i=0;i<f1;i++){
-
-                List<TbDriver> list= driverpublishMapper.selectByFromAddress(formAddress.substring(0, f1 - i)+"%");
-                if(list!=null&&list.size()>0){
-                    formAddress2=formAddress.substring(0, f1 - i);
-                    break;
-                }
-
-             }
-
-            //根据最佳匹配终点地址
-             for(int i=0;i<f2;i++){
-                List<TbDriver> list= driverpublishMapper.selectByToAddress(toAddress.substring(0, f2 - i)+"%");
-                if(list!=null&&list.size()>0){
-                 toAddress2=toAddress.substring(0, f2 - i);
-                    break;
-                }
-             }
-
-
-
-              if(formAddress2.equals("")||toAddress2.equals("")){
-
-                map.put("rows",null);
-                map.put("totalItems",0);
-                return  map;
-
-               }
-
-            MyLog.logger.info("匹配出发地址最佳-整车："+formAddress2);
-            MyLog.logger.info("匹配终点地址最佳-整车："+toAddress2);
-
-                criteria.andFromaddressLike(formAddress2+"%");
-                criteria.andToaddressLike(toAddress2+"%");
-
-
-            if(driverpublish.getLinkname()!=null && driverpublish.getLinkname().length()>0){
-                criteria.andLinknameLike("%"+driverpublish.getLinkname()+"%");
-            }
-            if(driverpublish.getCartype()!=null && driverpublish.getCartype().length()>0){
-                criteria.andCartypeLike("%"+driverpublish.getCartype()+"%");
-            }
-            if(driverpublish.getLoadtime()!=null){
-                criteria.andLoadtimeGreaterThanOrEqualTo(driverpublish.getLoadtime());
-            }
-            if(driverpublish.getUnloadtime()!=null){
-                criteria.andUnloadtimeLessThanOrEqualTo(driverpublish.getUnloadtime());
-            }
-            if(driverpublish.getCarweight()!=null){
-
-                criteria.andCarheightLessThanOrEqualTo(driverpublish.getCarweight());
-
-            }
-
-
 
         }
-
-
-
+*/
         //零担匹配
-        if(driverpublish!=null&&driverpublish.getNeedtype().equals("零担")){
+        if(driverpublish!=null&&driverpublish.getNeedtype()!=null&&driverpublish.getNeedtype().equals("零担")){
 
 
 
@@ -259,41 +180,105 @@ public class DriverPulishServiceImp implements DriverPulishService {
             boolean flag=false;
 
            //根据最佳的匹配出发地址
+            x:
             for(int i=0;i<f1;i++){
+
 
                 List<TbDriver> list= driverpublishMapper.selectByFromAddress(formAddress.substring(0, f1 - i)+"%");
                 if(list!=null&&list.size()>0){
+
                     formAddress2=formAddress.substring(0, f1 - i);
-                    break;
+
+
+                    for(int i2=0;i2<f2;i2++){//然后找根据这个最佳起点 匹配最佳终点 若匹配到 则结束 不然 继续回到匹配起点哪里
+
+                        List<TbDriver> list2= driverpublishMapper.selectByToAddress(toAddress.substring(0, f2 - i2)+"%");
+                        if(list2!=null&&list2.size()>0){
+
+                            toAddress2=toAddress.substring(0, f2 - i2);
+                            DriverpublishExample queryEx=new DriverpublishExample();
+                            DriverpublishExample.Criteria criteria1 = queryEx.createCriteria();
+
+                            if(!formAddress2.equals("")&&!toAddress2.equals("")) {
+
+                                criteria1.andFromaddressLike(formAddress2 + "%");
+                                criteria1.andToaddressLike(toAddress2 + "%");
+                            }
+                            List<Driverpublish> driverpublishes = driverpublishMapper.selectByExample(queryEx);
+                            if(driverpublishes!=null&&driverpublishes.size()>0){
+                                break x
+                                        ;
+                            }
+                        }
+                    }
+
+
                 }
 
-            }
+                formAddress2="";
+                toAddress2="";
+
+         }
+
             MyLog.logger.info("匹配出发地址最佳-零担："+formAddress2);
 
-            //根据最佳匹配终点地址
-            for(int i=0;i<f2;i++){
-                List<TbDriver> list= driverpublishMapper.selectByToAddress(toAddress.substring(0, f2 - i)+"%");
-                if(list!=null&&list.size()>0){
-                    toAddress2=toAddress.substring(0, f2 - i);
-                    break;
-                }
-            }
+
             MyLog.logger.info("匹配终点地址最佳-零担："+toAddress2);
             //如果终点匹配不到 则中途经路线找 若找不到 则返回空 表示没有类似路线的
-            if(toAddress2.equals("")){
 
+
+
+            if(toAddress2.equals("")){
                  flag=true;
-                for(int i=0;i<f2;i++){
-                    List<TbDriver> list= driverpublishMapper.selectByRouteAddress("%"+toAddress.substring(0, f2 - i)+"%");
+
+
+
+
+                y:
+                for(int i=0;i<f1;i++){
+
+
+                    List<TbDriver> list= driverpublishMapper.selectByFromAddress(formAddress.substring(0, f1 - i)+"%");
                     if(list!=null&&list.size()>0){
-                        toAddress2=toAddress.substring(0, f2 - i);
-                        break;
+
+                        formAddress2=formAddress.substring(0, f1 - i);
+
+
+                        for(int i2=0;i2<f2;i2++){//然后找根据这个最佳起点 匹配最佳终点 若匹配到 则结束 不然 继续回到匹配起点哪里
+
+                            List<TbDriver> list2= driverpublishMapper.selectByToAddress(toAddress.substring(0, f2 - i2)+"%");
+                            if(list2!=null&&list2.size()>0){
+
+                                toAddress2=toAddress.substring(0, f2 - i2);
+                                DriverpublishExample queryEx=new DriverpublishExample();
+                                DriverpublishExample.Criteria criteria1 = queryEx.createCriteria();
+
+                                if(!formAddress2.equals("")&&!toAddress2.equals("")) {
+
+                                    criteria1.andFromaddressLike(formAddress2 + "%");
+                                    criteria1.andRouteLike("%"+toAddress2 + "%");
+
+                                }
+                                List<Driverpublish> driverpublishes = driverpublishMapper.selectByExample(queryEx);
+                                if(driverpublishes!=null&&driverpublishes.size()>0){
+                                    break y;
+                                }
+                            }
+                        }
+
+
                     }
+
+                    formAddress2="";
+                    toAddress2="";
+
                 }
+
 
                 MyLog.logger.info("匹配终点地址最佳(途经)-零担："+toAddress2);
 
             }
+
 
             if(formAddress2.equals("")||toAddress2.equals("")){
 
@@ -314,11 +299,103 @@ public class DriverPulishServiceImp implements DriverPulishService {
                 criteria.andToaddressLike(toAddress2+"%");
             }
 
-
             if(driverpublish.getLinkname()!=null && driverpublish.getLinkname().length()>0){
                 criteria.andLinknameLike("%"+driverpublish.getLinkname()+"%");
             }
 
+            if(driverpublish.getCartype()!=null && driverpublish.getCartype().length()>0){
+                criteria.andCartypeLike("%"+driverpublish.getCartype()+"%");
+            }
+            if(driverpublish.getLoadtime()!=null){
+                criteria.andLoadtimeGreaterThanOrEqualTo(driverpublish.getLoadtime());
+            }
+            if(driverpublish.getUnloadtime()!=null){
+                criteria.andUnloadtimeLessThanOrEqualTo(driverpublish.getUnloadtime());
+            }
+            if(driverpublish.getCarweight()!=null){
+                criteria.andCarheightLessThanOrEqualTo(driverpublish.getCarweight());
+            }
+
+
+
+
+        }
+        else{
+
+            String formAddress="",toAddress="";
+            String formAddress2="",toAddress2="";
+
+            if(driverpublish.getFromaddress()!=null&&!driverpublish.getFromaddress().equals("")){
+                formAddress=driverpublish.getFromaddress();
+            }
+            if(driverpublish.getToaddress()!=null&&!driverpublish.getToaddress().equals("")){
+                toAddress=driverpublish.getToaddress();
+            }
+
+            int f1=formAddress.length();
+            int f2=toAddress.length();
+
+
+            //根据起点匹配起点位置
+            x:
+            for(int i=0;i<f1;i++){
+
+                List<TbDriver> list= driverpublishMapper.selectByFromAddress(formAddress.substring(0, f1 - i)+"%");
+
+                if(list!=null&&list.size()>0){//找到最佳出发起点
+
+                    formAddress2=formAddress.substring(0, f1 - i);
+
+                    for(int i2=0;i2<f2;i2++){//然后找根据这个最佳起点 匹配最佳终点 若匹配到 则结束 不然 继续回到匹配起点哪里
+
+                        List<TbDriver> list2= driverpublishMapper.selectByToAddress(toAddress.substring(0, f2 - i2)+"%");
+                        if(list2!=null&&list2.size()>0){
+
+                            toAddress2=toAddress.substring(0, f2 - i2);
+                            DriverpublishExample queryEx=new DriverpublishExample();
+                            DriverpublishExample.Criteria criteria1 = queryEx.createCriteria();
+
+                            if(!formAddress2.equals("")&&!toAddress2.equals("")) {
+
+                                criteria1.andFromaddressLike(formAddress2 + "%");
+                                criteria1.andToaddressLike(toAddress2 + "%");
+                            }
+                            List<Driverpublish> driverpublishes = driverpublishMapper.selectByExample(queryEx);
+                            if(driverpublishes!=null&&driverpublishes.size()>0){
+                             break x;
+                            }
+                        }
+                    }
+
+                }
+
+
+                formAddress2="";
+                toAddress2="";
+
+
+
+            }
+
+
+            if(formAddress2.equals("")||toAddress2.equals("")){
+
+                map.put("rows",null);
+                map.put("totalItems",0);
+                return  map;
+
+            }
+
+            MyLog.logger.info("匹配出发地址最佳-整车："+formAddress2);
+            MyLog.logger.info("匹配终点地址最佳-整车："+toAddress2);
+
+            criteria.andFromaddressLike(formAddress2+"%");
+            criteria.andToaddressLike(toAddress2+"%");
+
+
+            if(driverpublish.getLinkname()!=null && driverpublish.getLinkname().length()>0){
+                criteria.andLinknameLike("%"+driverpublish.getLinkname()+"%");
+            }
             if(driverpublish.getCartype()!=null && driverpublish.getCartype().length()>0){
                 criteria.andCartypeLike("%"+driverpublish.getCartype()+"%");
             }
@@ -336,10 +413,9 @@ public class DriverPulishServiceImp implements DriverPulishService {
 
         }
 
+
         PageHelper.startPage(pageNum,pageSize);
-
         Page<Driverpublish> page= (Page<Driverpublish>)driverpublishMapper.selectByExample(example);
-
         map.put("rows",page.getResult());
         map.put("totalItems",page.getTotal());
 

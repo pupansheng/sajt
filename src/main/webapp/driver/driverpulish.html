@@ -1,23 +1,37 @@
 <html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../css/transform.css" />
-    <link rel="stylesheet" type="text/css" href="../css/baiduMap.css" />
-    <link rel="stylesheet" type="text/css" href="../css/bar.css" />
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/transform.css" />
+		<link rel="stylesheet" type="text/css" href="../css/baiduMap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bar.css" />
+		<script src="../jquery.min.js"></script>
+
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=fvmUbS74pKoc6RA4jtk5sGy8cvCRIAjC"></script>
+		<script src="../bootstrap.min.js"></script>
+		<script src="../angular.min.js"></script>
+		<style type="text/css">
+			html {
+				min-width: 1200px;
+			}
+
+			a {
+				color: white;
+				text-decoration: none;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function(){
+				$(".dropdown").click(function(){
+					$(".dropdown").toggleClass("open");
+				});
+			});
+		</script>
+		<title>下单</title>
 
 
-
-
-    <script src="../jquery.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=fvmUbS74pKoc6RA4jtk5sGy8cvCRIAjC"></script>
-    <script src="../bootstrap.min.js"></script>
-    <script src="../angular.min.js"></script>
-    <title>下单</title>
-
-
-    <script>
-        var app=angular.module("myApp",[]);
+		<script>
+			var app=angular.module("myApp",[]);
         app.controller("orderController",function ($http,$scope,$timeout) {
 
             $scope.f=[false,false,false]
@@ -245,7 +259,10 @@
 
             $scope.match=function () {
 
-                sessionStorage.setItem("d",JSON.stringify($scope.order))
+
+                var j=JSON.stringify($scope.order);
+
+                sessionStorage.setItem("d",j);
                 location.href="match.html";
 
 
@@ -260,93 +277,91 @@
 
     </script>
 
-</head>
-<body ng-app="myApp" ng-controller="orderController" ng-init="getProvince();getPrice();getLogin()">
+	</head>
+	<body ng-app="myApp" ng-controller="orderController" ng-init="getProvince();getPrice();getLogin()">
 
 
-<div class="">
-    <div class="superlink" style="background-color:black;height: 100px">
-        <div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
-            <img src="/img/logo.png" width="100" height="100"> \
-        </div>
-        <div style="float:left;color: white;margin-right: 200px;">
-            <h2>
-                <a href="">速安交通</a>
-            </h2>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown" style="background-color: black">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu"  >
-                            <li><a href="/driver/driverpulish.html" >司机下单</a></li>
-                            <li><a href="/user/placeanorder.html">客户下单</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
-        </div>
-        <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
-        </div>
+		<div class="">
+			<div class="superlink" style="background-color:black;height: 100px">
+				<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+					<img src="/img/logo.png" width="100" height="100"> \
+				</div>
+				<div style="float:left;color: white;margin-right: 200px;">
+					<h2>
+						<a href="">速安交通</a>
+					</h2>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;">
+					<li class="dropdown" style="background-color: black;list-style: none;">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单<span
+							 class="glyphicon glyphicon-triangle-bottom" style="color: white;"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/driver/driverpulish.html">司机下单</a></li>
+							<li><a href="/user/placeanorder.html">客户下单</a></li>
+						</ul>
+					</li>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+				</div>
 
 
-        <span ng-if="user.id==null">
+				<span ng-if="user.id==null">
 
-             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
-            登录
+					<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;"> <a href="#"
+						 data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>
+							登录/注册
 
-                </a>
+						</a>
 
-             </div>
+					</div>
 
-        </span>
+				</span>
 
-        <span ng-if="user.id!=null">
-           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
-        <a  href="/user/my.html">
-            {{user.username}}，
-         </a>
-               你好！
-       </div>
+				<span ng-if="user.id!=null">
+					<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+						<a href="/user/my.html">
+							<span class="glyphicon glyphicon-user"></span>{{user.username}}，
+						</a>
+						你好！
+					</div>
 
-       </span>
+				</span>
 
-    </div>
+			</div>
 
-</div>
+		</div>
 
 
-<div class="passload">
+		<div class="passload">
 
-    <div class="path">
-        <ul>
-            <li id="sto" class="first on"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>填写基本信息</button></span></li>
-            <li id="st1" class="second"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>信息确认</button></span></li>
-            <li id="st2" class="third"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>录入成功</button></span></li>
-            <!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
+			<div class="path">
+				<ul style="list-style: none;">
+					<li id="sto" class="first on"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled>填写基本信息</button></span></li>
+					<li id="st1" class="second"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled>信息确认</button></span></li>
+					<li id="st2" class="last"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled>录入成功</button></span></li>
+					<!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
             <li id="fifth" class="fifth"><span class="line"></span><span class="arr"></span><span class="txt">上门服务</span></li>
             <li id="last" class="last"><span class="line"></span><span class="arr"></span><span class="txt">服务完成</span></li>-->
-        </ul>
-    </div>
+				</ul>
+			</div>
 
-</div>
-
-
-<div ng-if="f[0]"><!-- 第一步 -->
-
-    <div class="container register">
+		</div>
 
 
-        <!--	<div class="register1">
+		<div ng-if="f[0]">
+			<!-- 第一步 -->
+
+			<div class="container register">
+
+
+				<!--	<div class="register1">
                 <div class="dliver">
                     <div class="tips1">
                         <p style="font-size:30px; align-content: center; text-align: center; color: white;">选择城市以及所需车辆</p>
@@ -392,394 +407,398 @@
 
                 </div>
             </div>-->
-        <div class="register2">
-            <div class="dliver">
-                <div class="tips2">
-                    <p style="font-size:30px; align-content: center; text-align: center; color: white;">司机发单信息</p>
-                </div>
-            </div>
-            <div style="margin-top: 30px; width: 95%;">
-                <form class="form-horizontal" role="form" style="margin-left:10%;">
+				<div class="register2">
+					<div class="dliver">
+						<div class="tips2">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">司机发单信息</p>
+						</div>
+					</div>
+					<div style="margin-top: 30px; width: 95%;">
+						<form class="form-horizontal" role="form" style="margin-left:10%;">
 
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">司机姓名</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="order.linkname">
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">司机姓名</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="order.linkname">
+								</div>
+							</div>
 
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">联系电话</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="order.linkphone">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">货车长度</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="2" placeholder="请输入货车长度" ng-model="order.carlength">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">货车宽度</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="3" placeholder="请输入货车宽度" ng-model="order.carwidth">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">货车高度</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="4" placeholder="请输入货车高度" ng-model="order.carheight">
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">联系电话</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="order.linkphone">
+								</div>
+							</div>
 
 
-
-
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">货车载重</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="请输入货车载重" ng-model="order.carweight">
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货车长度</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="2" placeholder="请输入货车长度" ng-model="order.carlength">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货车宽度</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="3" placeholder="请输入货车宽度" ng-model="order.carwidth">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货车高度</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="4" placeholder="请输入货车高度" ng-model="order.carheight">
+								</div>
+							</div>
 
 
 
-                  <!--  <div class="form-group">
+
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货车载重</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入货车载重" ng-model="order.carweight">
+								</div>
+							</div>
+
+
+
+							<!--  <div class="form-group">
                         <label for="" class="col-sm-2 control-label">价格</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="" placeholder="请输入价格" ng-model="order.price">
                         </div>
                     </div>-->
 
-                    <div class="form-group">
-                        <label for="" class="col-md-2 control-label">服务类型</label>
-                        <div class="col-sm-8">
-                            <select ng-model="order.needtype" class="form-control">
-                                <option >整车</option>
-                                <option >零担</option>
-                            </select>
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="" class="col-md-2 control-label">服务类型</label>
+								<div class="col-sm-8">
+									<select ng-model="order.needtype" class="form-control">
+										<option>整车</option>
+										<option>零担</option>
+									</select>
+								</div>
+							</div>
 
-                    <div class="form-group" >
-                        <label for="exampleInputEmail1" class="col-sm-2 control-label">货车车型</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" required ng-model="order.cartype">
-                                <option ng-repeat="(v,k) in cartypes">{{k.name}}</option>
-                            </select>
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="col-sm-2 control-label">货车车型</label>
+								<div class="col-sm-8">
+									<select class="form-control" required ng-model="order.cartype">
+										<option ng-repeat="(v,k) in cartypes">{{k.name}}</option>
+									</select>
+								</div>
+							</div>
 
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">装货时间</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" id="6" placeholder="请输入装货时间" ng-model="order.loadtime">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">卸货时间(预计)</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" id="7" placeholder="请输入卸货时间" ng-model="order.unloadtime">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group" >
-                        <label for="" class="col-sm-2 control-label">起始地址</label>
-                        <div class="col-sm-8">
-                            <div id="r-result"><input ng-model="order.fromaddress" type="text" id="from" size="20" placeholder="输入起始地址" style="width:200px;" /></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" >
-                        <label for="" class="col-sm-2 control-label">终点地址</label>
-                        <div class="col-sm-8">
-                            <div id="r-result"><input ng-model="order.toaddress" type="text" id="to" size="20" placeholder="输入终点地址" style="width:200px;" /></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-if="order.needtype=='零担'">
-                        <label for="" class="col-sm-2 control-label">途经站点</label>
-                        <button ng-click="addRoute()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button ng-click="minusRoute()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-                        <div class="col-sm-8" >
-                            <input type="text" class="form-control" placeholder="(途经站点{{k+1}})" ng-model="x.name"  ng-repeat="(k,x) in routess">
-                        </div>
-                    </div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">装货时间</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control" id="6" placeholder="请输入装货时间" ng-model="order.loadtime">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">卸货时间(预计)</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control" id="7" placeholder="请输入卸货时间" ng-model="order.unloadtime">
+								</div>
+							</div>
 
 
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">起始地址</label>
+								<div class="col-sm-8">
+									<div id="r-result"><input ng-model="order.fromaddress" type="text" id="from" size="20" placeholder="输入起始地址"
+										 style="width:200px;" /></div>
+								</div>
+							</div>
 
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">终点地址</label>
+								<div class="col-sm-8">
+									<div id="r-result"><input ng-model="order.toaddress" type="text" id="to" size="20" placeholder="输入终点地址" style="width:200px;" /></div>
+								</div>
+							</div>
 
-                </form>
-            </div>
-        </div>
-
-
-        <button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步</button>
-        <button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(1)">下一步
-            </button>
-    </div>
+							<div class="form-group" ng-if="order.needtype=='零担'">
+								<label for="" class="col-sm-2 control-label">途经站点</label>
+								<button ng-click="addRoute()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+								<button ng-click="minusRoute()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" placeholder="(途经站点{{k+1}})" ng-model="x.name" ng-repeat="(k,x) in routess">
+								</div>
+							</div>
 
 
 
 
-</div>
-
-<div ng-if="f[1]"><!-- 第二部-->
-    <div class="container order">
-        <div class="order1" style="margin-top: 60px;">
-            <div class="dliver">
-                <div class="tips1">
-                    <p style="font-size:30px; align-content: center; text-align: center; color: white;">录入信息确认</p>
-                </div>
-            </div>
-
-        </div>
-        <div id="" class="starting">
-            <div class="col-md-2">
-                <p>出发地</p>
-            </div>
-            <div class="col-md-6">
-                <p>{{order.fromaddress}}</p>
-            </div>
-            <div class="col-md-2">
-                <p>司机：{{order.linkname}}</p>
-            </div>
-            <div class="col-md-2">
-                <p>联系电话：{{order.linkphone}}</p>
-            </div>
-        </div>
-
-        <div class="destination" >
-            <div class="col-md-2">
-                <p>目的地</p>
-            </div>
-            <div class="col-md-6">
-                <p>{{order.toaddress}}</p>
-            </div>
+						</form>
+					</div>
+				</div>
 
 
-            <div class="col-md-4">
-                <p>途经：{{order.route}}</p>
-            </div>
-
-        </div>
-
-        <div id="" class="destination">
-            <div class="col-md-2">
-                <p>服务车型</p>
-            </div>
-            <div class="col-md-6">
-                <p>{{order.cartype}}</p>
-            </div>
-        </div>
-
-        <div id="" class="destination">
-            <div class="col-md-2">
-                <p>预估里程</p>
-            </div>
-            <div class="col-md-6">
-                <p id="addin"></p>
-            </div>
-        </div>
-
-        <div style="margin-top: 50px;height:250px">
-            <div style="float: left; width: 60%; border-right: 1px solid dimgrey;">
-                <div style="margin-left: 10%; height: 35px;">
-                    <div style="font-size:20px;float: left;">出发时间:</div>
-                    <div style="float: left;">
-                        <label class="input-group" style="float: left;">
-                            {{order.loadtime}}
-                        </label>
-                    </div>
-                </div>
-                <div style=" margin-left: 10%; margin-top: 30px;">
-                    总路程：<input id="dis" type="text" disabled v-show="false" >
-                    <p style="font-size: 20px;">预计里程费用:￥{{totalPrice}}</p>
-                    <p class="text-muted" style="font-size: 15px;">实际费可能因实际行驶里程/等候时间等因素而异</p>
-                </div>
-                <div style="margin-left: 10%;margin-top: 30px;">
-                    <button class="btn btn-info " ng-click="next(2)">确认提交订单</button>
-                    <button  class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步</button>
-
-                </div>
-            </div>
-            <div style="float: left; width: 30%;">
-                <img src="../img/gzh.png" style="width: 100px; height: 100px;margin-left:30px ;">
-                <p style="font-size: 25px; color: red;font-weight: 500; margin-top: 20px;">关注微信公众号</p>
-                <p style="font-size: 20px; font-weight: 300;">享更多优惠</p>
-            </div>
-        </div>
-    </div>
-
-</div>
+				<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步</button>
+				<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(1)">下一步
+				</button>
+			</div>
 
 
 
 
-<div ng-if="f[2]"> <!--第三步-->
+		</div>
 
-    <div class="receipt container">
-        <div class="dliverreceipt">
-            <div class="tips1">
-                <div class="col-md-4 text-center" style="font-size:20px; align-content: center;  color: white; float: left; height: 100%;">
-                    <p style="margin-top:10px;">订单编号:{{order.id}}</p>
-                </div>
-                <div class="col-md-2 text-center" style="font-size:20px; align-content: center;  color: white; float: left;  height: 100%;">
-                    <p style="margin-top:10px;">状态:<span ng-if="order.status==1">等待接单</span><span ng-if="order.status==2">接单中</span></p>
-                </div>
-            </div>
-        </div>
-        <div class="text-center" style="height: 100px;">
-            <p style="font-size: 30px; margin-top: 20px;">尊敬的用户，您的订单已收录</p><a href="match.html" class="btn btn-info">点击匹配合适的货源</a>
-        </div>
-    </div>
-    <div class="container register" style="margin-top: 50px; border-radius: 15px;">
-        <div style="border-top: 1px solid #999999 ;margin-bottom: 50px;">
-            <div class="dliver">
-                <div class="tips4">
-                    <p style="font-size:20px;text-align: center; color: white; ">订单信息</p>
-                </div>
-            </div>
-            <div style="margin-top: 30px; width: 95%;">
-                <div id="" style="margin-left:10%;">
-                    <p style="font-size: 20px;">装货时间:{{order.loadtime}}</p><br>
-                    <p style="font-size: 20px;">车型:{{order.cartype}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="" style="border-top: 1px solid #999999;">
-            <div class="dliver " style="margin-top: 20px;">
-                <div style="float: left; font-size: 20px;  align-content: center;height: 100px; width: 100%;">
-                    <p style="margin-left: 15px;">发货信息</p>
+		<div ng-if="f[1]">
+			<!-- 第二部-->
+			<div class="container order">
+				<div class="order1" style="margin-top: 60px;">
+					<div class="dliver">
+						<div class="tips1">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">录入信息确认</p>
+						</div>
+					</div>
 
-                </div>
-            </div>
-            <div style="height: 200px;">
-                <div id="" style="width: 50%;height: 100%; margin-left: 20%;">
-                    <ol style="list-style-type: none; font-size: 20px;">
-                        <li>始发地:{{order.fromaddress}}<li><br>
-                        <li>姓名:{{order.linkname}}</li><br>
-                        <li>电话:{{order.linkphone}}</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+				</div>
+				<div id="" class="starting">
+					<div class="col-md-2">
+						<p>出发地</p>
+					</div>
+					<div class="col-md-6">
+						<p>{{order.fromaddress}}</p>
+					</div>
+					<div class="col-md-2">
+						<p>司机：{{order.linkname}}</p>
+					</div>
+					<div class="col-md-2">
+						<p>联系电话：{{order.linkphone}}</p>
+					</div>
+				</div>
+
+				<div class="destination">
+					<div class="col-md-2">
+						<p>目的地</p>
+					</div>
+					<div class="col-md-6">
+						<p>{{order.toaddress}}</p>
+					</div>
 
 
-        <div id="" style="width: 100%; border-top: 1px solid #999999; height: 250px; margin-top: 20px;">
-            <div id="" style=" height: 200px;width: 40%; margin-top: 30px;">
-                <ul style="font-size: 20px;text-align: center; list-style-type: none;">
+					<div class="col-md-4">
+						<p>途经：{{order.route}}</p>
+					</div>
 
-                    <li style="margin: 10px 0 ;">车型:<span>{{order.cartype}}</span></li>
-                    <li style="margin: 10px 0 ;">起步价:<span>{{price.startPrice}}</span></li>
-                    <li style="margin: 10px 0 ;">超里程费:<span>{{totalPrice-price.startPrice}}</span></li>
-                    <li style="margin: 10px 0 ;">预估费用:<span>{{totalPrice}}元</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+				</div>
 
+				<div id="" class="destination">
+					<div class="col-md-2">
+						<p>服务车型</p>
+					</div>
+					<div class="col-md-6">
+						<p>{{order.cartype}}</p>
+					</div>
+				</div>
 
+				<div id="" class="destination">
+					<div class="col-md-2">
+						<p>预估里程</p>
+					</div>
+					<div class="col-md-6">
+						<p id="addin"></p>
+					</div>
+				</div>
 
-</div>
+				<div style="margin-top: 50px;height:250px">
+					<div style="float: left; width: 60%; border-right: 1px solid dimgrey;">
+						<div style="margin-left: 10%; height: 35px;">
+							<div style="font-size:20px;float: left;">出发时间:</div>
+							<div style="float: left;">
+								<label class="input-group" style="float: left;">
+									{{order.loadtime}}
+								</label>
+							</div>
+						</div>
+						<div style=" margin-left: 10%; margin-top: 30px;">
+							总路程：<input id="dis" type="text" disabled v-show="false">
+							<p style="font-size: 20px;">预计里程费用:￥{{totalPrice}}</p>
+							<p class="text-muted" style="font-size: 15px;">实际费可能因实际行驶里程/等候时间等因素而异</p>
+						</div>
+						<div style="margin-left: 10%;margin-top: 30px;">
+							<button class="btn btn-info " ng-click="next(2)">确认提交订单</button>
+							<button class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步</button>
 
+						</div>
+					</div>
+					<div style="float: left; width: 30%;">
+						<img src="../img/gzh.png" style="width: 100px; height: 100px;margin-left:30px ;">
+						<p style="font-size: 25px; color: red;font-weight: 500; margin-top: 20px;">关注微信公众号</p>
+						<p style="font-size: 20px; font-weight: 300;">享更多优惠</p>
+					</div>
+				</div>
+			</div>
 
-
-
-
-
-
-<div class="superlink" style="height: 300px;background-color:black; margin-top: 5px;">
-    <div style="float:left; width: 20%; "><br><br>
-        <div class="text-center">
-            <div style="font-size:20px;color: white">
-                <p>关于我们</p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">开发者关系</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">发展历程</a></p>
-            </div>
-            <div style="font-size:15px;color:#555555">
-                <p><a href="">新闻中心</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">团队介绍</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">加盟合作</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">招贤纳士</a></p>
-            </div>
-        </div>
-    </div>
-    <div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
-        <div class="text-center"><br><br>
-
-            <div style="font-size:20px;color: white">
-                <p>热门产品</p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">以租代够</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
-        <div class="text-center"><br><br>
-
-            <div style="font-size:20px;color: white">
-                <p>联系我们</p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">联系方式</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">公司地图</a></p>
-            </div>
-            <div style="font-size:15px;color:#555555">
-                <p><a href="">留言提交</a></p>
-            </div>
-            <div style="font-size:15px;color: #555555">
-                <p><a href="">帮助中心</a></p>
-            </div>
-        </div>
-    </div>
-    <div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
-        <div style="float:left; margin-left: 1.25rem; ">
-            <div style="margin-top: 50px;color: white">
-                <img src="../img/gzh.png" height="100px" width="100px"><br>官方公众号
-            </div>
-            <div style="color: white">
-                <img src="../img/kfh.jpg" height="100px" width="100px"><br>官方客服
-            </div>
-        </div>
-        <div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="../img/fm_logo.png"
-                                                                                                                   height="50px" width="45%"><br>
-            <p>24小时服务热线：0813-8112271</p>
-            <p>24小时投诉热线：18990053717</p>
-            <p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
-            <p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
-            <p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
-            <p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
-
-        </div>
-    </div>
-
-</div>
+		</div>
 
 
-<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
 
-<div id="r-result"></div>
-<div id="l-map" style="display: none;"></div>
-</body>
+
+		<div ng-if="f[2]">
+			<!--第三步-->
+
+			<div class="receipt container">
+				<div class="dliverreceipt">
+					<div class="tips1">
+						<div class="col-md-4 text-center" style="font-size:20px; align-content: center;  color: white; float: left; height: 100%;">
+							<p style="margin-top:10px;">订单编号:{{order.id}}</p>
+						</div>
+						<div class="col-md-2 text-center" style="font-size:20px; align-content: center;  color: white; float: left;  height: 100%;">
+							<p style="margin-top:10px;">状态:<span ng-if="order.status==1">等待接单</span><span ng-if="order.status==2">接单中</span></p>
+						</div>
+					</div>
+				</div>
+				<div class="text-center" style="height: 100px;">
+					<p style="font-size: 30px; margin-top: 20px;">尊敬的用户，您的订单已收录</p><a href="#" ng-click="match()" class="btn btn-info">点击匹配合适的货源</a>
+				</div>
+			</div>
+			<div class="container register" style="margin-top: 50px; border-radius: 15px;">
+				<div style="border-top: 1px solid #999999 ;margin-bottom: 50px;">
+					<div class="dliver">
+						<div class="tips4">
+							<p style="font-size:20px;text-align: center; color: white; ">订单信息</p>
+						</div>
+					</div>
+					<div style="margin-top: 30px; width: 95%;">
+						<div id="" style="margin-left:10%;">
+							<p style="font-size: 20px;">装货时间:{{order.loadtime}}</p><br>
+							<p style="font-size: 20px;">车型:{{order.cartype}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="" style="border-top: 1px solid #999999;">
+					<div class="dliver " style="margin-top: 20px;">
+						<div style="float: left; font-size: 20px;  align-content: center;height: 100px; width: 100%;">
+							<p style="margin-left: 15px;">发货信息</p>
+
+						</div>
+					</div>
+					<div style="height: 200px;">
+						<div id="" style="width: 50%;height: 100%; margin-left: 20%;">
+							<ol style="list-style-type: none; font-size: 20px;">
+								<li>始发地:{{order.fromaddress}}
+								<li><br>
+								<li>姓名:{{order.linkname}}</li><br>
+								<li>电话:{{order.linkphone}}</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+
+
+				<div id="" style="width: 100%; border-top: 1px solid #999999; height: 250px; margin-top: 20px;">
+					<div id="" style=" height: 200px;width: 40%; margin-top: 30px;">
+						<ul style="font-size: 20px;text-align: center; list-style-type: none;">
+
+							<li style="margin: 10px 0 ;">车型:<span>{{order.cartype}}</span></li>
+							<li style="margin: 10px 0 ;">起步价:<span>{{price.startPrice}}</span></li>
+							<li style="margin: 10px 0 ;">超里程费:<span>{{totalPrice-price.startPrice}}</span></li>
+							<li style="margin: 10px 0 ;">预估费用:<span>{{totalPrice}}元</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+
+
+
+
+		<div class="superlink" style="height: 300px;background-color:black; margin-top: 5px;">
+			<div style="float:left; width: 20%; "><br><br>
+				<div class="text-center">
+					<div style="font-size:20px;color: white">
+						<p>关于我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">开发者关系</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">发展历程</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">新闻中心</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">团队介绍</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">加盟合作</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">招贤纳士</a></p>
+					</div>
+				</div>
+			</div>
+			<div style=" float: left; border-left: 1px solid #c0c0c0;height: 270px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>热门产品</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">以租代够</a></p>
+					</div>
+				</div>
+			</div>
+
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:150px; width: 20%;">
+				<div class="text-center"><br><br>
+
+					<div style="font-size:20px;color: white">
+						<p>联系我们</p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">联系方式</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">公司地图</a></p>
+					</div>
+					<div style="font-size:15px;color:#555555">
+						<p><a href="">留言提交</a></p>
+					</div>
+					<div style="font-size:15px;color: #555555">
+						<p><a href="">帮助中心</a></p>
+					</div>
+				</div>
+			</div>
+			<div style="float:left;border-left: 1px solid #c0c0c0;height:300px; width: 40%;">
+				<div style="float:left; margin-left: 1.25rem; ">
+					<div style="margin-top: 50px;color: white">
+						<img src="../img/gzh.png" height="100px" width="100px"><br>官方公众号
+					</div>
+					<div style="color: white">
+						<img src="../img/kfh.jpg" height="100px" width="100px"><br>官方客服
+					</div>
+				</div>
+				<div style="float: left; color: white; float: left; width: 65%; margin-left: 50px; margin-top: 50px;"><img src="../img/fm_logo.png"
+					 height="50px" width="45%"><br>
+					<p>24小时服务热线：0813-8112271</p>
+					<p>24小时投诉热线：18990053717</p>
+					<p>周一至周五 &nbsp;&nbsp;&nbsp;周六至周日</p>
+					<p> 9：00-21：00 &nbsp;&nbsp;&nbsp;9：00-18：00</p>
+					<p>本网站所有图文内容均属速安交通有限责任公司版权所有</p>
+					<p>蜀ICP备18036575号 Copyright@2007-2018 sounso.All Rights Reserved</p>
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
+
+		<div id="r-result"></div>
+		<div id="l-map" style="display: none;"></div>
+	</body>
 </html>
 <script src="../js/baiduMap.js"></script>

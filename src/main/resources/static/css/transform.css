@@ -182,7 +182,7 @@ body {
 .passload {
 	width: 100%;
 	height: 150px;
-	background-color: lightgrey;
+	background-color: #ededed;
 }
 
 .register {
@@ -199,7 +199,7 @@ body {
 
 .register1 {
 	border-top: 1px solid orangered;
-	height: 300px;
+	height: auto;
 }
 
 .order1 {

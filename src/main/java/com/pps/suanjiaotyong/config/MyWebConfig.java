@@ -46,4 +46,17 @@ public class MyWebConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
 
     }
+
+    //允许跨域
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
+                .maxAge(3600 * 24);
+
+
+    }
 }

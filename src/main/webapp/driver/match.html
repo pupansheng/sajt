@@ -1,18 +1,39 @@
-<html style="min-width: 1200px;">
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-		<script src="/jquery.min.js"></script>
-		<script src="/bootstrap.min.js"></script>
-		<script src="/angular.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<script src="../jquery.min.js"></script>
+		<script src="../bootstrap.min.js"></script>
+		<script src="../angular.min.js"></script>
 		<!-- 分页组件开始 -->
-		<script src="/js/pagination.js"></script>
-		<link rel="stylesheet" href="/css/pagination.css">
+		<script src="../js/pagination.js"></script>
+		<link rel="stylesheet" href="../css/pagination.css">
+		<style type="text/css">
+			html {
+				min-width: 1200px;
+			}
+		
+			a {
+				color: white;
+				text-decoration: none;
+			}
+			.changecolor div a{
+				color: black;
+			}	
+			
+		</style>
 
 		<style type="text/css">
 			html {
 				background: lightgrey;
 			}
+
+			a[class=pp]:visited{
+
+				color: red;
+			}
+			
 		</style>
 
 
@@ -70,14 +91,14 @@
 
 				$scope.pageInit=function () {
 
-					sessionStorage.setItem("d",'{"fromaddress": "自贡市自流井区中港·燊海森林","toaddress": "自贡市自流井区舒坪镇","goodsweight": 11,"needtype": "整车","cartype": ""}');
 				 var  order=sessionStorage.getItem("d");
+
 				 var  orderEntity=JSON.parse(order);
 				 $scope.searchEntity.fromaddress=orderEntity.fromaddress;
 				 $scope.searchEntity.toaddress=orderEntity.toaddress;
-				 $scope.searchEntity.cartype=orderEntity.cartype;
-				 $scope.searchEntity.needtype=orderEntity.needtype;
-				 $scope.searchEntity.goodsweight=orderEntity.goodsweight;
+				 //$scope.searchEntity.cartype=orderEntity.cartype;
+				 //$scope.searchEntity.needtype=orderEntity.needtype;
+				 //$scope.searchEntity.goodsweight=orderEntity.goodsweight;
 
 
 
@@ -106,33 +127,26 @@
 	<div class="">
 		<div class="superlink" style="background-color:black;height: 100px">
 			<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
-				<img src="/img/logo.png" width="100" height="100"> \
+				<img src="../img/logo.png" width="100" height="100">
 			</div>
 			<div style="float:left;color: white;margin-right: 200px;">
 				<h2>
 					<a href="">速安交通</a>
-				</h2>
+				</h2><span style="color: white;">achnyan traff</span>
 			</div>
 			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
 			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="dropdown" style="background-color: black">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu"  >
-								<li><a href="/driver/driverpulish.html" >司机下单</a></li>
-								<li><a href="/user/placeanorder.html">客户下单</a></li>
-							</ul>
-						</li>
+			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;">
+				<li class="dropdown" style="background-color: black;list-style: none;">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单<span
+							class="glyphicon glyphicon-triangle-bottom" style="color: white;"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/driver/driverpulish.html">司机下单</a></li>
+						<li><a href="/user/placeanorder.html">客户下单</a></li>
 					</ul>
-				</div>
+				</li>
 			</div>
 			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
 			</div>
 			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
 			</div>
@@ -140,8 +154,8 @@
 
 			<span ng-if="user.id==null">
 
-             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
-            登录
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>
+            登录/注册
                 </a>
 
              </div>
@@ -151,7 +165,7 @@
 			<span ng-if="user.id!=null">
            <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
         <a  href="user/my.html">
-            {{user.username}}，
+           <span class="glyphicon glyphicon-user"></span>{{user.username}}，
          </a>
                你好！
        </div>
@@ -172,26 +186,26 @@
 		</div>
 		<div class="container" style="background-color: #f6f6f6; border-radius: 0 0 15px 15px;">
 			<div class="container text-center" style="line-height: 50px; ">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+				<div class=" text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto; width:17%; float: left;">
 					选择新需求车型:
 				</div>
-				<div class="col-md-10" >
-
-					<a href="#" ng-repeat="x in cartypes" style="float: left"  ng-click="searchEntity.cartype=x.name;;reloadList()">{{x.name}}&nbsp;&nbsp;&nbsp;</a>
-
+				<div class="changecolor" style="width: 60%; float: left;font-size: 20px; font-weight: 600;" >
+					<span style="color: red;float: right">当前选择:[{{searchEntity.cartype}}]</span>
+					<a href="#" ng-repeat="x in cartypes" style="float: left;color: black;margin-right: 10px;"  ng-click="searchEntity.cartype=x.name;;reloadList()">{{x.name}}</a>
+					<a href="#" style="float: left;color: black;"  ng-click="searchEntity.cartype='';;reloadList()">所有车型</a>
 				</div>
 
 			</div>
 			<div class="container text-center" style="line-height: 50px;">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+				<div class=" text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;float:left; width:17%;">
 					选择车需求类别:
 				</div>
-				<div class="col-md-10">
-					<div >
-
-						<a href="javascript:null" style="float: left" ng-click="searchEntity.needtype='整车';reloadList()">整车 &nbsp;&nbsp;&nbsp;</a>
-						<a href="javascript:null" style="float: left"  ng-click="searchEntity.needtype='零担';reloadList()">零担</a>
-
+				<div class="changecolor" style="width: 60%; float: left;">
+					<div style="font-size:20px;font-weight:600;">
+						<span style="color: red;float: right">当前选择:[{{searchEntity.needtype}}]</span>
+						<a href="javascript:null" style="float: left;margin-right:20px;" ng-click="searchEntity.needtype='整车';reloadList()">整车 </a>
+						<a href="javascript:null" style="float: left;margin-right:20px;"  ng-click="searchEntity.needtype='零担';reloadList()">零担</a>
+						<a href="javascript:null" style="float: left;"  ng-click="searchEntity.needtype='';reloadList()">所有</a>
 					</div>
 				</div>
 
@@ -200,48 +214,46 @@
 
 
 			<div class="container text-center" style="line-height: 50px;">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
-					选择货物重量(t):
+				<div class="text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;float:left;width:17%">
+					选择货物重量(吨):
 				</div>
-				<div class="col-md-10">
-
-					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=1;reloadList()"><=1 &nbsp;&nbsp;&nbsp;</a>
-					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=2;reloadList()"><=2 &nbsp;&nbsp;&nbsp;</a>
-					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=5;reloadList()"><=5 &nbsp;&nbsp;&nbsp;</a>
-					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=10;reloadList()"><=10 &nbsp;&nbsp;&nbsp;</a>
-					<a href="javascript:null" style="float: left" ng-click="searchEntity.goodsweight=20;reloadList()"><=20 &nbsp;&nbsp;&nbsp;</a>
+				<div class="changecolor" style="width: 60%; float:left; font-size:20px;font-weight:600;">
+					<span style="color: red;float: right">当前选择:[{{searchEntity.goodsweight}}]</span>
+					<a href="javascript:null" style="float: left;color:black; margin-right:10px;" ng-click="searchEntity.goodsweight=1;reloadList()" class="pp"><=1 </a>
+					<a href="javascript:null" style="float: left;color:black;margin-right:10px;" ng-click="searchEntity.goodsweight=2;reloadList()" class="pp"><=2 </a>
+					<a href="javascript:null" style="float: left;color:black;margin-right:10px;" ng-click="searchEntity.goodsweight=5;reloadList()" class="pp"><=5 </a>
+					<a href="javascript:null" style="float: left;color:black;margin-right:10px;" ng-click="searchEntity.goodsweight=10;reloadList()"class="pp"><=10 </a>
+					<a href="javascript:null" style="float: left;color:black;" ng-click="searchEntity.goodsweight=20;reloadList()"class="pp"><=20 </a>
 				</div>
 			</div>
 			<div class="container text-center" style="line-height: 50px; ">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+				<div class=" text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;float:left;width:17%">
 					选择起始地:
 				</div>
-				<div class="col-md-6">
+				<div style=" float: left; width: 50%; padding: 10px 0;">
 					<input class="form-control input-sm" ng-model="searchEntity.fromaddress" type="text">
 				</div>
 			</div>
 				<div class="container text-center" style="line-height: 50px; ">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+				<div class="text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;float:left;width:17%">
 					选择目的地:
 				</div>
-				<div class="col-md-6">
+				<div style=" float: left; width: 50%; padding: 10px 0;">
 					<input class="form-control input-sm" ng-model="searchEntity.toaddress" type="text">
 				</div>
 			</div>
 			<div class="container text-center" style="line-height: 50px; ">
-				<div class="col-md-2 text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;">
+				<div class="text-right" style="align-content: center; font-size: 20px; font-weight: bold; margin:auto;float:left;width:17%">
 					发货时间:
 				</div>
-				<div class="col-md-6">
+				<div style="float: left; width: 50%; padding: 10px 0;">
 					<div >
-
-						<input class="form-control input-sm " ng-model="searchEntity.loadtime" type="date">
-
+						<input class="form-control input-sm" ng-model="searchEntity.loadtime" type="date">
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div style="width: 33%;float: right;padding: 8px;">
 					<div >
-						<button class="btn btn-info" ng-click="reloadList()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>检索</button>
+						<button class="btn btn-info btn-sm" ng-click="reloadList()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>检索</button>
 					</div>
 				</div>
 			</div>
@@ -254,12 +266,12 @@
 					<caption ng-show="!flag">匹配结果</caption>	<caption ng-show="flag">匹配中......</caption>
 					<!--//标题，请忽更改-->
 					<tr class="active" style="font-size: 17px;">
-						<td>出发地<span>|</span></td>
-						<td>目的地<span>|</span></td>
-						<td>货物重量<span>|</span></td>
-						<td>需求车型<span>|</span></td>
-						<td>装货时间<span>|</span></td>
-						<td>卸货时间<span>|</span></td>
+						<td>出发地</td>
+						<td>目的地</td>
+						<td>货物重量</td>
+						<td>需求车型</td>
+						<td>装货时间</td>
+						<td>卸货时间</td>
 						<td>操作</td>
 					</tr>
 					<!--//标题，请忽更改-->
@@ -270,7 +282,7 @@
 						<td>{{x.cartype}}</td>
 						<td>{{x.loadtime}}</td>
 						<td>{{x.unloadtime}}</td>
-						<td><a rel="nofollow"  ng-click="seeDetail(x.id)">查看详细</a></td>
+						<td><a style="color: #1b6d85" rel="nofollow"  ng-click="seeDetail(x.id)">查看详细</a></td>
 					</tr>
 
 

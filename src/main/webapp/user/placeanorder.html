@@ -5,23 +5,33 @@
 		<link rel="stylesheet" type="text/css" href="../css/transform.css" />
 		<link rel="stylesheet" type="text/css" href="../css/baiduMap.css" />
 		<link rel="stylesheet" type="text/css" href="../css/bar.css" />
-
-
-
 		<script src="../jquery.min.js"></script>
+
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=fvmUbS74pKoc6RA4jtk5sGy8cvCRIAjC"></script>
 		<script src="../bootstrap.min.js"></script>
 		<script src="../angular.min.js"></script>
+		<style type="text/css">
+			html {
+				min-width: 1200px;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function(){
+				$(".dropdown").click(function(){
+					$(".dropdown").toggleClass("open");
+				});
+			});
+		</script>
 
 
 		<title>下单</title>
 
 
 		<script>
-            var app=angular.module("myApp",[]);
+			var app=angular.module("myApp",[]);
             app.controller("orderController",function ($http,$scope,$timeout) {
 
-                $scope.f=[false,false,false]
+                $scope.f=[false,false,true]
 				$scope.order={};
                 $scope.receiverpeople=[{name:'',linkphone:''}];
 
@@ -231,7 +241,7 @@
 
                 $scope.match=function () {
 
-                    sessionStorage.getItem("u",JSON.stringify($scope.order))
+                    sessionStorage.setItem("u",JSON.stringify($scope.order))
 					location.href="/user/match.html";
 
                 }
@@ -242,91 +252,82 @@
 	</head>
 	<body ng-app="myApp" ng-controller="orderController" ng-init="getProvince();getPrice();getLogin()">
 
-	<div class="">
-		<div class="superlink" style="background-color:black;height: 100px">
-			<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
-				<img src="/img/logo.png" width="100" height="100"> \
-			</div>
-			<div style="float:left;color: white;margin-right: 200px;">
-				<h2>
-					<a href="">速安交通</a>
-				</h2>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
-			</div>
-
-			<div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="dropdown" style="background-color: black">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu"  >
-								<li><a href="/driver/driverpulish.html" >司机下单</a></li>
-								<li><a href="/user/placeanorder.html">客户下单</a></li>
-							</ul>
-						</li>
-					</ul>
+		<div class="">
+			<div class="superlink" style="background-color:black;height: 100px">
+				<div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
+					<img src="/img/logo.png" width="100" height="100">
 				</div>
+				<div style="float:left;color: white;margin-right: 200px;">
+					<h2>
+						<a href="">速安交通</a>
+					</h2><span style="color: white;">achnyan traff</span>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;">
+					<li class="dropdown" style="background-color: black;list-style: none;">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white">在线下单<span
+							 class="glyphicon glyphicon-triangle-bottom" style="color: white;"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/driver/driverpulish.html">司机下单</a></li>
+							<li><a href="/user/placeanorder.html">客户下单</a></li>
+						</ul>
+					</li>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
+				</div>
+				<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
+				</div>
+				<span ng-if="user.id==null">
+
+					<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;"> 
+					<a href="#"data-toggle="modal" data-target="#myModal">
+						<span class="glyphicon glyphicon-user" style="color: white;">
+							<span class="glyphicon glyphicon-user"></span>登录/注册
+						</a>
+					</div>
+				</span>
+				<span ng-if="user.id!=null">
+					<div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
+						<a href="/user/my.html">
+							<span class="glyphicon glyphicon-user"></span>{{user.username}}，
+						</a>
+						你好！
+					</div>
+
+				</span>
+
 			</div>
-
-
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
-			</div>
-			<div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
-			</div>
-
-
-			<span ng-if="user.id==null">
-
-             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
-            登录
-
-                </a>
-
-             </div>
-
-        </span>
-
-			<span ng-if="user.id!=null">
-           <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
-        <a  href="/user/my.html">
-            {{user.username}}，
-         </a>
-               你好！
-       </div>
-
-       </span>
 
 		</div>
-
-	</div>
 
 		<div class="passload">
 
 			<div class="path">
-				<ul>
-					<li id="sto" class="first on"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>填写基本信息</button></span></li>
-					<li id="st1" class="second"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>确认订单</button></span></li>
-					<li id="st2" class="third"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm" disabled>等待接单</button></span></li>
-					<!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
-					<li id="fifth" class="fifth"><span class="line"></span><span class="arr"></span><span class="txt">上门服务</span></li>
-					<li id="last" class="last"><span class="line"></span><span class="arr"></span><span class="txt">服务完成</span></li>-->
+				<ul style="list-style: none;">
+					<li id="sto" class="first on"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled >填写基本信息</button></span></li>
+					<li id="st1" class="second"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled >确认订单</button></span></li>
+					<!-- <li id="st2" class="third"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled >等待接单</button></span></li>
+					<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
+					<li id="fifth" class="fifth"><span class="line"></span><span class="arr"></span><span class="txt">上门服务</span></li> -->
+					<li id="st2" class="last"><span class="line"></span><span class="arr"></span><span class="txt"><button class="btn btn-info btn-sm"
+							 disabled >等待接单</button></span></li>
 				</ul>
 			</div>
 
 		</div>
 
 
-		<div ng-if="f[0]"><!-- 第一步 -->
+		<div ng-if="f[0]">
+			<!-- 第一步 -->
 
-		<div class="container register">
+			<div class="container register">
 
 
-		<!--	<div class="register1">
+				<!--	<div class="register1">
 				<div class="dliver">
 					<div class="tips1">
 						<p style="font-size:30px; align-content: center; text-align: center; color: white;">选择城市以及所需车辆</p>
@@ -372,227 +373,232 @@
 
 				</div>
 			</div>-->
-			<div class="register2">
-				<div class="dliver">
-					<div class="tips2">
-						<p style="font-size:30px; align-content: center; text-align: center; color: white;">发货信息</p>
+				<div class="register2">
+					<div class="dliver">
+						<div class="tips2">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">发货信息</p>
+						</div>
 					</div>
-				</div>
-				<div style="margin-top: 30px; width: 95%;">
-					<form class="form-horizontal" role="form" style="margin-left:10%;">
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">寄件人姓名</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="order.linkname">
+					<div style="margin-top: 30px; width: 95%;">
+						<form class="form-horizontal" role="form" style="margin-left:15%;">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">寄件人姓名</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="order.linkname">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">寄件人电话</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="order.linkphone">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">寄件人电话</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="order.linkphone">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物名称</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="" placeholder="请输入货物名称" ng-model="order.goodsname">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物名称</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="" placeholder="请输入货物名称" ng-model="order.goodsname">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物价值(rmb)</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="1" placeholder="请输入货物价值" ng-model="order.goodsprice">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物价值(rmb)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="1" placeholder="请输入货物价值 单位(元/￥)" ng-model="order.goodsprice">
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物长度(m)</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="2" placeholder="请输入货物长度" ng-model="order.goodslength">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物长度(m)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="2" placeholder="请输入货物长度 单位(米)" ng-model="order.goodslength">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物宽度(m)</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="3" placeholder="请输入货物宽度" ng-model="order.goodswidth">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物宽度(m)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="3" placeholder="请输入货物宽度 单位(米)" ng-model="order.goodswidth">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物高度(m)</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="4" placeholder="请输入货物高度" ng-model="order.goodsheight">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物高度(m)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="4" placeholder="请输入货物高度 单位(米)" ng-model="order.goodsheight">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物重量(kg)</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="5" placeholder="请输入货物重量" ng-model="order.goodsweight">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物重量(t)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="5" placeholder="请输入货物重量 单位(吨)" ng-model="order.goodsweight">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">货物数量</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="5" placeholder="请输入货物数量" ng-model="order.goodsamount">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">货物数量</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="5" placeholder="请输入货物数量" ng-model="order.goodsamount">
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group" >
-							<label for="exampleInputEmail1" class="col-sm-2 control-label">选择车型</label>
-							<div class="col-sm-8">
-							<select class="form-control" required ng-model="order.cartype">
-								<option ng-repeat="(k,v) in cartypes">{{v.name}}</option>
-							</select>
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="col-sm-2 control-label">选择车型</label>
+								<div class="col-sm-4">
+									<select class="form-control" required ng-model="order.cartype" style="width:87%">
+										<option value="''">所有车型</option>
+										<option ng-repeat="(k,v) in cartypes">{{v.name}}</option>
+									</select>
+								</div>
+								<span ng-if="order.cartype!=null">车长:{{price.length}} 车宽:{{price.width}} 车高:{{price.height}} 起步距离：{{price.startDistance}}(公里)
+									起步价(5公里内):{{price.startPrice}} 超里程价:{{price.average}}</span>
 							</div>
-							<span ng-if="order.cartype!=null">车长:{{price.length}} 车宽:{{price.width}} 车高:{{price.height}} 起步距离：{{price.startDistance}}(公里) 起步价(5公里内):{{price.startPrice}}  超里程价:{{price.average}}</span>
-						</div>
 
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">装货时间</label>
-							<div class="col-sm-8">
-								<input type="date" class="form-control" id="6" placeholder="请输入装货时间" ng-model="order.loadtime">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">装货时间</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control" id="6" placeholder="请输入装货时间" ng-model="order.loadtime">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">卸货时间</label>
-							<div class="col-sm-8">
-								<input type="date" class="form-control" id="7" placeholder="请输入卸货时间" ng-model="order.unloadtime">
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">卸货时间</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control" id="7" placeholder="请输入卸货时间" ng-model="order.unloadtime">
+								</div>
 							</div>
-						</div>
-
-
-						<div class="form-group" >
-							<label for="" class="col-sm-2 control-label">寄货地址</label>
-							<div class="col-sm-8">
-								<div id="r-result"><input ng-model="order.fromaddress" type="text" id="from" size="20" placeholder="输入寄货地址" style="width:200px;" /></div>
-							</div>
-						</div>
-
-						<div class="form-group" >
-							<label for="" class="col-sm-2 control-label">收件地址</label>
-							<div class="col-sm-8">
-								<div id="r-result"><input ng-model="order.toaddress" type="text" id="to" size="20" placeholder="输入收货地址" style="width:200px;" /></div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-md-2 control-label">是否开票</label>
-							<div class="col-sm-10">
-								<select ng-model="order.invoice" class="form-control">
-									<option value="1">是</option>
-									<option value="0">否</option>
-								</select>
 
 
-
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">寄货地址</label>
+								<div class="col-sm-8">
+									<div id="r-result"><input style="width: 50%;" class =" form-control" ng-model="order.fromaddress" type="text" id="from" size="20" placeholder="输入寄货地址"
+										 style="width:200px;" /></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-md-2 control-label">货车要求</label>
-							<div class="col-sm-10">
-								<select ng-model="order.needtype" class="form-control">
-									<option >整车</option>
-									<option >零担</option>
-								</select>
 
-
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">收件地址</label>
+								<div class="col-sm-8">
+									<div id="r-result"><input style="width: 50%;" class="form-control" ng-model="order.toaddress" type="text" id="to" size="20" placeholder="输入收货地址" style="width:200px;" /></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-md-2 control-label">支付方式</label>
-							<div class="col-sm-10">
+							<div class="form-group">
+								<label for="" class="col-md-2 control-label">是否开票</label>
+								<div class="col-sm-10">
+									<select ng-model="order.invoice" class="form-control">
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select>
 
-								<select ng-model="order.paytype" class="form-control">
-									<option value="1">支付宝</option>
-									<option value="2">微信</option>
-									<option value="3">现金</option>
-								</select>
 
+
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-md-2 control-label">备注</label>
-							<div class="col-sm-10">
+							<div class="form-group">
+								<label for="" class="col-md-2 control-label">货车要求</label>
+								<div class="col-sm-10">
+									<select ng-model="order.needtype" class="form-control">
 
-								<textarea rows="3" class="form-control" ng-model="order.remark">
+										<option value="''">无特殊要求</option>
+										<option>整车</option>
+										<option>零担</option>
+
+									</select>
+
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-md-2 control-label">支付方式</label>
+								<div class="col-sm-10">
+
+									<select ng-model="order.paytype" class="form-control">
+										<option value="1">支付宝</option>
+										<option value="2">微信</option>
+										<option value="3">现金</option>
+									</select>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-md-2 control-label">备注</label>
+								<div class="col-sm-10">
+
+									<textarea rows="3" class="form-control" ng-model="order.remark">
 
 
 								</textarea>
 
+								</div>
 							</div>
+
+
+						</form>
+					</div>
+				</div>
+				<div class=" register3">
+					<div class="dliver ">
+						<div class="tips3" style="float: left;">
+							<p style="font-size:30px; align-content: center; text-align: center; color: white;">收货信息</p>
+						</div>
+						<div style="float: left; margin-left: 5%; font-size: 20px; text-align: center; align-content: center;">
+							<p class="text-muted">最多可添加5个收货人</p>
 						</div>
 
+						<div class="tool" style="float: right; width: 5%;">
+							<button ng-click="addRece()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+							<button ng-click="minusRece()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+						</div>
+					</div>
+					<div style="margin-top: 30px; height: 200px;">
 
-					</form>
+						<div>
+
+							<form class="form-horizontal" role="form" style="float: left; width: 95%;">
+								<div ng-repeat="(k,v) in receiverpeople">
+
+									<div class="form-group" style="margin-left: 10%;">
+										<label for="" class="col-sm-2 control-label">收货人({{k+1}})姓名</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="v.name">
+										</div>
+									</div>
+									<div class="form-group" style="margin-left: 10%;">
+										<label for="" class="col-sm-2 control-label">联系电话</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="v.linkphone">
+										</div>
+									</div>
+
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+
+
+
 				</div>
+				<div id="settle" style="width: 100%; border-top: 1px solid #d8e0e6; height: 250px;">
+					<div class="" style="width: 60%; height: 200px; float: left; margin-top: 30px;"></div>
+					<div id="" style=" height: 200px;width: 40%; float: left;  margin-top: 30px;">
+						<ul style="font-size: 20px; align-content: center; list-style-type: none;">
+							<li>预估里程:<span>公里</span></li>
+							<li>车型:<span></span></li>
+							<li>起步价:<span>元</span></li>
+							<li>超里程费:<span>元</span></li>
+							<li>预估费用:<span>元</span></li>
+						</ul>
+					</div>
+				</div>
+				<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步
+					<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(1)">下一步
+					</button>
 			</div>
-			<div class=" register3">
-				<div class="dliver ">
-					<div class="tips3" style="float: left;">
-						<p style="font-size:30px; align-content: center; text-align: center; color: white;">收货信息</p>
-					</div>
-					<div style="float: left; margin-left: 5%; font-size: 20px; text-align: center; align-content: center;">
-						<p class="text-muted">最多可添加5个收货人</p>
-					</div>
 
-					<div class="tool" style="float: right; width: 5%;">
-					  <button ng-click="addRece()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-						<button ng-click="minusRece()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-					</div>
-				</div>
-				<div style="margin-top: 30px; height: 200px;">
-
-					<div>
-
-					<form class="form-horizontal" role="form" style="float: left; width: 95%;">
-						<div ng-repeat="(k,v) in receiverpeople">
-
-						<div class="form-group" style="margin-left: 10%;">
-							<label for="" class="col-sm-2 control-label">收货人({{k+1}})姓名</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="" placeholder="请输入姓名" ng-model="v.name">
-							</div>
-						</div>
-						<div class="form-group" style="margin-left: 10%;">
-							<label for="" class="col-sm-2 control-label">联系电话</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="" placeholder="请输入电话号码" ng-model="v.linkphone">
-							</div>
-						</div>
-
-						</div>
-					</form>
-
-					</div>
-
-				</div>
-
-
-
-			</div>
-			<div id="settle" style="width: 100%; border-top: 1px solid #d8e0e6; height: 250px;">
-				<div class="" style="width: 60%; height: 200px; float: left; margin-top: 30px;"></div>
-				<div id="" style=" height: 200px;width: 40%; float: left;  margin-top: 30px;">
-					<ul style="font-size: 20px; align-content: center; list-style-type: none;">
-						<li>预估里程:<span>公里</span></li>
-						<li>车型:<span></span></li>
-						<li>起步价:<span>元</span></li>
-						<li>超里程费:<span>元</span></li>
-						<li>预估费用:<span>元</span></li>
-					</ul>
-				</div>
-			</div>
-			<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步
-			<button type="submit" class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(1)">下一步
-			</button>
 		</div>
 
-		</div>
 
 
 
-
-		<div ng-if="f[1]"><!-- 第二部-->
-
-
+		<div ng-if="f[1]">
+			<!-- 第二部-->
 			<div class="container order">
 				<div class="order1" style="margin-top: 60px;">
 					<div class="dliver">
@@ -602,53 +608,53 @@
 					</div>
 
 				</div>
-				<div id="" class="starting">
-					<div class="col-md-2">
-						<p>出发地</p>
+				<div id="" class="starting" style="font-size: 15px">
+					<div class="" style="width: 10%;float: left;">
+						<p >出发地</p>
 					</div>
-					<div class="col-md-6">
+					<div class="" style="width: 40%;float: left;">
 						<p>{{order.fromaddress}}</p>
 					</div>
-					<div class="col-md-2">
+					<div class="" style="width: 20%;float: left;">
 						<p>寄件人：{{order.linkname}}</p>
 					</div>
-					<div class="col-md-2">
+					<div class="" style="width: 30%;float: left;">
 						<p>联系电话：{{order.linkphone}}</p>
 					</div>
 				</div>
 
-				<div class="destination" >
-					<div class="col-md-2">
+				<div class="destination" style="font-size: 15px">
+					<div style="width: 10%;float: left;">
 						<p>目的地</p>
 					</div>
-					<div class="col-md-6">
+					<div style="width: 40%;float: left;">
 						<p>{{order.toaddress}}</p>
 					</div>
 
 
-					<div class="col-md-2">
+					<div class="" style="width: 20%;float: left;">
 						<p>收件人(1)：{{receiverpeople[0].name}}</p>
 					</div>
-					<div class="col-md-2">
+					<div class="" style="width: 30%;float: left;">
 						<p>联系电话：{{receiverpeople[0].linkphone}}</p>
 					</div>
 
 				</div>
 
-				<div id="" class="destination">
-					<div class="col-md-2">
+				<div id="" class="destination" style="font-size: 15px">
+					<div style="width: 10%;float: left">
 						<p>服务车型</p>
 					</div>
-					<div class="col-md-6">
+					<div style="width: 40%;float: left;">
 						<p>{{order.cartype}}</p>
 					</div>
 				</div>
 
-				<div id="" class="destination">
-					<div class="col-md-2">
+				<div id="" class="destination" style="font-size: 15px">
+					<div class="" style="width: 10%;float: left;">
 						<p>预估里程</p>
 					</div>
-					<div class="col-md-6">
+					<div style="width: 40%;float: left;">
 						<p id="addin"></p>
 					</div>
 				</div>
@@ -657,21 +663,21 @@
 					<div style="float: left; width: 60%; border-right: 1px solid dimgrey;">
 						<div style="margin-left: 10%; height: 35px;">
 							<div style="font-size:20px;float: left;">发货时间:</div>
-							<div style="float: left;">
+							<div style="float: left; font-size: 20px">
 								<label class="input-group" style="float: left;">
 									{{order.loadtime}}
 								</label>
 							</div>
 						</div>
-						<div style=" margin-left: 10%; margin-top: 30px;">
-							总路程：<input id="dis" type="text" disabled v-show="false" >
-							<p style="font-size: 20px;">预计里程费用:<span ng-if="!flag">￥{{totalPrice}}</span><span ng-if="flag">计算中...</span></p>
+						<div style=" margin-left: 10%; margin-top: 5px;font-size: 20px;">
+							总路程：<input style="border-radius: 5px;border: 0px;background-color:white;" id="dis" type="text" disabled v-show="false">
+							<p style="font-size: 20px;margin-top: 5px;margin-bottom: 5px">预计里程费用:<span ng-if="!flag">￥{{totalPrice}}</span><span ng-if="flag">计算中...</span></p>
 							自己估算费用：<input class="form-control" type="text" ng-model="order.assessedPrice">
 							<p class="text-muted" style="font-size: 15px;">实际费可能因实际行驶里程/等候时间等因素而异</p>
 						</div>
 						<div style="margin-left: 10%;margin-top: 30px;">
-							<button  class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步
-							<button class="btn btn-info " ng-click="next(2)">确认提交订单</button>
+							<button class=" btn btn-default" style="float: right; background-color: palegreen;" ng-click="next(0)">上一步
+								<button class="btn btn-info " ng-click="next(2)">确认提交订单</button>
 						</div>
 					</div>
 					<div style="float: left; width: 30%;">
@@ -686,7 +692,8 @@
 
 
 
-		<div ng-if="f[2]"> <!--第三步-->
+		<div ng-if="f[2]">
+			<!--第三步-->
 
 			<div class="receipt container">
 				<div class="dliverreceipt">
@@ -701,7 +708,7 @@
 				</div>
 				<div class="text-center" style="height: 100px;">
 					<p style="font-size: 30px; margin-top: 20px;">尊敬的用户，您的订单已录入</p>
-					<a class="btn btn-info" href="#" ng-click="match()">点击进入匹配，查看适合你的司机信息</a>
+					<a class="btn btn-info" href="#" ng-click="match()"><span class="glyphicon glyphicon-search"></span>点击进入匹配，查看适合你的司机信息</a>
 				</div>
 
 			</div>
@@ -713,7 +720,7 @@
 						</div>
 					</div>
 					<div style="margin-top: 30px; width: 95%;">
-						<div id="" style="margin-left:10%;">
+						<div id="" style="margin-left:20%;">
 							<p style="font-size: 20px;">装货时间:{{order.loadtime}}</p><br>
 							<p style="font-size: 20px;">车型:{{order.cartype}}</p>
 						</div>
@@ -729,7 +736,8 @@
 					<div style="height: 200px;">
 						<div id="" style="width: 50%;height: 100%; margin-left: 20%;">
 							<ol style="list-style-type: none; font-size: 20px;">
-								<li>始发地:{{order.fromaddress}}<li><br>
+								<li>始发地:{{order.fromaddress}}
+								<li><br>
 								<li>姓名:{{order.linkname}}</li><br>
 								<li>电话:{{order.linkphone}}</li>
 							</ol>
@@ -746,7 +754,8 @@
 					<div style="height: 200px;">
 						<div id="" style="width: 50%;height: 100%; margin-left: 20%;">
 							<ol style="list-style-type: none; font-size: 20px;">
-								<li>始发地:{{order.fromaddress}}<li><br>
+								<li>始发地:{{order.fromaddress}}
+								<li><br>
 								<li>姓名:{{v.name}}</li><br>
 								<li>电话:{{v.linkphone}}</li>
 							</ol>
@@ -757,8 +766,8 @@
 
 
 				<div id="" style="width: 100%; border-top: 1px solid #999999; height: 250px; margin-top: 20px;">
-					<div id="" style=" height: 200px;width: 40%; margin-top: 30px;">
-						<ul style="font-size: 20px;text-align: center; list-style-type: none;">
+					<div id="" style=" height: 200px;width: 40%; margin-top: 30px;margin-left: 20%;">
+						<ul style="font-size: 20px;text-align: left; list-style-type: none;">
 
 							<li style="margin: 10px 0 ;">车型:<span>{{order.cartype}}</span></li>
 							<li style="margin: 10px 0 ;">起步价:<span>{{price.startPrice}}</span></li>

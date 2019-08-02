@@ -7,6 +7,16 @@
     <script src="../jquery.min.js"></script>
     <script src="../bootstrap.min.js"></script>
     <script src="../angular.min.js"></script>
+	<style type="text/css">
+		html {
+			min-width: 1200px;
+		}
+		
+		a {
+			color: white;
+			text-decoration: none;
+		}
+	</style>
 
     <script>
         var app=angular.module("myApp",[]);
@@ -33,33 +43,26 @@
                     <div class="">
                         <div class="superlink" style="background-color:black;height: 100px">
                             <div style="width:100px;color: white;float: left;margin-right: 5px;margin-left:100px;">
-                                <img src="/img/logo.png" width="100" height="100"> \
+                                <img src="../img/logo.png" width="100" height="100"> \
                             </div>
                             <div style="float:left;color: white;margin-right: 200px;">
                                 <h2>
                                     <a href="">速安交通</a>
-                                </h2>
+                                </h2><span style="color: white;">achnyan traff</span>
                             </div>
                             <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/index.html">首页</a>
                             </div>
-                            <div style="float:left;color: white;font-size: 15px;margin-top: 25px;margin-right: 4%;">
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                    <ul class="nav navbar-nav">
-                                        <li class="dropdown" style="background-color: black">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单 <span class="caret"></span></a>
-                                            <ul class="dropdown-menu" role="menu"  >
-                                                <li><a href="/driver/driverpulish.html" >司机下单</a></li>
-                                                <li><a href="/user/placeanorder.html">客户下单</a></li>
-                                            </ul>
-                                        </li>
+                            <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;">
+                                <li class="dropdown" style="background-color: black;list-style: none;">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:black;color: white ">在线下单<span
+                                            class="glyphicon glyphicon-triangle-bottom" style="color: white;"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/driver/driverpulish.html">司机下单</a></li>
+                                        <li><a href="/user/placeanorder.html">客户下单</a></li>
                                     </ul>
-                                </div>
+                                </li>
                             </div>
                             <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="/list.html">货源信息</a>
-                            </div>
-                            <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">司机加盟</a>
-                            </div>
-                            <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%;"><a href="">联系我们</a>
                             </div>
                             <div style="float:left;color: white;font-size: 15px;margin-top: 40px;margin-right: 4%"><a href="">常见问题</a>
                             </div>
@@ -67,8 +70,8 @@
 
                             <span ng-if="user.id==null">
 
-             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal">
-            登录
+             <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">  <a  href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>
+            <span class="glyphicon glyphicon-user"></span>登录/注册
 
                 </a>
 
@@ -79,7 +82,7 @@
                             <span ng-if="user.id!=null">
            <div style="float:left;color: lawngreen;font-size: 15px;margin-top: 40px;margin-right: 50px;">
         <a  href="user/my.html">
-            {{user.username}}，
+            <span class="glyphicon glyphicon-user"></span>{{user.username}}，
          </a>
                你好！
        </div>
@@ -111,27 +114,27 @@
 
                                     <ul>
                                         <span ng-if="user.status==0">
-                                        <li ng-if="user.usertype==0"><a href="st2.html" target="content">完善资料(个人)</a></li>
-                                        <li ng-if="user.usertype==1"><a href="st3.html" target="content">完善资料(企业)</a></li>
-                                        <li ng-if="user.usertype==2"><a href="st1.html" target="content">完善资料(车主)</a></li>
+                                        <li ng-if="user.usertype==0"><a href="st2.html" target="content" style="color: #1b6d85">完善资料(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3.html" target="content" style="color: #1b6d85">完善资料(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1.html" target="content" style="color: #1b6d85">完善资料(车主)</a></li>
                                         </span>
 
                                         <span ng-if="user.status==1">
-                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content">审核中(个人)</a></li>
-                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content">审核中(企业)</a></li>
-                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content">审核中(车主)</a></li>
+                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content" style="color: #1b6d85">审核中(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content" style="color: #1b6d85">审核中(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content" style="color: #1b6d85">审核中(车主)</a></li>
                                         </span>
 
                                         <span ng-if="user.status==2">
 
-                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content">已审核资料(个人)</a></li>
-                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content">已审核资料(企业)</a></li>
-                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content">已审核资料(车主)</a></li>
+                                        <li ng-if="user.usertype==0"><a href="st2_1_1.html" target="content" style="color: #1b6d85">已审核资料(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1_1.html" target="content" style="color: #1b6d85">已审核资料(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1_1.html" target="content" style="color: #1b6d85">已审核资料(车主)</a></li>
 
 
-                                        <li ng-if="user.usertype==0"><a href="st2_1.html" target="content">重新审核(个人)</a></li>
-                                        <li ng-if="user.usertype==1"><a href="st3_1.html" target="content">重新审核(企业)</a></li>
-                                        <li ng-if="user.usertype==2"><a href="st1_1.html" target="content">重新审核(车主)</a></li>
+                                        <li ng-if="user.usertype==0"><a href="st2_1.html" target="content" style="color: #1b6d85">重新审核(个人)</a></li>
+                                        <li ng-if="user.usertype==1"><a href="st3_1.html" target="content" style="color: #1b6d85">重新审核(企业)</a></li>
+                                        <li ng-if="user.usertype==2"><a href="st1_1.html" target="content" style="color: #1b6d85">重新审核(车主)</a></li>
                                         </span>
 
 

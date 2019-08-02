@@ -456,7 +456,7 @@
     `lever`
     FROM
     `sajt`.`driverpublish`
-    WHERE fromAddress like #{address};
+    WHERE fromAddress like #{address} limt 0,2;
 
   </select>
 
@@ -484,7 +484,7 @@
     `lever`
     FROM
     `sajt`.`driverpublish`
-    WHERE toAddress like #{address};
+    WHERE toAddress like #{address} limt 0,2;
   </select>
 
   <select id="selectByRouteAddress" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -511,7 +511,7 @@
     `lever`
     FROM
     `sajt`.`driverpublish`
-    WHERE route like #{address};
+    WHERE route like #{address} limt 0,2;
   </select>
 
 </mapper>

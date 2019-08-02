@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>认证</title>
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="../css/transform.css" />
+	<head>
+		<meta charset="utf-8">
+		<title>认证</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/transform.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bar.css" />
+		<style type="text/css">
+			html {
+				min-width: 1200px;
+			}
 
-	<script src="../jquery.min.js"></script>
-	<script src="../bootstrap.min.js"></script>
-	<script src="../angular.min.js"></script>
+			a {
+				color: white;
+				text-decoration: none;
+			}
+		</style>
+		<script src="../jquery.min.js"></script>
+		<script src="../bootstrap.min.js"></script>
+		<script src="../angular.min.js"></script>
 
-	<style>
+		<script>
 
-		.path{ height: 120px; clear: both;color: #ededed}
-		.path ul{ width: 1200px; margin: 0 auto;}
-		.path li{ float: left; width: 183px; color: #666; font-size: 16px; position: relative; height: 120px;}
-		.path li .line{ display: block; position: absolute; top:44px; left: 0; width: 100%; height: 4px; overflow: hidden;font-size: 0; background: #ccc;}
-		.path li .arr{ background: url(../images/ico-arr01.png); no-repeat; display: block; position: absolute; top:35px; right: 0; width: 20px; height: 20px; overflow: hidden; }
-		.path li .txt{ position: relative; top:70px; width:183px; right: -80px; display: block; text-align: center;}
-		.path li.first{ width: 154px;}
-		.path li.first .line{ border-radius: 3px 0 0 3px;}
-		.path li.first .txt{ width: 154px; right:-66px;}
-		.path li.last{ width: 314px;}
-		.path li.last .line{ border-radius: 0 3px 3px 0;}
-		.path li.last .arr{ left: 183px; right:auto;}
-		.path li.on{ color:#e5454a;}
-		.path li.on .line{ background: #e5454a;}
-		.path li.on .arr{ background-position:0 -20px;}
-		.path li.on .txt{ color: #e5454a;}
-		.path li.first.on .txt{ width: 154px;}
-		.path li.last .txt{ right:-104px;}
-
-	</style>
-	<script>
-
-        var app=angular.module("myApp",[]);
+			var app=angular.module("myApp",[]);
         app.controller("st1Controller",function ($http,$scope,$timeout) {
 
             $scope.parts={};
@@ -232,117 +220,119 @@
 
 	</script>
 
-</head>
-<body ng-app="myApp" ng-controller="st1Controller" ng-init="getProvince();getLogin();">
+	</head>
+	<body ng-app="myApp" ng-controller="st1Controller" ng-init="getProvince();getLogin();">
 
-<div class="passload">
+		<div class="passload">
 
-	<div class="path">
-		<ul>
-			<li id="first" class="first on"><span class="line"></span><span class="arr"></span><span class="txt">填写基本信息</span></li>
-			<li id="third" class="third"><span class="line"></span><span class="arr"></span><span class="txt">等待审核</span></li>
-			<!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
+			<div class="path">
+				<ul style="list-style: none;">
+					<li id="first" class="first on"style="width: 400px;"><span class="line" style="width: 400px;"></span><span class="arr"></span><span class="txt" style="right:-310px;">填写基本信息</span></li>
+					<li id="two" class="last" style="width: 800px;"><span class="line"style="width: 800px;"></span><span class="arr" style="left: 400px;"></span><span class="txt" style="right:-335px;">等待审核</span></li>
+					<!--<li id="fourth" class="fourth"><span class="line"></span><span class="arr"></span><span class="txt">完成派单</span></li>
             <li id="fifth" class="fifth"><span class="line"></span><span class="arr"></span><span class="txt">上门服务</span></li>
             <li id="last" class="last"><span class="line"></span><span class="arr"></span><span class="txt">服务完成</span></li>-->
-		</ul>
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist" ng-show="false">
-			<li role="presentation" class="active"><a href="#st0" aria-controls="home" role="tab" data-toggle="tab" ng-show="f[0]" id="step0" disabled>填写信息</a></li>
-			<li role="presentation"><a href="#st1" aria-controls="profile" role="tab" data-toggle="tab" ng-show="f[1]" id="step1" disabled>上传证件</a></li>
-			<li role="presentation"><a href="#st2" aria-controls="messages" role="tab" data-toggle="tab" ng-show="f[2]" id="step2" >成功</a></li>
-		</ul>
+				</ul>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist" ng-show="false">
+					<li role="presentation" class="active"><a href="#st0" aria-controls="home" role="tab" data-toggle="tab" ng-show="f[0]"
+						 id="step0" disabled>填写信息</a></li>
+					<li role="presentation"><a href="#st1" aria-controls="profile" role="tab" data-toggle="tab" ng-show="f[1]" id="step1"
+						 disabled>上传证件</a></li>
+					<li role="presentation"><a href="#st2" aria-controls="messages" role="tab" data-toggle="tab" ng-show="f[2]" id="step2">成功</a></li>
+				</ul>
 
 
-	</div>
-
-	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane fade in active" id="st0">
-
-			<div class="container register">
-				<div class="register1">
-					<div class="dliver">
-						<div class="tips1">
-							<p style="font-size:30px; align-content: center; text-align: center; color: white;">填写基本信息</p>
-						</div>
-					</div>
-					<div style="margin-top: 30px; margin-left: 25%;">
-
-						<div class="form-group">
-							<label for="exampleInputEmail1">企业名字</label>
-							<input id="inf1" class="form-control" ng-model="user.companyname" required type="text">
-							</input>
-						</div>
-						<div class="form-group" >
-							<label for="exampleInputEmail1">企业地址</label>
-							<input id="inf2" class="form-control" ng-model="user.companyaddress" required type="text">
-							</input>
-						</div>
-						<div class="form-group" >
-							<label for="exampleInputEmail1">公司法人</label>
-							<input id="inf3" class="form-control" ng-model="user.companylinkname" required type="text">
-							</input>
-						</div>
-						<div class="form-group" >
-							<label for="exampleInputEmail1">公司联系人电话</label>
-							<input id="inf4" class="form-control" ng-model="user.companyphone" required type="text">
-							</input>
-						</div>
-					</div>
-				</div>
-				<div class="register3">
-					<div class="dliver">
-						<div class="tips3">
-							<p style="font-size:30px; align-content: center; text-align: center; color: white;">相关证件</p>
-						</div>
-					</div>
-					<div>
-						<form>
-							<div id="page">
-								<div class="wrap-custom-file">
-
-									<label for="image1" id="Im1">
-										<span >公司许可证</span>
-										<i class="fa fa-plus-circle"></i>
-									</label>
-								</div>
-								<div class="wrap-custom-file">
-
-									<label for="image2" id="Im2">
-										<span>开户许可证</span>
-										<i class="fa fa-plus-circle"></i>
-									</label>
-								</div>
-
-								<div class="wrap-custom-file">
-
-									<label for="image3" id="Im3">
-										<span>公司法人身份证(前面)</span>
-										<i class="fa fa-plus-circle"></i>
-									</label>
-								</div>
-
-								<div class="wrap-custom-file">
-
-									<label for="image4" id="Im4">
-										<span>公司法人身份证（背面）</span>
-										<i class="fa fa-plus-circle"></i>
-									</label>
-								</div>
-
-							</div>
-						</form>
-
-
-					</div>
-				</div>
 			</div>
 
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="st0">
 
+					<div class="container register">
+						<div class="register1">
+							<div class="dliver">
+								<div class="tips1">
+									<p style="font-size:30px; align-content: center; text-align: center; color: white;">填写基本信息</p>
+								</div>
+							</div>
+							<div style="margin-top: 30px; margin-left: 25%;">
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">企业名字</label>
+									<input id="inf1" class="form-control" ng-model="user.companyname" required type="text">
+									</input>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">企业地址</label>
+									<input id="inf2" class="form-control" ng-model="user.companyaddress" required type="text">
+									</input>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">公司法人</label>
+									<input id="inf3" class="form-control" ng-model="user.companylinkname" required type="text">
+									</input>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">公司联系人电话</label>
+									<input id="inf4" class="form-control" ng-model="user.companyphone" required type="text">
+									</input>
+								</div>
+							</div>
+						</div>
+						<div class="register3">
+							<div class="dliver">
+								<div class="tips3">
+									<p style="font-size:30px; align-content: center; text-align: center; color: white;">相关证件</p>
+								</div>
+							</div>
+							<div>
+								<form>
+									<div id="page">
+										<div class="wrap-custom-file">
+
+											<label for="image1" id="Im1">
+												<span>公司许可证</span>
+												<i class="fa fa-plus-circle"></i>
+											</label>
+										</div>
+										<div class="wrap-custom-file">
+
+											<label for="image2" id="Im2">
+												<span>开户许可证</span>
+												<i class="fa fa-plus-circle"></i>
+											</label>
+										</div>
+
+										<div class="wrap-custom-file">
+
+											<label for="image3" id="Im3">
+												<span>公司法人身份证(前面)</span>
+												<i class="fa fa-plus-circle"></i>
+											</label>
+										</div>
+
+										<div class="wrap-custom-file">
+
+											<label for="image4" id="Im4">
+												<span>公司法人身份证（背面）</span>
+												<i class="fa fa-plus-circle"></i>
+											</label>
+										</div>
+
+									</div>
+								</form>
+
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+
+			</div>
+			<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
 		</div>
-
-
-	</div>
-	<script src="../js/transform.js" type="text/javascript" charset="utf-8"></script>
-</div>
-</body>
+	</body>
 </html>
